@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+            
+        </script>
+        <script>
+            var parametros=["a","b"];
+            var implementaciones=["a+b","a-b","a*b","a/b"];
+            var operaciones=[];
+            for(var i=0; i<implementaciones.length;i++){
+            operaciones [i]= new Function(parametros [0], parametros [1], "return "+implementaciones [i]+";");
+                //new Function(parametros [0], parametros [1], "return "+implementaciones [1]+";"),
+                //new Function(parametros [0], parametros [1], "return "+implementaciones [2]+";"),
+                //new Function(parametros [0], parametros [1], "return "+implementaciones [3]+";")];
+        }
+      alert(operaciones [2](10,9));
+        </script>
+    </body>
+</html>
