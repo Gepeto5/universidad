@@ -1,0 +1,284 @@
+#include <GL/glut.h>
+#include <iostream>
+
+float pitch = 0;
+float yaw = 0;
+float roll = 0;
+float moveX = 0;
+float moveY = 0;
+float moveZ = -3;
+int mx = -1;
+int my = -1;
+double t = 0;
+
+struct Vector3D{
+	double x,y,z;
+	Vector3D suma(Vector3D a) {
+		Vector3D r;
+		r.x = a.x + x;
+		r.y = a.y + y;
+		r.z = a.z + z;
+		return r;
+	}
+};
+Vector3D teteraPos [2];
+Vector3D teteraCol [2];
+Vector3D teteraVel[2];
+
+/*
+Vector3D suma(Vector3D a) {
+	Vector3D r;
+	Vector3D x, y, z;
+	r.x = a.x + x;
+	r.y = a.y + y;
+	r.z = a.z + z;
+	return r;
+}
+*/
+
+Vector3D v;
+
+
+
+struct Solido {
+	Vector3D pos;
+	Vector3D col;
+	Vector3D vel;
+	void renderTetera() {
+		glPushMatrix();
+		glTranslatef(1, 0, 0);
+		//glRotatef(t, -1.0f, 1.0f, 0.0f);
+		glTranslatef(pos.x, pos.y, pos.z);
+		glColor3f(col.x, col.y, col.z);
+		glutSolidTeapot(0.25);
+		//glRotatef(t, 0.0f, 1.0f, 0.0f);
+
+		glPopMatrix();
+	}
+};
+
+Solido* teteras=nullptr;
+Vector3D gravedad;
+Solido cubos[2];
+
+/*
+void renderTetera(Solido s) {
+	glPushMatrix();
+	glTranslatef(1, 0, 0);
+	//glRotatef(t, -1.0f, 1.0f, 0.0f);
+	glTranslatef(s.pos.x, s.pos.y, s.pos.z);
+	glColor3f(s.col.x, s.col.y, s.col.z);
+	glutSolidTeapot(0.25);
+	//glRotatef(t, 0.0f, 1.0f, 0.0f);
+
+	glPopMatrix();
+}
+*/
+
+void displayMe(void) { 
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glLoadIdentity();
+	glTranslatef(moveX, moveY, moveZ);
+	glRotatef(pitch, 1.0, 0.0, 0.0);
+	glRotatef(yaw, 0.0, 1.0, 0.0);
+	glRotatef(roll, 0.0, 0.0, 1.0); //se definen las rotaciones
+	GLfloat lightpos[] = { 5.0,15.0,5.0,0.0 }; //poner una luz
+	glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glBegin(GL_POLYGON);
+	glVertex3f(0.0, 0.0, 0.0);
+	glVertex3f(0.5, 0.0, 0.0);
+	glVertex3f(0.5, 0.5, 0.0);
+	glVertex3f(0.0, 0.5, 0.0);
+	glEnd();
+	glColor3f(1.5f, 1.0f, 1.0f);
+	glBegin(GL_POLYGON);
+	glVertex3f(0.0, 0.0, 0.0);
+	glVertex3f(0.5, 0.0, 0.0);
+	glVertex3f(0.5, 0.0, 0.5);
+	glVertex3f(0.0, 0.0, 0.5);
+	glEnd();
+	for (int i = 0; i < 2; i++) {
+
+
+		teteras[i].renderTetera();
+	}//lo que esta entre push y pop solo se ejecuta dentro de push y pop
+	for (int i = 0; i < 2; i++) {
+
+
+		glPushMatrix();
+		glTranslatef(1, 0, 0);
+		//glRotatef(t, -1.0f, 1.0f, 0.0f);
+		glTranslatef(cubos[i].pos.x, cubos[i].pos.y, cubos[i].pos.z);
+		glColor3f(cubos[i].col.x, cubos[i].col.y, cubos[i].col.z);
+		glutSolidCube(0.50);
+		//glRotatef(t, 0.0f, 1.0f, 0.0f);
+
+		glPopMatrix();
+	}
+	 glutSolidCube(0.6);
+	glFlush();
+	glutSwapBuffers();
+}
+
+
+
+void init(void) {
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_COLOR_MATERIAL);
+	glClearColor(0.0, 0.0, 0.0, 0.0);
+	teteras[0].pos.x = 0;
+	teteras[0].pos.y = 0;
+	teteras[0].pos.z = 0;
+	teteras[0].col.x = 1;
+	teteras[0].col.y = 1;
+	teteras[0].col.z = 1;
+	teteras[1].pos.x = 1;
+	teteras[1].pos.y = 0;
+	teteras[1].pos.z = 0;
+	teteras[1].col.x = 9;
+	teteras[1].col.y = 999;
+	teteras[1].col.z = 4;
+	teteras[1].vel.x = 0.01;
+	teteras[1].vel.y = 0;
+	teteras[1].vel.z = 0;
+
+	cubos[0].pos.x = 1;
+	cubos[0].pos.y = 2;
+	cubos[0].pos.z = 0;
+	cubos[0].col.x = 1;
+	cubos[0].col.y = 0;
+	cubos[0].col.z = 1;
+	cubos[1].pos.x = 1;
+	cubos[1].pos.y = 0;
+	cubos[1].pos.z = 0;
+	cubos[1].col.x = 0.2;
+	cubos[1].col.y = 0.5;
+	cubos[1].col.z = 0.9;
+	cubos[1].vel.x = 0.09;
+	cubos[1].vel.y = 0;
+	cubos[1].vel.z = 0;
+
+	gravedad.x = 0;
+	gravedad.z = 0;
+	gravedad.y = -0.000098;
+}
+
+void idle(void) {
+	t += 1;
+	for (int i = 0; i < 2; i++) {
+		(*(teteras + i)).pos = teteras[i].pos.suma(teteras[i].vel);
+		teteras[i].vel =teteras[i].vel.suma(gravedad);
+		if (teteras[i].pos.x > 2 || teteras[i].pos.x < -2) {
+			teteras[i].vel.x *= -1;
+		}
+		if (teteras[i].pos.z > 2 || teteras[i].pos.z < -2) {
+			teteras[i].vel.z *= -1;
+		}
+		if (teteras[i].pos.y < 0) {
+			teteras[i].vel.y *= -1;
+			teteras[i].pos.y = 0;
+		}
+	}
+		for (int i = 0; i < 2; i++) {
+			(*(cubos + i)).pos = cubos[i].pos.suma(cubos[i].vel);
+			cubos[i].vel = cubos[i].vel.suma(gravedad);
+			if (cubos[i].pos.x > 2 || cubos[i].pos.x < -2) {
+				cubos[i].vel.x *= -1;
+			}
+			if (cubos[i].pos.z > 2 || cubos[i].pos.z < -2) {
+				cubos[i].vel.z *= -1;
+			}
+			if (cubos[i].pos.y < 0) {
+				cubos[i].vel.y *= -0.3;
+				cubos[i].pos.y = 0;
+			}
+		}
+	
+	displayMe();
+	//glutPostRedisplay();
+	}
+
+
+
+void reshape(int width, int height) {  //redimensionar ventana
+	glViewport(0, 0, width, height); //coordenadas opengl para las vistas
+	glMatrixMode(GL_PROJECTION); //se define una matriz de transformacion para pasar los pixeles en 3D a la pantalla
+	glLoadIdentity(); //
+	gluPerspective(60.0f, (GLfloat)width/(GLfloat)height,1.0f,200.0f); //se define el campo de vision. objeto mas cercano y el mas lejano
+	glMatrixMode(GL_MODELVIEW); //se define una matriz para el modelo
+}
+
+
+
+void KeyPressed(unsigned char key, int x, int y) {
+	switch (key) {
+	case 'p': case 'P': pitch++; break;
+	case 'o': case 'O': yaw++; break;	
+	case 'i': case 'I': roll++; break;
+	case 'l': case 'L': pitch--; break;
+	case 'k': case 'K': yaw--; break;
+	case 'j': case 'J': roll--; break;
+	case 'd': case 'D': moveX += 0.01; break;
+	case 'w': case 'W': moveY+= 0.01;  break;
+	case 'e': case 'E': moveZ+= 0.01;  break;
+	case 'a': case 'A': moveX -= 0.01; break;
+	case 's': case 'S': moveY -= 0.01; break;
+	case 'q': case 'Q': moveZ -= 0.01; break;
+
+	}
+	glutPostRedisplay();
+}
+
+void mousePress(int button, int state, int x, int y) {
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+		mx = x;
+		my = y;
+	}
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+		mx = -1;
+		my = -1;
+	}
+}
+
+void mouseMove(int x, int y) {
+	if (mx >= 0 && my >= 0) {
+		pitch += y - my;
+		yaw += x - mx;
+	}
+	mx = x;
+	my = y;
+	glutPostRedisplay();
+}
+
+int main(int argc, char ** argv) {
+	int numbers[5];
+	int *p;
+	p = numbers;
+	*p = 10;
+	*(p + 4) = 50;
+	p = numbers + 3;
+	*p = 30;
+
+
+	teteras = new Solido[2];
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH); //comprobar profundidad, definir buffer y transparencia
+	glutInitWindowSize(300, 300); 
+	//window size
+	glutInitWindowPosition(500, 500);
+	//distance from the top-left screen
+	glutCreateWindow("BadproG - Hello world :D");
+	//message displayed on top bar window
+	init();
+	glutReshapeFunc(reshape); 
+	glutDisplayFunc(displayMe);
+	glutKeyboardFunc(KeyPressed);
+	glutMotionFunc(mouseMove);
+	glutMouseFunc(mousePress);
+	glutIdleFunc(idle);
+	glutMainLoop();
+	return 0;
+}

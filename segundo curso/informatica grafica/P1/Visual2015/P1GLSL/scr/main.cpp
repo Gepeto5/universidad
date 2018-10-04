@@ -44,11 +44,6 @@ int main(int argc, char** argv)
 	IGlib::setModelMat(objId, modelMat);
 	//Incluir texturas aquí.
 	
-	//CBs
-	IGlib::setIdleCB(idleFunc);
-	IGlib::setResizeCB(resizeFunc);
-	IGlib::setKeyboardCB(keyboardFunc);
-	IGlib::setMouseCB(mouseFunc);
 	
 	//Mainloop
 	IGlib::mainLoop();
