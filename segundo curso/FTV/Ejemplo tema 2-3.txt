@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Objetos en JS</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <p id="parrafo1"></p>
+        <p id="parrafo2"></p>
+        <p id="parrafo3"></p>
+        <p id="parrafo4"></p>
+        <p id="parrafo5"></p>
+        <p id="parrafo6"></p>
+        <p id="parrafo7"></p>
+        <p id="parrafo8"></p>
+        
+        <script>
+            
+            var parrafo1 = document.getElementById("parrafo1");
+            var parrafo2 = document.getElementById("parrafo2");
+            var parrafo3 = document.getElementById("parrafo3");
+            var parrafo4 = document.getElementById("parrafo4");
+            var parrafo5 = document.getElementById("parrafo5");
+            var parrafo6 = document.getElementById("parrafo6");
+            var parrafo7 = document.getElementById("parrafo7");
+            var parrafo8 = document.getElementById("parrafo8");
+            
+            var coche1 = {
+                marca: "BMW",
+                modelo: "325D",
+                color: "negro"
+            };
+            
+            coche1.cilindrada = "2000cc";
+            parrafo1.innerHTML = coche1.marca + " " + coche1.modelo + " " + coche1.color + " " + coche1.cilindrada;
+            
+            function Coche(marca,modelo,color) {
+                this.marca = marca;
+                this.modelo = modelo;
+                this.color = color;
+                this.setMarca = function(marca) {
+                    this.marca = marca;
+                }
+            }
+            
+            var coche2 = new Coche("RENAULT","Laguna","rojo");
+            //coche2.edad = 10;
+            var coche3 = new Coche("MERCEDES","Clase A","gris");
+            Coche.prototype.edad=10;
+            parrafo2.innerHTML = coche2.marca + " " + coche2.modelo + " " + coche2.color + " " + coche2.edad;
+            parrafo3.innerHTML = coche3.marca + " " + coche3.modelo + " " + coche3.color + " " + coche3.edad;
+            
+            coche3.setMarca("OPEL");
+            //parrafo4.innerHTML = coche3.marca + " " + coche3.modelo + " " + coche3.color + " " + coche3.edad;
+            imprimir(parrafo4,coche3);
+            
+            
+            function imprimir(parrafo,objeto) {
+                texto = "";
+                for(var atributo in objeto)
+                    if(typeof(objeto[atributo])!=="function")
+                    texto += objeto[atributo] + " ";
+                
+                parrafo.innerHTML = texto;
+            }
+            
+            Coche.prototype.toString = function() {
+                texto = "";
+                for(var atributo in this)
+                    if(typeof(this[atributo])!=="function")
+                        texto += this[atributo] + "";
+                return texto;
+            };
+            
+            parrafo5.innerHTML = coche3.toString();
+            
+            
+            
+            function Animal () {
+                
+            }
+            
+            function Gato() {
+                
+            }
+            
+            Gato.prototype = new Animal();
+            
+            var animal = new Animal ();
+            var gato = new Gato();
+            
+            
+        </script>
+    </body>
+</html>
