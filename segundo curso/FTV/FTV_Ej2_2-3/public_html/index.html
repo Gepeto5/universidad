@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <p id="parrafo1"></p>
+        <p id="parrafo2"></p>
+        <p id="parrafo3"></p>
+        
+        <script>
+            var forma1={
+              coordX:"0",
+              coordY:"0",
+              lados:"4",
+              color:"verde"
+            };
+            var forma2={
+              coordX:"100",
+              coordY:"100",
+              lados:"3",
+              color:"rojo"
+            };
+            var forma3={
+              coordX:"1000",
+              coordY:"100",
+              lados:"6",
+              color:"azul"
+            };
+            var vecObjetos=[forma1,forma2,forma3];
+            var parrafos=[parrafo1,parrafo2,parrafo3];
+            
+            function muestraObjetos(formasG,parrafo){   
+                
+                for(var i=0;i<formasG.length;i++){
+                    texto="";
+                for(var atributo in formasG[i])
+                    if(typeof(formasG[i][atributo]!=="function"))
+                        texto+=formasG[i][atributo] + " ";
+                
+                parrafo[i].innerHTML=texto;
+            }
+            }
+            
+            muestraObjetos(vecObjetos,parrafos);
+            
+        </script>
+        
+        
+    </body>
+</html>
