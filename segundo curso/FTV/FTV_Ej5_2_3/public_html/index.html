@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <p id="parrafo1"></p>
+        <p id="parrafo2"></p>
+        <p id="parrafo3"></p>
+
+        <script>
+
+
+            function formaG(coordx, coordy, lados, color) {
+                this.coordx = coordx;
+                this.coordy = coordy;
+                this.lados = lados;
+                this.color = color;
+            }
+            ;
+
+            var forma1 = new formaG(0, 0, 4, "verde");
+            var forma2 = new formaG(100, 100, 6, "rojo");
+            var forma3 = new formaG(1000, 100, 3, "azul");
+
+            //formaG.prototype.perimetro=0;
+
+            function expandeForma(formaG) {
+                formaG.perimetro = 0;
+                formaG.distancia = function () {
+                    return Math.sqrt((formaG.coordx * formaG.coordx) + (formaG.coordy * formaG.coordy));
+                };
+            }
+            ;
+
+            expandeForma(forma1);
+            expandeForma(forma2);
+            expandeForma(forma3);
+
+            var vecObjetos = [forma1, forma2, forma3];
+            var parrafos = [parrafo1, parrafo2, parrafo3];
+
+            function muestraObjetos(formasG, parrafo) {
+
+                for (var i = 0; i < formasG.length; i++) {
+                    texto = "";
+                    for (var atributo in formasG[i]) {
+                        if (typeof (formasG[i][atributo]) === "function") {
+                            texto += formasG[i][atributo]() + " ";
+                        } else {
+                            texto += formasG[i][atributo] + " ";
+                        }
+                    }
+
+                    parrafo[i].innerHTML = texto;
+                }
+            }
+
+            muestraObjetos(vecObjetos, parrafos);
+
+        </script>
+
+
+    </body>
+</html>

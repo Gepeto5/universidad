@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <p id="parrafo1"></p>
+        <p id="parrafo2"></p>
+        <p id="parrafo3"></p>
+        <p id="parrafo4"></p>
+        <script>
+            
+            var ob1={};
+            var ob2={};
+            ob1.valor=10;
+            ob2.valor=11;
+            
+            
+            
+            function objeto (x,y,z){
+                this.x=x;
+                this.y=y;
+                this.z=z;
+            };
+            
+           var A=new objeto(0,1,ob1);
+           
+           var B=new objeto(0,0,ob2);
+           
+           
+            
+            function clonar(objeto1,objeto2){                
+                    for(var atributo in objeto1){
+                        objeto2[atributo]=objeto1[atributo];
+                    }                
+            }
+            
+            clonar(A,B);
+            
+            parrafo1.innerHTML=A.x + " " + A.y + " " + A.z;
+            parrafo2.innerHTML=B.x + " " + B.y + " " + B.z;
+            
+            B.x=-1;
+            B.y=-2;
+            B.z=-3;
+            
+            parrafo3.innerHTML=A.x + " " + A.y + " " + A.z;
+            parrafo4.innerHTML=B.x + " " + B.y + " " + B.z;
+            
+            
+            
+            
+            
+        </script>
+    </body>
+</html>
