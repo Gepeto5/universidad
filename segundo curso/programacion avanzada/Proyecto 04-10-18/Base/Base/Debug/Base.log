@@ -1,0 +1,4 @@
+﻿  main.cpp
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 04-10-18\base\base\main.cpp(67): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 04-10-18\base\base\main.cpp(76): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+  Base.vcxproj -> C:\Users\ivan-\OneDrive\Escritorio\universidad\segundo curso\programacion avanzada\Proyecto 04-10-18\Base\Debug\Base.exe
