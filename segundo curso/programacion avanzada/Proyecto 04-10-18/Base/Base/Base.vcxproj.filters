@@ -30,6 +30,12 @@
     <ClCompile Include="cubo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="esfera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="escena.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vector3d.h">
@@ -39,6 +45,12 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="cubo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="esfera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="escena.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

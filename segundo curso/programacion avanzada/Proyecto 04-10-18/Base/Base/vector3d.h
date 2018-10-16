@@ -9,7 +9,9 @@ class Vector3D {
 private:
 	double x, y, z;
 public:
-	 double getX();
+	Vector3D() : x(0), y(0),z(0) {}
+	Vector3D(double x, double y, double z) :x(x),y(y),z(z) {}
+	double getX();
 	void setX(double d);
 	double getY();
 	void setY(double d);
