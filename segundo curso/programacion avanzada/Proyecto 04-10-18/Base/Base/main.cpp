@@ -17,10 +17,15 @@ double dt = 1.0f;
 
 #include "vector3d.h"
 #include "solido.h"
+#include "esfera.h"
+#include "cubo.h"
+#include "escena.h"
 
 Solido* teteras=nullptr;
-Solido cubos[2];
+Escena e;
+//Cubo cubos[2];
 Vector3D gravedad;
+//Esfera esferas[1];
 
 void displayMe(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	//sets the bitplane area of the window to values previously selected by glClearColor, glClearIndex, glClearDepth, glClearStencil,
@@ -68,14 +73,16 @@ void displayMe(void) {
 	glEnd();
 
 	for (int i = 0; i < 2; i++) {
-		teteras[i].renderTetera();
-		//cubos[i].renderCubo();
+		//teteras[i].renderTetera();
+		//cubos[i].render();
+		//esferas[i].render();
 	}
+	e.rend();
 	glPushMatrix(); 
 	glTranslatef(2, 0, 0);			//Este método mueve 
 	glRotatef(t/10, 1.0, 0.0, 0.0);
 	glColor3f(0, 0.5f, 0);
-	glutSolidCube(0.6);
+	//glutSolidSphere(0.6,10,10);
 	glPopMatrix();
 
 	glFlush();	//force execution of GL commands in finite time, check https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glFlush.xml
@@ -84,6 +91,8 @@ void displayMe(void) {
 }
 void idle(void) {
 	t += dt;
+	e.update(dt);
+	/*
 	Vector3D v;	//Variable auxiliar
 	for (int i = 0; i < 2; i++) {
 
@@ -119,8 +128,8 @@ void idle(void) {
 
 	}
 	for (int i = 0; i < 2; i++) {
-		
-		
+
+
 		v = cubos[i].getPos() + (cubos[i].getVel()*dt);
 		cubos[i].setPos(v);
 
@@ -151,6 +160,42 @@ void idle(void) {
 			cubos[i].setPos(v);
 		}
 	}
+
+	for (int i = 0; i < 2; i++) {
+
+
+		v = esferas[i].getPos() + (esferas[i].getVel()*dt);
+		esferas[i].setPos(v);
+
+		v = esferas[i].getVel() + (gravedad * dt);
+		esferas[i].setVel(v);
+
+
+		if (esferas[i].getPos().getX() >= 2 || esferas[i].getPos().getX() <= -2) {
+			v = esferas[i].getVel();
+			double d = v.getX()*-1;
+			v.setX(d);
+			esferas[i].setVel(v);
+		}
+		if (esferas[i].getPos().getZ() >= 2 || esferas[i].getPos().getZ() <= -2) {
+			v = cubos[i].getVel();
+			double d = v.getZ()*-1;
+			v.setZ(d);
+			esferas[i].setVel(v);
+		}
+		if (esferas[i].getPos().getY() <= 0) {
+			v = esferas[i].getVel();
+			double d = v.getY()*-0.99;
+			v.setY(d);
+			esferas[i].setVel(v);
+
+			v = esferas[i].getPos();
+			v.setY(0);
+			esferas[i].setPos(v);
+		}
+	}
+	*/
+	
 	displayMe();
 	//glutPostRedisplay();
 }
@@ -163,8 +208,23 @@ void init(void) {
 	glEnable(GL_COLOR_MATERIAL);		//If enabled, have ambient and diffuse material parameters track the current color.
 
 	glClearColor(0.0, 0.0, 0.0, 0.0);	//specifies the red, green, blue, and alpha values used by glClear to clear the color buffers. Values specified by glClearColor are clamped to the range [0,1].
+	
+	Vector3D v = { 1,2,4 };
 	for (int i = 0; i < 2; i++) {
+		
+		Cubo* c=nullptr;
+		c=new Cubo(Vector3D(0, 1, i + 1));
+		c->setCol(Vector3D(1, 0, i));
+		c->setVel(Vector3D(0.02, i + 2 * 2, -0.02));
+
+		c->setS(0.25*(i + 1));
+		e.add(c);
+		
+		
+		
+		/*
 		Vector3D v;
+		double r;
 		v = teteras[i].getPos();
 		v.setX(i * 2+0.5);
 		v.setY(1);
@@ -183,6 +243,7 @@ void init(void) {
 		v.setZ(0.01*(i+1));
 		teteras[i].setVel(v);
 
+		
 		v = cubos[i].getPos();
 		v.setX(i);
 		v.setY(1.5);
@@ -201,6 +262,28 @@ void init(void) {
 		v.setZ(0.01);
 		cubos[i].setVel(v);
 		
+
+		esferas[0].setR(0.25);
+		
+		esferas[0].setR(0.25);
+		v = esferas[0].getPos();
+		v.setX(0);
+		v.setY(1);
+		v.setZ(0);
+		esferas[0].setPos(v);
+
+		v = esferas[0].getCol();
+		v.setX(1);
+		v.setY(1);
+		v.setZ(0);
+		esferas[0].setCol(v);
+
+		v = esferas[0].getVel();
+		v.setX(0.0);
+		v.setY(0.0);
+		v.setZ(0.0);
+		esferas[0].setVel(v);
+		*/
 		
 	}
 	gravedad.setX(0);

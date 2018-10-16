@@ -119,12 +119,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cubo.cpp" />
+    <ClCompile Include="escena.cpp" />
+    <ClCompile Include="esfera.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="solido.cpp" />
     <ClCompile Include="vector3d.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cubo.h" />
+    <ClInclude Include="escena.h" />
+    <ClInclude Include="esfera.h" />
     <ClInclude Include="solido.h" />
     <ClInclude Include="vector3d.h" />
   </ItemGroup>

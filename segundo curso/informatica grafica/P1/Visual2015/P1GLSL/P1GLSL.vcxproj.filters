@@ -31,6 +31,12 @@
     <None Include="..\shaders_P1\shader.v0.vert">
       <Filter>shaders</Filter>
     </None>
+<<<<<<< HEAD
+    <None Include="..\shaders_P1\shader.v10.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="..\shaders_P1\shader.v10.vert">
+=======
     <None Include="..\shaders_P1\shader.v1.frag">
       <Filter>shaders</Filter>
     </None>
@@ -83,6 +89,7 @@
       <Filter>shaders</Filter>
     </None>
     <None Include="..\shaders_P1\shader.v9.vert">
+>>>>>>> d0b4015b6db65993d1baad336262723953c4ad83
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>

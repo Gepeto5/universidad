@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>¿Tema 3 o vida real?</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            div,p {
+                border: 1px solid black;
+                width: 400px;
+                margin: 50px;
+                padding: 25px;
+                background-color: lightgray;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="caja1" onclick="cambiarColor(this)">
+            <p id="parrafo1">No pinches wei</p>
+            
+            <script>
+                //document.getElementById("caja1").style.backgroundColor = "red";
+                
+                window.onload = function (){
+                    //document.getElementById("caja1").onclick = avisar1;
+                    //document.getElementById("caja1").onclick = avisar2;
+                    document.getElementById("caja1").addEventListener("click", avisar1, true);
+                    document.getElementById("parrafo1").addEventListener("click", avisar2, true);
+                }
+                //document.getElementById("caja1").onclick = avisar1;
+                
+                function avisar1(){
+                   /*
+                    alert('hiciste click pinche culiao');
+                    <div id="caja1" onclick="this.style.backgroundColor = 'red'; avisar1()">
+                    document.getElementById("caja1").style.backgroundColor = "red";
+                    */
+                   document.getElementById("caja1").style.backgroundColor = "red";
+                   alert('le dije que no hiciese click, es usted imbécil');
+                }
+                
+                                function avisar2(){
+                   document.getElementById("caja1").style.backgroundColor = "red";
+                   alert('te voy a sacar la cresta weon culiao');
+                }
+                
+                function cambiarColor(objeto){
+                    objeto.style.backgroundColor="red";
+                }
+                
+                //window.addEventListener("keydown", manejaTeclado, false);
+                //window.addEventListener("keypress", manejaTeclado, false);
+                window.addEventListener("keyup",  manejaTeclado, false);
+                document.getElementById("caja1").addEventListener("mouseover", manejaRaton, true);
+                function manejaTeclado(e){
+                    document.getElementById("caja1").style.backgroundColor = "purple";
+                }
+                
+                function manejaRaton(event){
+                    event.target.style.backgroundColor= "green";
+                }
+                
+            </script>
+        </div>
+    </body>
+</html>

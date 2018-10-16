@@ -1,4 +1,6 @@
-﻿  main.cpp
-c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 04-10-18\base\base\main.cpp(67): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 04-10-18\base\base\main.cpp(76): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-  Base.vcxproj -> C:\Users\ivan-\OneDrive\Escritorio\universidad\segundo curso\programacion avanzada\Proyecto 04-10-18\Base\Debug\Base.exe
+﻿  cubo.cpp
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 04-10-18\base\base\cubo.cpp(7): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 04-10-18\base\base\cubo.cpp(9): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+escena.obj : error LNK2019: símbolo externo "public: void __thiscall Cubo::render(void)" (?render@Cubo@@QAEXXZ) sin resolver al que se hace referencia en la función "public: void __thiscall Escena::rend(void)" (?rend@Escena@@QAEXXZ)
+escena.obj : error LNK2019: símbolo externo "public: void __thiscall Cubo::update(double)" (?update@Cubo@@QAEXN@Z) sin resolver al que se hace referencia en la función "public: void __thiscall Escena::update(double)" (?update@Escena@@QAEXN@Z)
+C:\Users\ivan-\OneDrive\Escritorio\universidad\segundo curso\programacion avanzada\Proyecto 04-10-18\Base\Debug\Base.exe : fatal error LNK1120: 2 externos sin resolver
