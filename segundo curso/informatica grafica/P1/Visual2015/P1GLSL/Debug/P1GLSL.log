@@ -1,5 +1,1 @@
-﻿  main.cpp
-c:\users\iván\desktop\uni\segundo curso\informatica grafica\p1\visual2015\p1glsl\scr\main.cpp(45): warning C4305: 'inicializando': truncamiento de 'double' a 'float'
-c:\users\iván\desktop\uni\segundo curso\informatica grafica\p1\visual2015\p1glsl\scr\main.cpp(46): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
-main.obj : warning LNK4075: se omite '/EDITANDCONTINUE' debido a la especificación '/SAFESEH'
-  P1GLSL.vcxproj -> C:\Users\Iván\Desktop\uni\segundo curso\informatica grafica\P1\Visual2015\P1GLSL\Debug\P1GLSL.exe
+﻿  P1GLSL.vcxproj -> C:\Users\Iván\Desktop\uni\segundo curso\informatica grafica\P1\Visual2015\P1GLSL\Debug\P1GLSL.exe
