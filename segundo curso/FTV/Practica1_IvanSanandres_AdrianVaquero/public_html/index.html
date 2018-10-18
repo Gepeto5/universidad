@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+            
+            var nomPElec=["Placa ABS","Centralita encendido","Bornes cableado","Alternador","Encendido"];
+            var nomPMec=["Larguero inferior","Guardabarros","Larguero superior","Subchasis","Puerta"];
+            
+            
+            function fabrica (factoria){
+                this.factoria=factoria;
+            }
+            
+            function factoria(estacionTratamiento){
+                this.estacionTratamiento=estacionTratamiento;
+            }
+            
+            function piezasGen(tipo, cod, fecha, estado, nombre){
+                var rand=Math.floor((Math.random() * 2) + 1);               
+                this.tipo=tipo;
+                if(tipo === 1){ //aqui metemos el nombre de la pieza electrica
+                    var randElec=Math.floor((Math.random() * 5) + 1)
+                    this.nombre=nomPElec [randElec - 1];
+                }
+                else if(tipo === 2){
+                    var randMec=Math.floor((Math.random() * 5) + 1)
+                    this.nombre=nomPMec[randMec - 1];
+                }
+            }
+            
+            function piezasElec(potencia, voltaje){
+                piezasGen.prototype.potencia=potencia;
+                piezasGen.prototype.voltaje=voltaje;
+            }
+            
+            function piezasMec(material){
+                piezasGen.prototype.material=material;
+            }
+            
+        </script>
+    </body>
+</html>

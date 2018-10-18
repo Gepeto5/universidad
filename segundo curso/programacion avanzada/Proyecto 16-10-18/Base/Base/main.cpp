@@ -12,6 +12,7 @@ double dt = 0.01f;
 #include "cubo.h"
 #include "esfera.h"
 #include "escena.h"
+#include "cilindro.h"
 
 Solido* teteras=nullptr;
 //Esfera esferas[2];
@@ -68,6 +69,15 @@ void init(void) {
 		sf=new Esfera(Vector3D(0, 1, i + 1), Vector3D(1, i, 0));
 		sf->setVel(Vector3D(0.015, 1+i*1, -0.003));
 		e.add(sf);
+
+		
+		Cilindro* cil = nullptr;
+		cil = new Cilindro(Vector3D(0, 0, i - 2), Vector3D(i, 2, 3));
+		cil->setVel(Vector3D(0.01, i + 0.2, 0.2));
+		cil->setHe(5.5);
+		cil->setRad(2.0);
+		e.add(cil);
+		
 	}
 	gravedad.setX(0);
 	gravedad.setY(-0.000098);

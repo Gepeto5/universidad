@@ -36,6 +36,9 @@
     <ClCompile Include="escena.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="cilindro.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Solido.h">
@@ -51,6 +54,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="escena.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cilindro.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

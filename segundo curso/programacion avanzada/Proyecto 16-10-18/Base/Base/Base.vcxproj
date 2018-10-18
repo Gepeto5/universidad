@@ -118,6 +118,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="cilindro.cpp" />
     <ClCompile Include="cubo.cpp" />
     <ClCompile Include="escena.cpp" />
     <ClCompile Include="Esfera.cpp" />
@@ -126,6 +127,7 @@
     <ClCompile Include="Vector3D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cilindro.h" />
     <ClInclude Include="cubo.h" />
     <ClInclude Include="escena.h" />
     <ClInclude Include="esfera.h" />

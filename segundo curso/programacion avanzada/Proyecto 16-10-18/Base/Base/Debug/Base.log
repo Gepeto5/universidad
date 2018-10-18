@@ -1,19 +1,10 @@
-﻿  cubo.cpp
-c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 16-10-18\base\base\cubo.cpp(4): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 16-10-18\base\base\cubo.cpp(6): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+﻿  cilindro.cpp
+c:\users\iván\desktop\uni\segundo curso\programacion avanzada\proyecto 16-10-18\base\base\cilindro.cpp(5): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\iván\desktop\uni\segundo curso\programacion avanzada\proyecto 16-10-18\base\base\cilindro.cpp(7): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
   escena.cpp
-c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 16-10-18\base\base\escena.cpp(14): warning C4018: '<': no coinciden signed/unsigned
-c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 16-10-18\base\base\escena.cpp(23): warning C4018: '<': no coinciden signed/unsigned
-  Esfera.cpp
-c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 16-10-18\base\base\esfera.cpp(5): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 16-10-18\base\base\esfera.cpp(7): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\iván\desktop\uni\segundo curso\programacion avanzada\proyecto 16-10-18\base\base\escena.cpp(14): warning C4018: '<': no coinciden signed/unsigned
+c:\users\iván\desktop\uni\segundo curso\programacion avanzada\proyecto 16-10-18\base\base\escena.cpp(26): warning C4018: '<': no coinciden signed/unsigned
   main.cpp
-c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 16-10-18\base\base\main.cpp(43): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-  SOLIDO.cpp
-c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 16-10-18\base\base\solido.cpp(4): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 16-10-18\base\base\solido.cpp(6): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 16-10-18\base\base\solido.cpp(12): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 16-10-18\base\base\solido.cpp(14): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-  Vector3D.cpp
+c:\users\iván\desktop\uni\segundo curso\programacion avanzada\proyecto 16-10-18\base\base\main.cpp(44): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
   Generando código...
-  Base.vcxproj -> C:\Users\ivan-\OneDrive\Escritorio\universidad\segundo curso\programacion avanzada\Proyecto 16-10-18\Base\Debug\Base.exe
+  Base.vcxproj -> C:\Users\Iván\Desktop\uni\segundo curso\programacion avanzada\Proyecto 16-10-18\Base\Debug\Base.exe
