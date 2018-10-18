@@ -71,14 +71,17 @@ void init(void) {
 		e.add(sf);
 
 		
-		Cilindro* cil = nullptr;
-		cil = new Cilindro(Vector3D(0, 0, i - 2), Vector3D(i, 2, 3));
-		cil->setVel(Vector3D(0.01, i + 0.2, 0.2));
-		cil->setHe(5.5);
-		cil->setRad(2.0);
-		e.add(cil);
+		
 		
 	}
+
+	Cilindro* cil = nullptr;
+	cil = new Cilindro(Vector3D(1, 0, (1 - 2)), Vector3D(0, 2, 3));
+	cil->setVel(Vector3D(0.01, 0.2, 0.2));
+	cil->setHe(5.5);
+	cil->setRad(2.0);
+	e.add(cil);
+
 	gravedad.setX(0);
 	gravedad.setY(-0.000098);
 	gravedad.setZ(0);

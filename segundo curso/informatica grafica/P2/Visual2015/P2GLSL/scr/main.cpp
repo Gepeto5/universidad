@@ -21,7 +21,7 @@ void mouseMotionFunc(int x, int y);
 int main(int argc, char** argv)
 {
 	std::locale::global(std::locale("spanish"));// acentos ;)
-	if (!IGlib::init("../shaders_P2/shader.v1.vert", "../shaders_P2/shader.v1.frag"))
+	if (!IGlib::init("../shaders_P2/shader.v3.vert", "../shaders_P2/shader.v3.frag"))
 		return -1;
    
 	//CBs
@@ -52,7 +52,9 @@ int main(int argc, char** argv)
 	//Creamos el objeto que vamos a visualizar
 	objId = IGlib::createObj(cubeNTriangleIndex, cubeNVertex, cubeTriangleIndex, 
 			cubeVertexPos, cubeVertexColor, cubeVertexNormal,cubeVertexTexCoord, cubeVertexTangent);
-	IGlib::addColorTex(objId, "../img/color.png");
+	IGlib::addColorTex(objId, "../img/color2.png");
+	IGlib::addEmissiveTex(objId, "../img/emissive.png");
+	IGlib::addSpecularTex(objId, "../img/specMap.png");
 		
 	glm::mat4 modelMat = glm::mat4(1.0f);
 	IGlib::setModelMat(objId, modelMat);

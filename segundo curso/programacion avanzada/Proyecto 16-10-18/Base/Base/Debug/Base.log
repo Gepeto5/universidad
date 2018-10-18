@@ -1,10 +1,3 @@
-﻿  cilindro.cpp
-c:\users\iván\desktop\uni\segundo curso\programacion avanzada\proyecto 16-10-18\base\base\cilindro.cpp(5): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-c:\users\iván\desktop\uni\segundo curso\programacion avanzada\proyecto 16-10-18\base\base\cilindro.cpp(7): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-  escena.cpp
-c:\users\iván\desktop\uni\segundo curso\programacion avanzada\proyecto 16-10-18\base\base\escena.cpp(14): warning C4018: '<': no coinciden signed/unsigned
-c:\users\iván\desktop\uni\segundo curso\programacion avanzada\proyecto 16-10-18\base\base\escena.cpp(26): warning C4018: '<': no coinciden signed/unsigned
-  main.cpp
-c:\users\iván\desktop\uni\segundo curso\programacion avanzada\proyecto 16-10-18\base\base\main.cpp(44): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-  Generando código...
-  Base.vcxproj -> C:\Users\Iván\Desktop\uni\segundo curso\programacion avanzada\Proyecto 16-10-18\Base\Debug\Base.exe
+﻿  main.cpp
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 16-10-18\base\base\main.cpp(44): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+  Base.vcxproj -> C:\Users\ivan-\OneDrive\Escritorio\universidad\segundo curso\programacion avanzada\Proyecto 16-10-18\Base\Debug\Base.exe
