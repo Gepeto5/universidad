@@ -11,16 +11,31 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
+        <p>Pulse "Fabricar 100" para simular la fabricación de 100 piezas.
+            Pulse "Fabricar 1000" para simular la fabricación de 1000 piezas.
+            Resultado de la simulación:</p>
+
+        <button onclick="">Fabricar 100</button>
+        <button onclick="prueba()">Fabricar 1000</button>
         <script>
 
             var nomPElec = ["Placa ABS", "Centralita encendido", "Bornes cableado", "Alternador", "Encendido"];
             var nomPMec = ["Larguero inferior", "Guardabarros", "Larguero superior", "Subchasis", "Puerta"];
             var pot = [1, 5, 10, 20];
             var volt = [3.3, 5, 12, 240];
-            var material = ["acero", "titanio", "carbono"];
+            var mat = ["acero", "titanio", "carbono"];
             var letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             var numeros = "1234567890";
             var fecha = "5/6/2015";
+
+            var contE;
+            var contM;
+
+            function randomize() {
+                var randomArray = [1, 1, 1, 2, 2, 2, 2, 2, 2, 2]; //ya que hay 3 unos y 7 doses, hay un 30% de probabilidad de que salga 1, y 70% de que salga 2.
+                var randomIndex = Math.floor(Math.random() * randomArray.length);
+                return randomArray[randomIndex];
+            }
 
             function codRand() {
                 var cod = "";
@@ -32,75 +47,83 @@ and open the template in the editor.
             }
 
             function fabrica() {
-                /*
-               var piezas= factoria(100);
-               var texto="";
-                for(var i=0;i<35;i++){
-                    texto += piezas[i].cod;
+                //var numPiezas = 100;
+                var factoria;
+                var estacion;
+                this.fabricar=function (fac, est){
+                    fac = new factoria();
+                    est = new estacionTrat();
                 }
-                return texto;
-                */
             }
-
+            
             function factoria(numPiezas) {
-                var piezasE = new PiezasGen();
-                var piezasM = new PiezasGen();
-                var piezasTot = new piezasGen();
-                for (var i = 0; i < numPiezas * 0, 3; i++) {
-                    piezasE[i].nombre=nomPElec[(Math.floor((Math.random() * 5) + 1)) - 1];
-                    piezasE[i].cod = codRand() + "E";
-                    piezasE[i].fecha= fecha;
-                    piezasE[i].prototype.potencia = pot[(Math.floor((Math.random() * 4) + 1)) - 1];
-                    piezasE[i].prototype.voltaje = volt[(Math.floor((Math.random() * 4) + 1)) - 1];
+                contE = 0;
+                contM = 0;
+                this.piezasTot = [];
+                for (var i = 0; i < numPiezas; i++) {
+                    if (randomize() === 1) {
+                        this.piezasTot[i] = new piezasElec();
+                        this.piezasTot[i].nombre = nomPElec[(Math.floor((Math.random() * 5) + 1)) - 1];
+                        this.piezasTot[i].cod = codRand() + "E";
+                        this.piezasTot[i].fecha = fecha;
+                        this.piezasTot[i].potencia = pot[(Math.floor((Math.random() * 4) + 1)) - 1];
+                        this.piezasTot[i].voltaje = volt[(Math.floor((Math.random() * 4) + 1)) - 1];
+                        contE++;
+                    } else {
+                        this.piezasTot[i] = new piezasMec();
+                        this.piezasTot[i].nombre = nomPMec[(Math.floor((Math.random() * 5) + 1)) - 1];
+                        this.piezasTot[i].cod = codRand() + "M";
+                        this.piezasTot[i].fecha = fecha;
+                        this.piezasTot[i].material = mat[(Math.floor((Math.random() * 3) + 1)) - 1];
+                        contM++;
+                    }
                 }
-                for (var i = 0; i < numPiezas * 0, 7; i++) {
-                    piezasM[i].nombre = nomPMec[(Math.floor((Math.random() * 5) + 1)) - 1];
-                    piezasM[i].cod = codRand() + "M";
-                    piezasM[i].fecha = fecha;
-                    piezasM[i].prototype.material = pot[(Math.floor((Math.random() * 3) + 1)) - 1];
-                }
-                piezasTot = piezasE.concat(piezasM);
-                //return piezasTot;
-                return piezasTot[1].nombre;
+                return piezasTot;
             }
 
-            function estacionTrat(piezas, numPiezas, procesamiento) {
-                for (var i = 0; i < numPiezas; i++) {
+            function estacionTrat(piezas) {
+                this.piezas = piezas;
+                for (var i = 0; i < piezas.length; i++) {
                     if (piezas[i].cod.charAt(11) === "E") {
                         if (piezas[i].potencia === 1 || piezas[i].potencia === 5) {
-                            piezas[i].prototype.procesamiento = "barnizada normal";
-                        } else if (piezas[i].potencia === 10 || piezas[i].potencia === 20) {
-                            piezas[i].prototype.procesamiento = "barnizada especial";
+                            piezas[i].proc = "barnizada normal";
+                        } else if (this.piezas[i].potencia === 10 || piezas[i].potencia === 20) {
+                            piezas[i].proc = "barnizada especial";
                         }
                     } else if (piezas[i].cod.charAt(11) === "M") {
                         if (piezas[i].material === "acero") {
-                            piezas[i].prototype.procesamiento = "galvanizada";
+                            piezas[i].proc = "galvanizada";
                         } else if (piezas[i].material === "titanio") {
-                            piezas[i].prototype.procesamiento = "pulida";
+                            piezas[i].proc = "pulida";
                         } else if (piezas[i].material === "carbono") {
-                            piezas[i].prototype.procesamiento = "pintada";
+                            piezas[i].proc = "pintada";
                         }
                     }
                 }
+                return piezas;
             }
 
-            function piezasGen(nombre, cod, fecha) {
-                // var rand=Math.floor((Math.random() * 2) + 1);   
+            function piezasGen(nombre = "", cod = "", fecha = "", proc = "") {
                 this.nombre = nombre;
                 this.cod = cod;
-                this.fecha = fecha;             
+                this.fecha = fecha;
+                this.proc = proc;
             }
 
-            function piezasElec(potencia, voltaje) {
+            function piezasElec(nombre, cod, fecha, proc, potencia = "", voltaje = "") {
+                this.generico = piezasGen;
+                this.generico(nombre, cod, fecha, proc);
                 this.potencia = potencia;
                 this.voltaje = voltaje;
             }
-
-            function piezasMec(material) {
+            piezasElec.prototype = new piezasGen;
+            function piezasMec(nombre, cod, fecha, proc, material = "") {
+                this.generico = piezasGen;
+                this.generico(nombre, cod, fecha, proc);
                 this.material = material;
             }
-            
-            
+            piezasMec.prototype = new piezasGen;
+
         </script>
     </body>
 </html>
