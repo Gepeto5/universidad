@@ -11,9 +11,9 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <p>Pulse "Fabricar 100" para simular la Fabricaci贸n de 100 piezas.
-            Pulse "Fabricar 1000" para simular la Fabricaci贸n de 1000 piezas.
-            Resultado de la simulaci贸n:</p>
+        <p>Pulse "Fabricar 100" para simular la Fabricaci髇 de 100 piezas.
+            Pulse "Fabricar 1000" para simular la Fabricaci髇 de 1000 piezas.
+            Resultado de la simulaci髇:</p>
         <p>Piezas totales:</p>
         <p id="parrafo1"></p>
         <p id="parrafo2"></p>
@@ -64,13 +64,13 @@ and open the template in the editor.
                     est = new EstacionTrat(fac.crearPiezas());
                     piezasFin=est.tratarPiezas();
                     parrafo1 = document.getElementById("parrafo1");
-                    texto = "La factor铆a ha fabricado " + numPiezas + " de las cuales " + fac.contE + " son de tipo el茅ctrico y " + fac.contM + " son de tipo mec谩nico. \n";        
+                    texto = "La factor韆 ha fabricado " + numPiezas + " de las cuales " + fac.contE + " son de tipo el閏trico y " + fac.contM + " son de tipo mec醤ico. \n";        
                     parrafo1.innerHTML = texto;
                     parrafo2 = document.getElementById("parrafo2");                    
-                    texto = "De las el茅ctricas, la estaci贸n de tratamiento ha aplicado barniz normal a " + est.contBn + " y ha aplicado barniz especial a " + est.contBe + ".";
+                    texto = "De las el閏tricas, la estaci髇 de tratamiento ha aplicado barniz normal a " + est.contBn + " y ha aplicado barniz especial a " + est.contBe + ".";
                     parrafo2.innerHTML = texto;
                     parrafo3 = document.getElementById("parrafo3");                 
-                    texto = "De las mec谩nicas ha galvanizado " + est.contGal + ", ha pintado " + est.contPin + " y ha pulido " + est.contPul + ".";
+                    texto = "De las mec醤icas ha galvanizado " + est.contGal + ", ha pintado " + est.contPin + " y ha pulido " + est.contPul + ".";
                     parrafo3.innerHTML = texto;
                 };
             }

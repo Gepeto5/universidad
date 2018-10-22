@@ -11,16 +11,12 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <p>Pulse "Fabricar 100" para simular la Fabricaci贸n de 100 piezas.
-            Pulse "Fabricar 1000" para simular la Fabricaci贸n de 1000 piezas.
-            Resultado de la simulaci贸n:</p>
-        <p>Piezas totales:</p>
-        <p id="parrafo1"></p>
-        <p id="parrafo2"></p>
-        <p id="parrafo3"></p>
+        <p>Pulse "Fabricar 100" para simular la Fabricaci髇 de 100 piezas.
+            Pulse "Fabricar 1000" para simular la Fabricaci髇 de 1000 piezas.
+            Resultado de la simulaci髇:</p>
 
-        <button onclick="fab.fabricar(100)">Fabricar 100</button>
-        <button onclick="fab.fabricar(1000)">Fabricar 1000</button>
+        <button onclick="">Fabricar 100</button>
+        <button onclick="">Fabricar 1000</button>
         <script>
 
             var nomPElec = ["Placa ABS", "Centralita encendido", "Bornes cableado", "Alternador", "Encendido"];
@@ -54,33 +50,19 @@ and open the template in the editor.
                 //var numPiezas = 100;
                 var fac;
                 var est;
-                var piezasFin;
-                var texto = "";
-                var parrafo1;
-                var parrafo2;
-                var parrafo3;
-                this.fabricar = function (numPiezas) {
-                    fac=new Factoria(numPiezas);
-                    est = new EstacionTrat(fac.crearPiezas());
-                    piezasFin=est.tratarPiezas();
-                    parrafo1 = document.getElementById("parrafo1");
-                    texto = "La factor铆a ha fabricado " + numPiezas + " de las cuales " + fac.contE + " son de tipo el茅ctrico y " + fac.contM + " son de tipo mec谩nico. \n";        
-                    parrafo1.innerHTML = texto;
-                    parrafo2 = document.getElementById("parrafo2");                    
-                    texto = "De las el茅ctricas, la estaci贸n de tratamiento ha aplicado barniz normal a " + est.contBn + " y ha aplicado barniz especial a " + est.contBe + ".";
-                    parrafo2.innerHTML = texto;
-                    parrafo3 = document.getElementById("parrafo3");                 
-                    texto = "De las mec谩nicas ha galvanizado " + est.contGal + ", ha pintado " + est.contPin + " y ha pulido " + est.contPul + ".";
-                    parrafo3.innerHTML = texto;
+                this.fabricar = function () {
+                    est = new EstacionTrat(Factoria(100));
+                    return est[0].fecha;
                 };
             }
             var fab = new Fabrica();
+            alert(fab.fabricar());
 
             function Factoria(numPiezas) {
-                this.contE = 0;
-                this.contM = 0;
+                contE = 0;
+                contM = 0;
                 this.piezas = [];
-                this.crearPiezas = function() {
+                //function func() {
                 for (var i = 0; i < numPiezas; i++) {
                     if (Randomize() === 1) {
                         this.piezas[i] = new PiezasElec();
@@ -89,52 +71,41 @@ and open the template in the editor.
                         this.piezas[i].fecha = fecha;
                         this.piezas[i].potencia = pot[(Math.floor((Math.random() * 4) + 1)) - 1];
                         this.piezas[i].voltaje = volt[(Math.floor((Math.random() * 4) + 1)) - 1];
-                        this.contE++;
+                        contE++;
                     } else {
                         this.piezas[i] = new PiezasMec();
                         this.piezas[i].nombre = nomPMec[(Math.floor((Math.random() * 5) + 1)) - 1];
                         this.piezas[i].cod = CodRand() + "M";
                         this.piezas[i].fecha = fecha;
                         this.piezas[i].material = mat[(Math.floor((Math.random() * 3) + 1)) - 1];
-                        this.contM++;
+                        contM++;
                     }
                 }
                 return this.piezas;
-                }
+                //}
+                //this.crearPiezas=func();
             }
 
             function EstacionTrat(piezas) {
-                this.contBn = 0;
-                this.contBe = 0;
-                this.contGal = 0;
-                this.contPin = 0;
-                this.contPul = 0;
                 this.piezas = piezas;
-                this.tratarPiezas=function(){
                 for (var i = 0; i < piezas.length; i++) {
                     if (piezas[i].cod.charAt(11) === "E") {
                         if (piezas[i].potencia === 1 || piezas[i].potencia === 5) {
                             piezas[i].proc = "barnizada normal";
-                            this.contBn++;
                         } else if (piezas[i].potencia === 10 || piezas[i].potencia === 20) {
                             piezas[i].proc = "barnizada especial";
-                            this.contBe++;
                         }
                     } else if (piezas[i].cod.charAt(11) === "M") {
                         if (piezas[i].material === "acero") {
                             piezas[i].proc = "galvanizada";
-                            this.contGal++;
                         } else if (piezas[i].material === "titanio") {
                             piezas[i].proc = "pulida";
-                            this.contPul++;
                         } else if (piezas[i].material === "carbono") {
                             piezas[i].proc = "pintada";
-                            this.contPin++;
                         }
                     }
                 }
                 return piezas;
-            };               
             }
 
             function PiezasGen(nombre = "", cod = "", fecha = "", proc = "") {
