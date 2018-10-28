@@ -6,6 +6,8 @@
 #include<GL/glut.h>
 #include "vector3D.h"
 #include "Solido.h"
+#include <iostream>
+using namespace std;
 
 class Esfera :public Solido {
 private:
@@ -21,5 +23,14 @@ public:
 	inline double getR() { return r; }
 	inline void setR(double a) { r = a; }
 	void render();
+
+	friend ostream &operator<<(ostream &os, const Esfera &c);
 };
+
+inline ostream &operator<<(ostream &os, const Esfera &c) {
+	os << static_cast<const Solido&>(c);
+	os << c.r << endl;
+	return os;
+}
+
 //#endif
