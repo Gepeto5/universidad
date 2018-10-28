@@ -64,7 +64,11 @@ and open the template in the editor.
                     est = new EstacionTrat(fac.crearPiezas());
                     piezasFin=est.tratarPiezas();
                     parrafo1 = document.getElementById("parrafo1");
+<<<<<<< HEAD
                     texto = "La factoría ha fabricado " + numPiezas + " de las cuales " + fac.contE + " son de tipo eléctrico y " + fac.contM + " son de tipo mecánico. <br> De las eléctricas, la estación de tratamiento ha aplicado barniz normal a " + est.contBn + " y ha aplicado barniz especial a " + est.contBe + ". <br> De las mecánicas ha galvanizado " + est.contGal + ", ha pintado " + est.contPin + " y ha pulido " + est.contPul + ".";        
+=======
+                    texto = "La factoría ha fabricado " + numPiezas + " de las cuales " + fac.contE + " son de tipo eléctrico y " + fac.contM + " son de tipo mecánico. <br>";       //<br> salto de linea en HTML 
+>>>>>>> 478a0dd79832d1c375895ed2fee39e1f899db78f
                     parrafo1.innerHTML = texto;
                     return texto;
                 };

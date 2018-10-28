@@ -1,13 +1,2 @@
-﻿  camara.cpp
-c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18\base\base\camara.h(17): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18\base\base\camara.h(18): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18\base\base\camara.h(19): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18\base\base\camara.h(20): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-  main.cpp
-c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18\base\base\camara.h(17): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18\base\base\camara.h(18): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18\base\base\camara.h(19): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18\base\base\camara.h(20): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18\base\base\main.cpp(51): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-  Generando código...
+﻿  SOLIDO.cpp
   Base.vcxproj -> C:\Users\ivan-\OneDrive\Escritorio\universidad\segundo curso\programacion avanzada\Proyecto 18-10-18\Base\Debug\Base.exe

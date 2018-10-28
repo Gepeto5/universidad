@@ -1,9 +1,14 @@
 #include "Solido.h"
+void Solido::render() {}
 void Solido::update(double dt) {
-	Vector3D gravedad(0, -0.98, 0);
+	//Vector3D gravedad(0, -0.98, 0);
 	//pos = pos+vel * dt;
+	Vector3D a = f / m;
+	vel = vel + a * dt;
 	pos = pos + vel * dt;
-	vel = vel + gravedad * dt;
+
+	
+
 	if (pos.getX() > 2 || pos.getX() < -2) {
 		double d = vel.getX()*-0.9;
 		vel.setX(d);

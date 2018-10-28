@@ -22,6 +22,15 @@ Vector3D Vector3D::operator*(double a) {
 	r.z = a * z;
 	return r;
 }
+
+Vector3D Vector3D::operator/(double a) {
+	Vector3D r;
+	r.x = a / x;
+	r.y = a / y;
+	r.z = a / z;
+	return r;
+}
+
 double Vector3D::operator*(Vector3D v) {//Volvemos a usar *, dependiendo del tipo de argumento entrará en una función u otra
 	double r;
 	r = x * v.x + y * v.y + z * v.z;

@@ -6,6 +6,8 @@
 #include<GL/glut.h>
 #include "vector3D.h"
 #include "Solido.h"
+#include <iostream>
+using namespace std;
 
 class Cubo :public Solido
 {
@@ -23,5 +25,14 @@ public:
 	inline double getS() { return s; }
 	inline void setS(double a) { s = a; }
 	void render();
+
+	friend ostream &operator<<(ostream &os, const Cubo &c);
 };
+
+inline ostream &operator<<(ostream &os, const Cubo &c) {
+	os << static_cast<const Solido&>(c);
+	os << c.s << endl;
+	return os;
+}
+
 //#endif

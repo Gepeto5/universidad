@@ -1,6 +1,10 @@
 //#pragma once //es equivalente a usar ifndef y tal, internamente hacen lo mismo (que el código se ejecute solo una vez)
+
 #ifndef VECTOR3D_
 #define VECTOR3D_
+#include <iostream>
+using namespace std;
+
 class Vector3D {
 private:
 	double x, y, z;
@@ -28,10 +32,18 @@ public:
 	inline void setY(double d) {y = d;}
 	inline double getZ() {return z;}
 	inline void setZ(double d) {z = d;}
+	friend ostream &operator<<(ostream &os, const Vector3D &v); // con esto no hace falta poner get en el ostream
 
 	Vector3D operator+(Vector3D a);
 	Vector3D operator-(Vector3D a);
+	Vector3D operator/(double a);
 	Vector3D operator*(double a);//producto escalar
 	double operator*(Vector3D v);//producto por escalar
 };
+
+inline ostream &operator<<(ostream &os, const Vector3D &v) {
+	os << v.x << "," << v.y << "," << v.z;
+	return os;
+}
+
 #endif

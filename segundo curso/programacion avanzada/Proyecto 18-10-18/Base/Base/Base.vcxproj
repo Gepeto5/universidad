@@ -133,6 +133,7 @@
     <ClInclude Include="cubo.h" />
     <ClInclude Include="escena.h" />
     <ClInclude Include="esfera.h" />
+    <ClInclude Include="pared.h" />
     <ClInclude Include="Solido.h" />
     <ClInclude Include="vector3D.h" />
   </ItemGroup>

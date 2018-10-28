@@ -1,6 +1,10 @@
 #pragma once
 #include "vector3D.h"
 #include "GL/glut.h"
+#include <cmath>
+#define M_PI 3.14159
+
+inline double rot2rad(double a) { return a / 180 * M_PI; }
 
 class Camara {
 	Vector3D pos;
@@ -21,13 +25,20 @@ public:
 	}
 
 };
-/*
+
 class CamaraFPS : public Camara {
 public:
 	CamaraFPS(double x = 0, double y = 1.65, double z = 0) : Camara(x, y, z) {}
 	void update(double dt) {
 		double ry = rot2rad(getRot().getY());
-		Vector3D vel={-sin}
+		Vector3D vel={-sin(ry), 0, cos(ry)};
+		setPos(getPos() - vel * dt);
+	}
+
+	void render() {
+		glRotatef(getRot().getX(), 1, 0, 0);
+		glRotatef(getRot().getY(), 0, 1, 0);
+		glRotatef(getRot().getZ(), 0, 0, 1);
+		glTranslatef(-getPos().getX(), -getPos().getY(), -getPos().getZ());
 	}
 };
-*/

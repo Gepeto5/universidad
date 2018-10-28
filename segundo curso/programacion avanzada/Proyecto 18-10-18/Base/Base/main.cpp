@@ -14,6 +14,7 @@ double dt = 0.01f;
 #include "escena.h"
 #include "cilindro.h"
 #include "camara.h"
+#include "pared.h"
 
 //Solido* teteras=nullptr;
 //Esfera esferas[2];
@@ -21,6 +22,7 @@ double dt = 0.01f;
 Escena e;
 Camara cam(0,0,3);
 Vector3D gravedad;
+Esfera sf;
 
 void displayMe(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -89,10 +91,21 @@ void init(void) {
 	cil->setHe(5.5);
 	cil->setRad(2.0);
 	e.add(cil);
+	
+	
+	Pared* par = nullptr;
+	par = new Pared();
+	par->setPos(Vector3D(0, -1, 1));
+	par->setVel(Vector3D(0.01, 0.2, 0.2));
+	e.add(par);
+	par->setCol(Vector3D(0, 1, 0));
+	
 
 	gravedad.setX(0);
 	gravedad.setY(-0.000098);
 	gravedad.setZ(0);
+	cout << sf;
+	//cout << par;
 
 }
 void idle(void) {
@@ -242,6 +255,8 @@ void keyPressed(unsigned char key, int x, int y) {
 		case's': case 'S': yaw-=5; break;	//Disminuir yaw
 		case'e': case 'E': roll+=5; break;	//aumentar roll
 		case'd': case 'D': roll-=5; break;	//disminuir roll
+		case 'o': case 'O': cam.setRot(cam.getRot() - Vector3D(0, 1, 0));
+		case 'p': case 'P': cam.setRot(cam.getRot() + Vector3D(0, 1, 0));
 	}
 	//teteras[0].setPos(v);
 	//teteras[1].setCol(v);
