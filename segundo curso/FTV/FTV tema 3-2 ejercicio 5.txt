@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+?<!DOCTYPE html>
 
 <html>
 
@@ -35,26 +35,21 @@
         <script>
             "use strict";
             window.addEventListener("keydown", manejaTeclado, false);
-            window.addEventListener("keyup", manejaTeclado, false);
-            window.addEventListener("keypress", manejaTeclado, false);
-            // a > 97 w > 119 d > 100 s > 115
-            //document.getElementById("parrafo3");
+            //window.addEventListener("keyup", manejaTeclado, false);
+            // window.addEventListener("keypress", manejaTeclado, false);
+
+            var teclas = [];
+            var ultimaTecla = 0;
             function manejaTeclado(e) {
-                if(e.keyCode === 97){
-                    document.getElementById("cuadro1").style.height = 7;
-                    document.getElementById("cuadro2").style.width = 7;
+                teclas[e.keyCode];
+                document.getElementById("parrafo3");
+                if ((e.keyCode >= 56 && e.keyCode <= 90) || (e.keyCode >= 97 && e.keyCode <=122) || e.keyCode === 32) {
+                    parrafo3.innerHTML += e.key;
+                    ultimaTecla++;
                 }
-                else if(e.charCode === 100){
-                    document.getElementById("cuadro1").style.width++;
-                    document.getElementById("cuadro2").style.width++;
-                }
-                else if(e.charCode === 119){
-                    document.getElementById("cuadro1").style.height++;
-                    document.getElementById("cuadro2").style.height++;
-                }
-                else if(e.charCode === 115){
-                    document.getElementById("cuadro1").style.height--;
-                    document.getElementById("cuadro2").style.height--;
+                if(e.keyCode === 127){
+                    parrafo3.charAt(ultimaTecla).innerHTML = "";
+                    ultimaTecla--;
                 }
             }
 
