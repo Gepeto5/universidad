@@ -37,6 +37,16 @@
             window.addEventListener("keydown", manejaTeclado, false);
             window.addEventListener("keyup", manejaTeclado, false);
             window.addEventListener("keypress", manejaTeclado, false);
+            
+            window.addEventListener("mousedown", manejaRaton, false);
+            window.addEventListener("mouseup", manejaRaton, true);
+            window.addEventListener("mouseover", manejaRaton, true);
+            window.addEventListener("mouseout", manejaRaton, true);
+            window.addEventListener("mousemove", manejaRaton, true);
+            window.addEventListener("click", manejaRaton, true);
+            window.addEventListener("contextmenu", manejaRaton, true);
+            window.addEventListener("dbclick", manejaRaton, true);
+            
             // a > 97 w > 119 d > 100 s > 115
             //document.getElementById("parrafo3");
             function manejaTeclado(e) {
@@ -56,6 +66,11 @@
                     document.getElementById("cuadro1").style.height--;
                     document.getElementById("cuadro2").style.height--;
                 }
+            }
+            
+            function manejaRaton(e){
+                document.getElementById("parrafo1");
+                
             }
 
         </script>
