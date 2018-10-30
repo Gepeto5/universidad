@@ -25,9 +25,9 @@ Vector3D Vector3D::operator*(double a) {
 
 Vector3D Vector3D::operator/(double a) {
 	Vector3D r;
-	r.x = a / x;
-	r.y = a / y;
-	r.z = a / z;
+	r.x = x / a;
+	r.y = y / a;
+	r.z = z / a;
 	return r;
 }
 

@@ -86,7 +86,7 @@ void init(void) {
 
 	Cilindro* cil = nullptr;
 	cil = new Cilindro(1.0, 1.0);
-	cil->setVel(Vector3D(0.01, 0.2, 0.2));
+	cil->setVel(Vector3D(0.01, 0.0, 0.2));
 	cil->setPos(Vector3D(0,10,1));
 	cil->setHe(5.5);
 	cil->setRad(2.0);
@@ -95,8 +95,8 @@ void init(void) {
 	
 	Pared* par = nullptr;
 	par = new Pared();
-	par->setPos(Vector3D(0, -1, 1));
-	par->setVel(Vector3D(0.01, 0.2, 0.2));
+	par->setPos(Vector3D(0, 2, 1));
+	par->setVel(Vector3D(0.01, 0.0, 0.2));
 	e.add(par);
 	par->setCol(Vector3D(0, 1, 0));
 	

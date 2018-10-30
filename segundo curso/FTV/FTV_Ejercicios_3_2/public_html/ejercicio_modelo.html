@@ -33,44 +33,163 @@
         <p id="parrafo3"></p>
 
         <script>
+
+            document.getElementById("cuadro1");
+            cuadro1.contDown = 0;
+            cuadro1.contUp = 0;
+            cuadro1.contOut = 0;
+            cuadro1.contOver = 0;
+            cuadro1.contContext = 0;
+            cuadro1.contClick = 0;
+            cuadro1.contDBLClick = 0;
+            cuadro1.contMove = 0;
+
+            document.getElementById("cuadro2");
+            cuadro2.contDown = 0;
+            cuadro2.contUp = 0;
+            cuadro2.contOut = 0;
+            cuadro2.contOver = 0;
+            cuadro2.contContext = 0;
+            cuadro2.contClick = 0;
+            cuadro2.contDBLClick = 0;
+            cuadro2.contMove = 0;
+
             "use strict";
-            window.addEventListener("keydown", manejaTeclado, false);
-            window.addEventListener("keyup", manejaTeclado, false);
-            window.addEventListener("keypress", manejaTeclado, false);
-            
-            window.addEventListener("mousedown", manejaRaton, false);
-            window.addEventListener("mouseup", manejaRaton, true);
-            window.addEventListener("mouseover", manejaRaton, true);
-            window.addEventListener("mouseout", manejaRaton, true);
-            window.addEventListener("mousemove", manejaRaton, true);
-            window.addEventListener("click", manejaRaton, true);
-            window.addEventListener("contextmenu", manejaRaton, true);
-            window.addEventListener("dbclick", manejaRaton, true);
-            
+            /*
+             window.addEventListener("keydown", manejaTeclado, false);
+             window.addEventListener("keyup", manejaTeclado, false);
+             window.addEventListener("keypress", manejaTeclado, false);
+             window.addEventListener("mousedown", manejaRaton, false);
+             window.addEventListener("mouseup", manejaRaton, true);
+             window.addEventListener("mouseover", manejaRaton, true);
+             window.addEventListener("mouseout", manejaRaton, true);
+             window.addEventListener("mousemove", manejaRaton, true);
+             window.addEventListener("click", manejaRaton, true);
+             window.addEventListener("contextmenu", manejaRaton, true);
+             window.addEventListener("dblclick", manejaRaton, true);
+             */
+            cuadro1.addEventListener("mousedown", manejaRaton, false);
+
+            cuadro1.addEventListener("mouseup", manejaRaton, true);
+            cuadro1.addEventListener("mouseover", manejaRaton, true);
+            cuadro1.addEventListener("mouseout", manejaRaton, true);
+            cuadro1.addEventListener("mousemove", manejaRaton, true);
+            cuadro1.addEventListener("click", manejaRaton, true);
+            cuadro1.addEventListener("contextmenu", manejaRaton, true);
+            cuadro1.addEventListener("dblclick", manejaRaton, true);
+            cuadro2.addEventListener("mousedown", manejaRaton, false);
+            cuadro2.addEventListener("mouseup", manejaRaton, true);
+            cuadro2.addEventListener("mouseover", manejaRaton, true);
+            cuadro2.addEventListener("mouseout", manejaRaton, true);
+            cuadro2.addEventListener("mousemove", manejaRaton, true);
+            cuadro2.addEventListener("click", manejaRaton, true);
+            cuadro2.addEventListener("contextmenu", manejaRaton, true);
+            cuadro2.addEventListener("dblclick", manejaRaton, true);
+
+
             // a > 97 w > 119 d > 100 s > 115
             //document.getElementById("parrafo3");
             function manejaTeclado(e) {
-                if(e.keyCode === 97){
+                if (e.keyCode === 97) {
                     document.getElementById("cuadro1").style.height = 7;
                     document.getElementById("cuadro2").style.width = 7;
-                }
-                else if(e.charCode === 100){
+                } else if (e.charCode === 100) {
                     document.getElementById("cuadro1").style.width++;
                     document.getElementById("cuadro2").style.width++;
-                }
-                else if(e.charCode === 119){
+                } else if (e.charCode === 119) {
                     document.getElementById("cuadro1").style.height++;
                     document.getElementById("cuadro2").style.height++;
-                }
-                else if(e.charCode === 115){
+                } else if (e.charCode === 115) {
                     document.getElementById("cuadro1").style.height--;
                     document.getElementById("cuadro2").style.height--;
                 }
             }
-            
-            function manejaRaton(e){
-                document.getElementById("parrafo1");
-                
+
+            var contDown = 0;
+            var contUp = 0;
+            var contOut = 0;
+            var contOver = 0;
+            var contMove = 0;
+            var contClick = 0;
+            var contContext = 0;
+            var contDBClick = 0;
+            function manejaRaton(e) {
+                document.getElementById("parrafo3");
+                parrafo3.innerHTML = "mouseDown: " + contDown + " mouseup: " + contUp + " mouseout: " + contOut + "mouseover: " + contOver + " clicks: " + " contextmenu: " + contContext + " dbclicks: " + contDBClick;
+                if (e.type === "mousedown") {
+                    contDown++;
+                    parrafo3.innerHTML = "mouseDown: " + contDown + " mouseup: " + contUp + " mouseout: " + contOut + "mouseover: " + contOver + " clicks: " + " contextmenu: " + contContext + " dbclicks: " + contDBClick;
+                } else if (e.type === "mouseup") {
+                    contUp++;
+                    parrafo3.innerHTML = "mouseDown: " + contDown + " mouseup: " + contUp + " mouseout: " + contOut + "mouseover: " + contOver + " clicks: " + " contextmenu: " + contContext + " dbclicks: " + contDBClick;
+                } else if (e.type === "mouseout") {
+                    contOut++;
+                    parrafo3.innerHTML = "mouseDown: " + contDown + " mouseup: " + contUp + " mouseout: " + contOut + "mouseover: " + contOver + " clicks: " + " contextmenu: " + contContext + " dbclicks: " + contDBClick;
+                } else if (e.type === "mouseover") {
+                    contOver++;
+                    parrafo3.innerHTML = "mouseDown: " + contDown + " mouseup: " + contUp + " mouseout: " + contOut + "mouseover: " + contOver + " clicks: " + " contextmenu: " + contContext + " dbclicks: " + contDBClick;
+                } else if (e.type === "mousemove") {
+                    contMove++;
+                    parrafo3.innerHTML = "mouseDown: " + contDown + " mouseup: " + contUp + " mouseout: " + contOut + "mouseover: " + contOver + " clicks: " + " contextmenu: " + contContext + " dbclicks: " + contDBClick;
+                } else if (e.type === "click") {
+                    contClick++;
+                    parrafo3.innerHTML = "mouseDown: " + contDown + " mouseup: " + contUp + " mouseout: " + contOut + "mouseover: " + contOver + " clicks: " + " contextmenu: " + contContext + " dbclicks: " + contDBClick;
+                } else if (e.type === "contextmenu") {
+                    contContext++;
+                    parrafo3.innerHTML = "mouseDown: " + contDown + " mouseup: " + contUp + " mouseout: " + contOut + "mouseover: " + contOver + " clicks: " + " contextmenu: " + contContext + " dbclicks: " + contDBClick;
+                } else if (e.type === "dblclick") {
+                    contDBClick++;
+                    parrafo3.innerHTML = "mouseDown: " + contDown + " mouseup: " + contUp + " mouseout: " + contOut + "mouseover: " + contOver + " clicks: " + " contextmenu: " + contContext + " dbclicks: " + contDBClick;
+                }
+                if (this.id === "cuadro1") {
+                    var destino = "parrafo1";
+                } else if (this.id === "cuadro2") {
+                    var destino = "parrafo2";
+                }
+                switch (e.type) { //e.currentTarget.dataset
+                    case("mousedown"):
+                        console.log(destino);
+                        var p = document.getElementById(destino);
+                        this.contDown++;
+                        p.innerHTML = this.contDown;
+                        break;
+                    case("mouseup"):
+                        console.log(destino);
+                        var p = document.getElementById(destino);
+                        this.contUp++;
+                        p.innerHTML = this.contUp;
+                        break;
+                    case("mouseout"):
+                        console.log(destino);
+                        var p = document.getElementById(destino);
+                        this.contOut++;
+                        p.innerHTML = this.contOut;
+                        break;
+                    case("mouseover"):
+                        console.log(destino);
+                        var p = document.getElementById(destino);
+                        this.contOver++;
+                        p.innerHTML = this.contOver;
+                        break;
+                    case("click"):
+                        console.log(destino);
+                        var p = document.getElementById(destino);
+                        this.contClick++;
+                        p.innerHTML = this.contClick;
+                        break;
+                    case("contextmenu"):
+                        console.log(destino);
+                        var p = document.getElementById(destino);
+                        this.contContext++;
+                        p.innerHTML = this.contContext;
+                        break;
+                    case("dblclick"):
+                        console.log(destino);
+                        var p = document.getElementById(destino);
+                        this.contDBLClick++;
+                        p.innerHTML = this.contDBLClick;
+                        break;
+                }
             }
 
         </script>

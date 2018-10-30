@@ -23,12 +23,12 @@ public:
 		col(1, 0, 0),
 		m(1) {}
 		
-	Solido(Vector3D p, Vector3D c = Vector3D(1, 0, 0), Vector3D v = Vector3D(), double m = 1) :
+	Solido(Vector3D p, Vector3D c = Vector3D(1, 0, 0), Vector3D v = Vector3D(), Vector3D efe = Vector3D(), double eme = 1) :
 		pos(p),
 		vel(v),
 		col(c),
-		f(f),
-		m(m) {}
+		f(efe),
+		m(eme) {}
 
 
 	inline Vector3D getPos() { return pos; }

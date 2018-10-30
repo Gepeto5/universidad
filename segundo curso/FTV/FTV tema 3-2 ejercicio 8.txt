@@ -1,0 +1,120 @@
+?<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <title>Ejercicio **</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <style>
+            div {
+                width:      400px;
+                height:     400px;
+                border:     1px solid black;
+                margin:     10px;
+                float:      left;
+                padding:    30px;
+                text-align: center;
+                background-color: lightgray;
+            }
+            p {
+                background-color:   white;
+                text-align:         left;	
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <table>
+            <td><div id="cuadro1"><p id="parrafo1"></p></div></td>
+            <td><div id="cuadro2"><p id="parrafo2"></p></div></td>
+        </table>
+
+        <p id="parrafo3"></p>
+
+        <script>
+            "use strict";
+            window.addEventListener("keydown", manejaTeclado, false);
+            window.addEventListener("keyup", manejaTeclado, false);
+            window.addEventListener("keypress", manejaTeclado, false);
+            
+            window.addEventListener("mousedown", manejaRaton, false);
+            window.addEventListener("mouseup", manejaRaton, true);
+            window.addEventListener("mouseover", manejaRaton, true);
+            window.addEventListener("mouseout", manejaRaton, true);
+            window.addEventListener("mousemove", manejaRaton, true);
+            window.addEventListener("click", manejaRaton, true);
+            window.addEventListener("contextmenu", manejaRaton, true);
+            window.addEventListener("dblclick", manejaRaton, true);
+            
+            // a > 97 w > 119 d > 100 s > 115
+            //document.getElementById("parrafo3");
+            function manejaTeclado(e) {
+                if(e.keyCode === 97){
+                    document.getElementById("cuadro1").style.height = 7;
+                    document.getElementById("cuadro2").style.width = 7;
+                }
+                else if(e.charCode === 100){
+                    document.getElementById("cuadro1").style.width++;
+                    document.getElementById("cuadro2").style.width++;
+                }
+                else if(e.charCode === 119){
+                    document.getElementById("cuadro1").style.height++;
+                    document.getElementById("cuadro2").style.height++;
+                }
+                else if(e.charCode === 115){
+                    document.getElementById("cuadro1").style.height--;
+                    document.getElementById("cuadro2").style.height--;
+                }
+            }
+            
+            var contDown = 0;
+            var contUp = 0;
+            var contOut = 0;
+            var contOver = 0;
+            var contMove = 0;
+            var contClick = 0;
+            var contContext = 0;
+            var contDBClick = 0;
+            function manejaRaton(e){
+                document.getElementById("parrafo3");
+                parrafo3.innerHTML = "mouseDown: " + contDown + " mouseup: " + contUp + " mouseout: " + contOut + "mouseover: " + contOver + " clicks: " + " contextmenu: " + contContext + " dbclicks: " + contDBClick;
+                if(e.type === "mousedown"){
+                    contDown++;
+                    parrafo3.innerHTML = "mouseDown: " + contDown + " mouseup: " + contUp + " mouseout: " + contOut + "mouseover: " + contOver + " clicks: " + " contextmenu: " + contContext + " dbclicks: " + contDBClick;
+                }
+                else if(e.type === "mouseup"){
+                    contUp++;
+                    parrafo3.innerHTML = "mouseDown: " + contDown + " mouseup: " + contUp + " mouseout: " + contOut + "mouseover: " + contOver + " clicks: " + " contextmenu: " + contContext + " dbclicks: " + contDBClick;
+                }
+                else if(e.type === "mouseout"){
+                    contOut++;
+                    parrafo3.innerHTML = "mouseDown: " + contDown + " mouseup: " + contUp + " mouseout: " + contOut + "mouseover: " + contOver + " clicks: " + " contextmenu: " + contContext + " dbclicks: " + contDBClick;
+                }
+                else if(e.type === "mouseover"){
+                    contOver++;
+                    parrafo3.innerHTML = "mouseDown: " + contDown + " mouseup: " + contUp + " mouseout: " + contOut + "mouseover: " + contOver + " clicks: " + " contextmenu: " + contContext + " dbclicks: " + contDBClick;
+                }
+                else if(e.type === "mousemove"){
+                    contMove++;
+                    parrafo3.innerHTML = "mouseDown: " + contDown + " mouseup: " + contUp + " mouseout: " + contOut + "mouseover: " + contOver + " clicks: " + " contextmenu: " + contContext + " dbclicks: " + contDBClick;
+                }
+                else if(e.type === "click"){
+                    contClick++;
+                    parrafo3.innerHTML = "mouseDown: " + contDown + " mouseup: " + contUp + " mouseout: " + contOut + "mouseover: " + contOver + " clicks: " + " contextmenu: " + contContext + " dbclicks: " + contDBClick;
+                }
+                else if(e.type === "contextmenu"){
+                    contContext++;
+                    parrafo3.innerHTML = "mouseDown: " + contDown + " mouseup: " + contUp + " mouseout: " + contOut + "mouseover: " + contOver + " clicks: " + " contextmenu: " + contContext + " dbclicks: " + contDBClick;
+                }
+                else if(e.type === "dblclick"){
+                    contDBClick++;
+                    parrafo3.innerHTML = "mouseDown: " + contDown + " mouseup: " + contUp + " mouseout: " + contOut + "mouseover: " + contOver + " clicks: " + " contextmenu: " + contContext + " dbclicks: " + contDBClick;
+                }
+            }
+
+        </script>
+
+    </body>
+
+</html>
