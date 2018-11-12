@@ -1,0 +1,8 @@
+﻿  main.cpp
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\informatica grafica\p2 - copia - copia\visual2015\p2glsl\scr\main.cpp(144): warning C4018: '<': no coinciden signed/unsigned
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\informatica grafica\p2 - copia - copia\visual2015\p2glsl\scr\main.cpp(152): warning C4018: '<': no coinciden signed/unsigned
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\informatica grafica\p2 - copia - copia\visual2015\p2glsl\scr\main.cpp(168): warning C4018: '<': no coinciden signed/unsigned
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\informatica grafica\p2 - copia - copia\visual2015\p2glsl\scr\main.cpp(186): warning C4018: '<': no coinciden signed/unsigned
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\informatica grafica\p2 - copia - copia\visual2015\p2glsl\scr\main.cpp(191): warning C4018: '<': no coinciden signed/unsigned
+main.obj : warning LNK4075: se omite '/EDITANDCONTINUE' debido a la especificaci¾n '/SAFESEH'
+  P2GLSL.vcxproj -> C:\Users\ivan-\OneDrive\Escritorio\universidad\segundo curso\informatica grafica\P2 - copia - copia\Visual2015\P2GLSL\Debug\P2GLSL.exe

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            canvas{
+                margin: 50px;
+                padding: 0;
+                border: 1px solid black;
+                background-color: lightgray;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            
+            <canvas id="lienzo" width="500" height="500">Tu navegador no soporta canvas.</canvas>
+            
+        </div>
+        
+        <audio id="sonido">
+            <source src="ping.mp3"/>
+        </audio>
+        
+        <script>
+            "use strict;"
+            
+            //Acceso al contexto gáficoo
+            var contexto = document.getElementById("lienzo").getContext("2d");
+            
+            //Texto
+            contexto.font = "40px Arial";
+            contexto.textAlign = "center";
+            contexto.textBaseline = "middle";
+            //contexto.fillText("Videojuegos", 250, 250);
+            contexto.strokeText("Videojuegos", 100, 250);
+            
+            //Imágenes
+            var imagen1 = new Image();
+            imagen1.src = "sklt.png";
+            //alert("esperando...");
+            imagen1.onload = function(){
+                contexto.drawImage(imagen1, 0, 50, 250, 250);
+            }
+            
+            //Rectángulos
+            //contexto.fillRect(250, 250, 100, 100);
+            //contexto.strokeRect(250, 250, 100, 100);
+            
+            //Caminos rectos
+            /*
+            contexto.beginPath();
+            contexto.moveTo(250, 250);
+            contexto.lineTo(400, 400);
+            contexto.lineTo(250, 500);
+            contexto.closePath();
+            contexto.stroke();
+            */
+            
+            //Caminos curvos
+            /*
+            contexto.beginPath();
+            contexto.arc(250, 250, 50, 1.5*Math.PI, 0.0*Math.PI, true);
+            contexto.arc(350, 250, 50, 1.0*Math.PI, 0.5*Math.PI, false);
+            contexto.stroke();
+            */
+           
+           //Curvas cuadráticas
+           contexto.beginPath();
+           contexto.moveTo(250, 250);
+           contexto.quadraticCurveTo(250, 350, 350, 250);
+           contexto.quadraticCurveTo(250, 150, 250, 250);
+           contexto.lineWidth = 50;
+           contexto.strokeStyle = "blue";
+           //contexto.fillStyle = "white";
+           var gradiente = contexto.createLinearGradient(250, 250, 350, 250);
+           gradiente.addColorStop(0.0, "blue");
+           gradiente.addColorStop(1.0, "white");
+           contexto.fillStyle = gradiente;
+           contexto.stroke();
+           contexto.fill();
+           
+           //Transformaciones
+           contexto.fillStyle = "red";
+           contexto.save();
+            contexto.translate(250, 250);
+            contexto.rotate(45*Math.PI/180);
+            contexto.scale(0.5, 0.5);
+            contexto.fillRect(-50, -50, 100, 100);
+           contexto.restore();
+           
+           contexto.fillStyle = "black";
+           contexto.fillRect(0, 0, 100, 100);
+           
+           //Sonidos
+           var audio = document.getElementById("sonido");
+           window.onclick = function() {
+               audio.pause;
+               audio.currentTime = 0;
+               audio.play();
+           }
+            
+        </script>
+        
+    </body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>
+            
+          <canvas id="lienzo1" width="800" height="600" style="border:1px solid black; background-color:lightgray">Tu navegador no soporta canvas.</canvas>
+          <canvas id="lienzo2" width="800" height="100" style="border:1px solid black; background-color:white">Tu navegador no soporta canvas.</canvas>
+          
+        </div>
+        
+        <script>
+            //Acceso al contexto gáficoo
+            var contexto1 = document.getElementById("lienzo1").getContext("2d");
+            var contexto2 = document.getElementById("lienzo2").getContext("2d");
+            
+            //Texto
+            contexto2.font = "18px Courier New";
+            contexto2.textAlign = "left";
+            contexto2.textBaseline = "top";
+            contexto2.fillText("Información gráfica:", 0, 0);
+            
+            contexto2.font = "28px Times New";
+            contexto2.textAlign = "left";
+            contexto2.textBaseline = "middle";
+            contexto2.strokeText("X=0 Y=0", 0, 50);
+            contexto2.stroke();
+            
+            //Imágenes
+            var imagen1;
+            var nomImagen1 = "puestadesol.jpg";
+                      
+            function cargaImagen ( contexto, nomImagen, imagen){
+                imagen = new Image();
+                imagen.src = nomImagen;
+                imagen.onload = function() {
+                    contexto.drawImage(imagen, 0, 0, contexto.canvas.width, contexto.canvas.height);
+                }
+            }
+            
+            //cargaImagen (contexto1, nomImagen1, imagen1);
+            
+            //Rectángulos
+            contexto1.strokeRect(0, 0, 800, 600);
+            contexto1.stroke();
+            
+        </script>
+    </body>
+</html>

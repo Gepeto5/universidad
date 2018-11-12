@@ -1,0 +1,32 @@
+﻿  compuesto.cpp
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18 - copia - copia\base\base\compuesto.h(24): error C2661: 'std::vector<Solido *,std::allocator<_Ty>>::push_back': ninguna función sobrecargada acepta 0 argumentos
+          with
+          [
+              _Ty=Solido *
+          ]
+  main.cpp
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18 - copia - copia\base\base\camara.h(21): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18 - copia - copia\base\base\camara.h(21): warning C4244: 'argumento': conversión de 'const double' a 'GLfloat'; posible pérdida de datos
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18 - copia - copia\base\base\camara.h(22): warning C4244: 'argumento': conversión de 'const double' a 'GLfloat'; posible pérdida de datos
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18 - copia - copia\base\base\camara.h(23): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18 - copia - copia\base\base\camara.h(24): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18 - copia - copia\base\base\camara.h(40): warning C4244: 'argumento': conversión de 'const double' a 'GLfloat'; posible pérdida de datos
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18 - copia - copia\base\base\camara.h(41): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18 - copia - copia\base\base\camara.h(42): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18 - copia - copia\base\base\camara.h(43): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18 - copia - copia\base\base\camara.h(43): warning C4244: 'argumento': conversión de 'const double' a 'GLfloat'; posible pérdida de datos
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18 - copia - copia\base\base\pared.h(18): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18 - copia - copia\base\base\pared.h(18): warning C4244: 'argumento': conversión de 'const double' a 'GLfloat'; posible pérdida de datos
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18 - copia - copia\base\base\pared.h(19): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18 - copia - copia\base\base\pared.h(20): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18 - copia - copia\base\base\pared.h(21): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18 - copia - copia\base\base\pared.h(21): warning C4244: 'argumento': conversión de 'const double' a 'GLfloat'; posible pérdida de datos
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18 - copia - copia\base\base\pared.h(22): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18 - copia - copia\base\base\pared.h(22): warning C4244: 'argumento': conversión de 'const double' a 'GLfloat'; posible pérdida de datos
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18 - copia - copia\base\base\compuesto.h(24): error C2661: 'std::vector<Solido *,std::allocator<_Ty>>::push_back': ninguna función sobrecargada acepta 0 argumentos
+          with
+          [
+              _Ty=Solido *
+          ]
+c:\users\ivan-\onedrive\escritorio\universidad\segundo curso\programacion avanzada\proyecto 18-10-18 - copia - copia\base\base\main.cpp(68): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+  Generando código...
