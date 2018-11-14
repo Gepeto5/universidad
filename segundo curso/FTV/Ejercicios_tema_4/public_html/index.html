@@ -50,8 +50,26 @@ and open the template in the editor.
             //cargaImagen (contexto1, nomImagen1, imagen1);
             
             //Rectángulos
-            contexto1.strokeRect(0, 0, 800, 600);
-            contexto1.stroke();
+            //contexto1.lineWidth = 30;
+            //contexto1.strokeRect(0, 0, 800, 600);
+            
+            function dibujaPlantilla (contexto, grosor) {
+                contexto.lineWidth = grosor;
+                contexto.strokeRect(0, 0, contexto.canvas.clientWidth, contexto.canvas.clientHeight);
+            }
+            
+            dibujaPlantilla(contexto1, 30);
+            dibujaPlantilla(contexto2, 5);
+            
+            contexto1.lineWidth = 1;
+            
+            for(var x=50; x<=250; x+=100){
+            for(var y=50; y<=150; y+=100){
+            contexto1.strokeRect(x, y, 50, 50);
+            contexto1.strokeRect(x+50, y+50, 50, 50);
+            contexto1.fillRect(x+25, y+25, 50, 50);
+        }
+    }
             
         </script>
     </body>
