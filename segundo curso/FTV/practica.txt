@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Práctica 2 de Fundamentos de Tecnología de Videojuegos</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            canvas{
+                background-color: white;
+                border: 1px solid black;
+                margin: 10px;
+                padding: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <canvas id="lienzo">Tu navegador no soporta canvas</canvas>
+        </div>
+        <div>
+            <p>Práctica 2 Fundamentos de Tecnología de Videojuegos<br />Adrián Vaquero Portillo, DNI: 53806658K<br />Iván Sanandrés Gutiérrez, DNI: 47587090K</p>
+        </div>
+        <script>
+            var context;
+            var canvas = document.getElementById("lienzo");
+
+            function World(){
+                const cell = 10;    //tamaño célula
+                const width = 8;    //número células en el ancho
+                const height = 8;   //número células en el alto
+
+                var cellpos = [width];
+                for(var i=0; i<height; i++){
+                    cellpos[i] = [height];
+                }
+
+                canvas.width = width*cell;
+                canvas.height = height*cell;
+
+                context = canvas.getContext("2d");
+                context.strokeStyle = "black";
+
+                for(var x=0; x<=width; x++){
+                    for(var y=0; y<=height; y++){
+                        contexto.strokeRect(x*cell, y*cell, cell, cell);
+                    }
+                }
+
+                context.strokeRect(20, 20, 40, 40);
+            }
+
+            function Cell(x, y){
+                var alive = true;
+                cellpos[x][y] = alive;
+                //var temp = 
+                function checkNeighbours(){
+                    
+                }
+            }
+
+            World(); //HOLD ON
+
+        </script>
+    </body>
+</html>
