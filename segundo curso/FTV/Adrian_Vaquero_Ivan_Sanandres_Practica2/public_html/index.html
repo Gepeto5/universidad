@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Práctica 2 de Fundamentos de Tecnología de Videojuegos</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            canvas{
+                background-color: white;
+                border: 1px solid black;
+                margin: 10px;
+                padding: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <canvas id="lienzo">Tu navegador no soporta canvas</canvas>
+        </div>
+        <div>
+            <p>Práctica 2 Fundamentos de Tecnología de Videojuegos<br />Adrián Vaquero Portillo, DNI: 53806658K<br />Iván Sanandrés Gutiérrez, DNI: 47587090K</p>
+        </div>
+        <script>
+            var context;
+            var canvas = document.getElementById("lienzo");
+
+            function World() {
+                const cell = 10;    //tamaño célula
+                const width = 50;    //número células en el ancho
+                const height = 50;   //número células en el alto
+
+                var cellpos = [width];
+                for (var i = 0; i < width; i++) {
+                    cellpos[i] = [height];
+                    for (var j = 0; j < height; j++) {
+                        cellpos[i][j] = new Cell();
+                    }
+                }
+
+                canvas.width = width * cell;
+                canvas.height = height * cell;
+
+                context = canvas.getContext("2d");
+                context.strokeStyle = "lightgrey";
+                context.fillStyle = "black";
+
+                /*for(var x=0; x<=width; x++){
+                 for(var y=0; y<=height; y++){
+                 context.strokeRect(x*cell, y*cell, cell, cell);
+                 }
+                 }*/
+
+                function checkNeighbours(x, y) {
+                    var count = 0;
+                    
+                    for (var i = -1; i <= 1; i++) {
+                        for (var j = -1; j <= 1; j++) {
+                            if(x === i && y === j){
+                                j++;
+                            }
+                            else if(i < 0 && j >= 0){
+                                if (checkpos[width-1][y].alive){ count++; }
+                            }
+                            else if(i >= 0 && j < 0){
+                                if (checkpos[x][height-1].alive){ count++; }
+                            }
+                            else if(i < 0 && j < 0){
+                                if (checkpos[width-1][height-1].alive){ count++; }
+                            }
+                            else if(i >= width && j < height){
+                                if(checkpos[0][y].alive){ count++; }
+                            }
+                            else if(i < width && j >= height){
+                                if(checkpos[x][0].alive){ count++; }
+                            }
+                            else if(i >= width && j >= height){
+                                if(checkpos[0][0].alive){ count++; }
+                            }
+                            else if(cellpos[x][y].alive){
+                                count++;
+                            }
+                        }
+                    }
+                }
+
+                function printRandCells() {
+                    for (var x = 0; x < width; x++) {
+                        for (var y = 0; y < height; y++) {
+                                    cellpos[x][y].alive = randBool();
+                                    if (cellpos[x][y].alive) {
+                                        context.fillRect(x * cell, y * cell, cell, cell);
+                                    }
+                                }
+                            }
+                        }
+
+                        printRandCells();
+
+                    }
+
+                    function Cell() {
+                var alive = false;
+            }
+
+
+
+            function randBool() {
+                var num = Math.floor((Math.random() * 2) + 1);
+                if (num === 1) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            }
+
+            World(); //HOLD ON
+
+        </script>
+    </body>
+</html>
