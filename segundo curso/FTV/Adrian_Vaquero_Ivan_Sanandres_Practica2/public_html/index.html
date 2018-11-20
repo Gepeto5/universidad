@@ -17,6 +17,8 @@
     <body>
         <div>
             <canvas id="lienzo">Tu navegador no soporta canvas</canvas>
+            <button onclick="">Start</button>
+            <button onclick="">Stop</button>
         </div>
         <div>
             <p>Práctica 2 Fundamentos de Tecnología de Videojuegos<br />Adrián Vaquero Portillo, DNI: 53806658K<br />Iván Sanandrés Gutiérrez, DNI: 47587090K</p>
@@ -24,20 +26,37 @@
         <script>
             var context;
             var canvas = document.getElementById("lienzo");
+            
 
             function World() {
                 const cell = 10;    //tamaño célula
                 const width = 50;    //número células en el ancho
                 const height = 50;   //número células en el alto
-
+                var checkN = [width];
                 var cellpos = [width];
                 for (var i = 0; i < width; i++) {
                     cellpos[i] = [height];
+                    checkN[i] = [height];
                     for (var j = 0; j < height; j++) {
                         cellpos[i][j] = new Cell();
+                        cellpos[i][j].alive = false;
+                        //cellpos[i][j].alive = randBool();
                     }
                 }
 
+                cellpos[1][0].alive = true;
+                cellpos[1][1].alive = true;
+                cellpos[1][2].alive = true;
+                cellpos[5][0].alive = true;
+                cellpos[5][1].alive = true;
+                cellpos[6][0].alive = true;
+                cellpos[6][2].alive = true;
+                cellpos[7][1].alive = true;
+                cellpos[25][25].alive = true;
+                cellpos[25][26].alive = true;
+                cellpos[26][25].alive = true;
+                cellpos[26][27].alive = true;
+                cellpos[27][25].alive = true;
                 canvas.width = width * cell;
                 canvas.height = height * cell;
 
@@ -45,62 +64,117 @@
                 context.strokeStyle = "lightgrey";
                 context.fillStyle = "black";
 
-                /*for(var x=0; x<=width; x++){
-                 for(var y=0; y<=height; y++){
-                 context.strokeRect(x*cell, y*cell, cell, cell);
+                /* for (var x = 0; x <= width; x++) {
+                 for (var y = 0; y <= height; y++) {
+                 context.strokeRect(x * cell, y * cell, cell, cell);
                  }
                  }*/
 
                 function checkNeighbours(x, y) {
                     var count = 0;
-                    
-                    for (var i = -1; i <= 1; i++) {
-                        for (var j = -1; j <= 1; j++) {
-                            if(x === i && y === j){
-                                j++;
-                            }
-                            else if(i < 0 && j >= 0){
-                                if (checkpos[width-1][y].alive){ count++; }
-                            }
-                            else if(i >= 0 && j < 0){
-                                if (checkpos[x][height-1].alive){ count++; }
-                            }
-                            else if(i < 0 && j < 0){
-                                if (checkpos[width-1][height-1].alive){ count++; }
-                            }
-                            else if(i >= width && j < height){
-                                if(checkpos[0][y].alive){ count++; }
-                            }
-                            else if(i < width && j >= height){
-                                if(checkpos[x][0].alive){ count++; }
-                            }
-                            else if(i >= width && j >= height){
-                                if(checkpos[0][0].alive){ count++; }
-                            }
-                            else if(cellpos[x][y].alive){
+
+                    for (var i = -1; i < 2; i++) {
+                        for (var j = -1; j < 2; j++) {
+                            var aux1 = (x + i + width) % width;
+                            var aux2 = (y + j + height) % height;
+                            if (!(i === 0 && j === 0) && cellpos[aux1][aux2].alive === true) {
                                 count++;
+                            }
+                            /*
+                             if (cellpos[aux1][aux2].alive === true) {
+                             count++;
+                             }
+                             
+                             
+                             /* else if (x+i < 0 && y+j >= 0 && y+j < 49) {
+                             if (cellpos[49][y+j].alive) {
+                             count++;
+                             }
+                             } else if (x+i >= 0 && y+j < 0) {
+                             if (cellpos[x+i][height - 1].alive) {
+                             count++;
+                             }
+                             } else if (x+i < 0 && y+j < 0) {
+                             if (cellpos[width - 1][height - 1].alive) {
+                             count++;
+                             }
+                             } else if (x+i >= width && y+j < height) {
+                             if (cellpos[0][y+j].alive) {
+                             count++;
+                             }
+                             } else if (x+i < width && y+j >= height) {
+                             if (cellpos[x+i][0].alive) {
+                             count++;
+                             }
+                             } else if (x+i >= width && y+j >= height) {
+                             if (cellpos[0][0].alive) {
+                             count++;
+                             }
+                             } else if (cellpos[x+i][y+j].alive) {
+                             count++;
+                             }*/
+                        }
+                    }
+                    return count;
+                }
+
+                function printCells() {
+                    for (var x = 0; x < width; x++) {
+                        for (var y = 0; y < height; y++) {
+                            if (cellpos[x][y].alive) {
+                                context.fillStyle = "black";
+                                context.fillRect(x * cell, y * cell, cell, cell);
+                                console.log(checkNeighbours(x, y));
+                            } else if (!cellpos[x][y].alive) {
+                                context.fillStyle = "red";
+                                context.fillRect(x * cell, y * cell, cell, cell);
                             }
                         }
                     }
                 }
 
-                function printRandCells() {
+                function life() {
                     for (var x = 0; x < width; x++) {
                         for (var y = 0; y < height; y++) {
-                                    cellpos[x][y].alive = randBool();
-                                    if (cellpos[x][y].alive) {
-                                        context.fillRect(x * cell, y * cell, cell, cell);
-                                    }
-                                }
+                            checkN[x][y] = checkNeighbours(x, y);
+                        }
+                    }
+                    for (var x = 0; x < width; x++) {
+                        for (var y = 0; y < height; y++) {
+                            if (cellpos[x][y].alive === false && checkN[x][y] === 3) {
+                                cellpos[x][y].alive = true;
+                            } else if (cellpos[x][y].alive === true && !(checkN[x][y] === 2 || checkN[x][y] === 3)) {
+                                cellpos[x][y].alive = false;
                             }
                         }
-
-                        printRandCells();
-
                     }
+                }
 
-                    function Cell() {
-                var alive = false;
+                setInterval(printCells, 100);
+                setInterval(life, 100);
+
+                contexto.addEventListener("mousedown", handleMouse, false);
+                function handleMouse(e) {
+                  /*  var posX = e.pageX;
+                    var posY = e.pageY;
+                    cellpos[parseInt((posX - 10) / cell)][parseInt((posY - 10) / cell)].alive = true;*/
+                    var dimCuadro = this.getBoundingClientRect();
+                    var posCuadroX = e.pageX - dimCuadro.left;
+                    var posCuadroY = e.pageY - dimCuadro.top;
+                    if(cellpos[posCuadroX][posCuadroY].alive && e.type==="mousedown"){
+                        cellpos[posCuadroX][posCuadroY].alive = false;
+                    }
+                    else if(!(cellpos[posCuadroX][posCuadroY].alive) && e.type==="mousedown"){
+                        cellpos[posCuadroX][posCuadroY].alive = true;
+                    }
+                }
+            }
+
+
+
+            function Cell(alive) {
+                //var alive = false;
+                this.alive = alive;
             }
 
 
