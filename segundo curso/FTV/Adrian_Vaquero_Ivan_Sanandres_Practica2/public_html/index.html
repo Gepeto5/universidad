@@ -17,8 +17,9 @@
     <body>
         <div>
             <canvas id="lienzo">Tu navegador no soporta canvas</canvas>
-            <button id="simulate">Start</button>
-            <button onclick="">Stop</button>
+            <button id="simulate">Jugar</button>
+            <button id="stop">Pausar</button>
+            <p id="simSteps"></p>
         </div>
         <div>
             <p>Práctica 2 Fundamentos de Tecnología de Videojuegos<br />Adrián Vaquero Portillo, DNI: 53806658K<br />Iván Sanandrés Gutiérrez, DNI: 47587090K</p>
@@ -27,6 +28,8 @@
             var context;
             var canvas = document.getElementById("lienzo");
             var simulate = document.getElementById("simulate");
+            var stop = document.getElementById("stop");
+            var simSteps = document.getElementById("simSteps");
 
             function World() {
                 const cell = 10;    //tamaño célula
@@ -80,39 +83,6 @@
                             if (!(i === 0 && j === 0) && cellpos[aux1][aux2].alive === true) {
                                 count++;
                             }
-                            /*
-                             if (cellpos[aux1][aux2].alive === true) {
-                             count++;
-                             }
-                             
-                             
-                             /* else if (x+i < 0 && y+j >= 0 && y+j < 49) {
-                             if (cellpos[49][y+j].alive) {
-                             count++;
-                             }
-                             } else if (x+i >= 0 && y+j < 0) {
-                             if (cellpos[x+i][height - 1].alive) {
-                             count++;
-                             }
-                             } else if (x+i < 0 && y+j < 0) {
-                             if (cellpos[width - 1][height - 1].alive) {
-                             count++;
-                             }
-                             } else if (x+i >= width && y+j < height) {
-                             if (cellpos[0][y+j].alive) {
-                             count++;
-                             }
-                             } else if (x+i < width && y+j >= height) {
-                             if (cellpos[x+i][0].alive) {
-                             count++;
-                             }
-                             } else if (x+i >= width && y+j >= height) {
-                             if (cellpos[0][0].alive) {
-                             count++;
-                             }
-                             } else if (cellpos[x+i][y+j].alive) {
-                             count++;
-                             }*/
                         }
                     }
                     return count;
@@ -124,7 +94,6 @@
                             if (cellpos[x][y].alive) {
                                 context.fillStyle = "black";
                                 context.fillRect(x * cell, y * cell, cell, cell);
-                                console.log(checkNeighbours(x, y));
                             } else if (!cellpos[x][y].alive) {
                                 context.fillStyle = "red";
                                 context.fillRect(x * cell, y * cell, cell, cell);
@@ -132,7 +101,8 @@
                         }
                     }
                 }
-
+                
+                var counterSteps = 0;
                 function life() {
                     for (var x = 0; x < width; x++) {
                         for (var y = 0; y < height; y++) {
@@ -148,27 +118,50 @@
                             }
                         }
                     }
-                } 
-                setInterval(printCells, 100);
-                function simulateLife(){   
-                setInterval(life, 100);
+                    counterSteps++;
+                    simSteps.innerHTML="Pasos de la simulación " + counterSteps;
                 }
-                simulate.addEventListener("click", simulateLife, false);
-
-                contexto.addEventListener("mousedown", handleMouse, false);
-                function handleMouse(e) {
-                  /*  var posX = e.pageX;
-                    var posY = e.pageY;
-                    cellpos[parseInt((posX - 10) / cell)][parseInt((posY - 10) / cell)].alive = true;*/
-                    var dimCuadro = this.getBoundingClientRect();
-                    var posCuadroX = e.pageX - dimCuadro.left;
-                    var posCuadroY = e.pageY - dimCuadro.top;
-                    if(cellpos[posCuadroX][posCuadroY].alive && e.type==="mousedown"){
-                        cellpos[posCuadroX][posCuadroY].alive = false;
+                
+                
+                
+                printCells();
+                var print, sim;
+                var simNow = false;
+                
+                function simulateLife() {
+                    if (simNow === false) {
+                        print = setInterval(printCells, 100);
+                        sim = setInterval(life, 100);
+                        simNow = true;
                     }
-                    else if(!(cellpos[posCuadroX][posCuadroY].alive) && e.type==="mousedown"){
+                }
+                function stopSimulation() {
+                    if (simNow === true) {
+                        clearInterval(print);
+                        clearInterval(sim);
+                        simNow = false;
+                    }
+                }
+
+                simulate.addEventListener("click", simulateLife, false);
+                stop.addEventListener("click", stopSimulation, false);
+
+                canvas.addEventListener("click", handleMouse, true);
+                function handleMouse(e) {
+                    /*  var posX = e.pageX;
+                     var posY = e.pageY;
+                     cellpos[parseInt((posX - 10) / cell)][parseInt((posY - 10) / cell)].alive = true;*/
+                    var dimCuadro = this.getBoundingClientRect();
+                    var posCuadroX = parseInt((e.pageX - dimCuadro.left) / cell);
+                    var posCuadroY = parseInt((e.pageY - dimCuadro.top) / cell);
+                    console.log(posCuadroX);
+                    console.log(posCuadroY);
+                    if (cellpos[posCuadroX][posCuadroY].alive === true && e.type === "click") {
+                        cellpos[posCuadroX][posCuadroY].alive = false;
+                    } else if (cellpos[posCuadroX][posCuadroY].alive === false && e.type === "click") {
                         cellpos[posCuadroX][posCuadroY].alive = true;
                     }
+                    printCells();
                 }
             }
 
