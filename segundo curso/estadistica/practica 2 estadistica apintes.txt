@@ -1,0 +1,72 @@
+sample=(1:100) -> 100 valores aleatorios entre 1 y 100
+sample=(1:100,3) -> muestra aleatoria de 3 valores entre 1 y 100
+sample(c(0,1),10,replace = TRUE) -> MUESTRA ALEATORIA de 10 valores ENTRE 0 Y 1 y con reemplazamiento
+sample=(1:3,1,prob=c(0.5,0.4,0.1)) -> muestra aleatoria de 1 elemento de valores entre 1 y 3 y con las probabilidades elegidas
+
+x = RNORM(200,100,10) -> simulacion de 200 realizaciones de
+hist(sort(x),freq=FALSE) ->
+lines(sort(x),dnorm(sort(x),100,10))
+dpois(3,0.1) -> probabilidad de que x sea igual a 3 donde x distribuye a la ecuacion lambda -> P(x=3)
+pbinom(3,5,0.2) - > probabilidad de que x sea <=3 donde x binomial x es 5 y p es 0.2
+qnorm(0.7,0,1) -> probabilidad de que x <= k donde x dstribuye normal 0,1
+
+d es densidad
+p es distribución o probabilidad
+q es cuartil
+
+1-generar 10 realizaciones de X
+2-si nos genera menos que siete numeros 3, quiero que me entregue un 1. Si la suma de todos los valores es mayor que 20, entrega 2,
+si no ocurre ninguna, entrega 3
+
+x~bin(5,0.5)
+
+x=0
+b=rbinom(10,5,0.5)
+if(sum(b==3)<7) x=1
+if(sum(b)>20) x=2
+x
+
+color=c("rojo","azul","verde","naranja")
+prob=c(0.25,0.25,0.25,0.25)
+
+v1=color[sample(1:4,1,prob=prob)]
+v2=color[sample(1:4,1,prob=prob)]
+v3=color[sample(1:4,1,prob=prob)]
+
+v1
+
+premio1=dbinom(3,3,0.25)
+premio2=3*premio1
+premio3=dbinom(2,3,0.25)
+nopremio=3*premio3 + 1*3*0.25*2*0.25
+
+prob_premios=rbind(premio1,premio2,premio3,nopremio)
+
+prob_premios
+
+sum(prob_premios)
+
+jugadas=10000
+montopremio=jugadas*0.7
+ganadores=round(jugadas*prob_premios[1:3])
+sum(ganadores)
+
+montos=rbind(montopremio/3,montopremio/3,montopremio/3)
+montoxganador=round(montos/ganadores,0)
+
+gasto=montoxganador*ganadores
+sum(gasto)
+
+ex=sum(gasto)-montopremio
+montoxgan2=round(montoxganador-ex/(3*ganadores),0)
+gasto2=montoxgan2*ganadores
+sum(gasto2)
+
+tirada=c(v1,v2,v3)
+
+premio=0
+if(sum(tirada=="rojo")==3)premio=montoxgan2[1]
+if(sum(tirada=="naranja")==3 | sum(tirada=="azul")==3 | sum(tirada=="verde")==3)premio=montoxgan2[2]
+if(sum(tirada=="rojo")==2)premio=montoxgan2[3]
+premio
+cat("",tirada,"\n","Premio:",premio,"Euros\n")
