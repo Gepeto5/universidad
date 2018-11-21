@@ -33,8 +33,8 @@
 
             function World() {
                 const cell = 10;    //tamaño célula
-                const width = 50;    //número células en el ancho
-                const height = 50;   //número células en el alto
+                const width = 200;    //número células en el ancho
+                const height = 200;   //número células en el alto
                 var checkN = [width];
                 var cellpos = [width];
                 for (var i = 0; i < width; i++) {
@@ -43,10 +43,10 @@
                     for (var j = 0; j < height; j++) {
                         cellpos[i][j] = new Cell();
                         cellpos[i][j].alive = false;
-                        //cellpos[i][j].alive = randBool();
+                        cellpos[i][j].alive = randBool();
                     }
                 }
-
+                /*
                 cellpos[1][0].alive = true;
                 cellpos[1][1].alive = true;
                 cellpos[1][2].alive = true;
@@ -59,7 +59,7 @@
                 cellpos[25][26].alive = true;
                 cellpos[26][25].alive = true;
                 cellpos[26][27].alive = true;
-                cellpos[27][25].alive = true;
+                cellpos[27][25].alive = true;*/
                 canvas.width = width * cell;
                 canvas.height = height * cell;
 

@@ -1,0 +1,42 @@
+seed=8121999
+set.seed(seed)
+
+colores = c("gris","verde","azul","morado","naranja")
+probs = c(0.4,0.3,0.15,0.1,0.05)
+
+ventana1 = colores[sample(1:5, 1, prob=probs)]
+ventana2 = colores[sample(1:5, 1, prob=probs)]
+ventana3 = colores[sample(1:5, 1, prob=probs)]
+ventana4 = colores[sample(1:5, 1, prob=probs)]
+
+tirada = c(ventana1, ventana2, ventana3, ventana4)
+
+probP1 = 4*(0.05*0.05*0.05*0.95)
+probP2 = 4*(0.1*0.1*0.1*0.9) + 4*(0.15*0.15*0.15*0.85)
+probP3 = 4*(0.3*0.3*0.3*0.7) 
+
+probP = rbind(probP1,probP2,probP3)
+
+jugadas = 100000
+premio = jugadas * 0.7
+
+numGanadores = round(jugadas * probP[1:3], 0)
+
+dineroPremios = rbind(premio*0.5, premio*0.3, premio*0.2)
+
+dineroPorGanador = round(dineroPremios/numGanadores, 0)
+
+if(dineroPorGanador[1] == Inf)dineroPorGanador[1] = "No hay ganadores"
+if(dineroPorGanador[2] == Inf)dineroPorGanador[2] = "No hay ganadores"
+if(dineroPorGanador[3] == Inf)dineroPorGanador[3] = "No hay ganadores"
+
+gasto = dineroPorGanador * numGanadores
+
+dineroRecibido = 0
+stringPremio = ""
+
+if(sum(tirada == "verde") >= 2) {dineroRecibido = dineroPorGanador[3]; stringPremio = "por el tercer premio"}
+if(sum((tirada == "morado") >= 2) | (sum(tirada == "azul") >= 2)) {dineroRecibido = dineroPorGanador[2]; stringPremio = "por el segundo premio"}
+if(sum(tirada == "naranja") >= 2) {dineroRecibido = dineroPorGanador[1]; stringPremio = "por el primer premio"}
+
+cat("",tirada,"\n","Premio: ",dineroRecibido," euros", stringPremio,"\n", "SEMILLA: ",seed)
