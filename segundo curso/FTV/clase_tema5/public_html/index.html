@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            canvas{
+                margin: 0px;
+                padding: 0px;
+                border: 1px solid black;
+                background-color: cyan
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <canvas  id="lienzo" width="500" height="500">Tu navegador no soporta canvas</canvas>
+        </div>
+
+        <p id="parrafo">Esperando...</p>
+
+
+        <script>
+            "use strict";
+
+            var contexto = document.getElementById("lienzo").getContext("2d");
+            var parrafo = document.getElementById("parrafo");
+
+            //Espera activa
+            /*  var contador=0;
+             while(contador<5){
+             parrafo.innerHTML=contador;
+             contador++;
+             sleep(1000);
+             alert(1);
+             }
+             
+             function sleep(milisegundos){
+             var start=new Date().getTime();
+             while(true){
+             if(new Date().getTime()-start>milisegundos)break;
+             }
+             } */
+
+            //Temporizadores
+            /*
+             alert("Pulse enter para entrar xd");
+             var temporizador = window.setTimeout(funcion1,3000); //no hace falta poner lo de window
+             window.clearTimeout(temporizador);
+             function funcion1(){
+             alert("Han pasado 3 segundos desde que pulsaste entrar");
+             } */
+
+            /* var contador = 0;
+             parrafo.innerHTML = contador;
+             //setTimeout(funcion2,1000); setInterval tambien funciona
+             setInterval(funcion2,1000);
+             function funcion2(){
+             contador++;
+             parrafo.innerHTML=contador;
+             //setTimeout(funcion2,1000);
+             } */
+
+            //Animaciones
+            /*   var x = 0;
+             var ritmo = 60;
+             var temporizador = setInterval(function () {
+             x += 1;
+             if (x > 400)
+             clearInterval(temporizador);
+             }, 100 / ritmo);
+             
+             requestAnimationFrame(dibujarCuadro, 100);
+             function dibujarCuadro() {
+             contexto.clearRect(0, 0, contexto.canvas.width, contexto.canvas.height);
+             contexto.strokeRect(x, 100, 100, 100);
+             requestAnimationFrame(dibujarCuadro);
+             } */
+
+            //Sprites
+            var ancho = 28;
+            var alto = 67;
+            var sprite = new Array(32);
+            var imagen = new Image();
+            imagen.src = "sprite.png";
+            imagen.onload = function () {
+                var i = 0;
+                for (var ySprite = 0; ySprite < 4; ySprite++) {
+                    for (var xSprite = 0; xSprite < 8; xSprite++) {
+                        sprite[i] = {x: xSprite * ancho, y: ySprite * alto};
+                        i++;
+                    }
+                }
+                window.onkeypress = function (e) {
+                    var i = parseInt(e.key) + 18;
+                    var escala = 2
+                    contexto.clearRect(0, 0, contexto.canvas.width, contexto.canvas.height);
+                    contexto.drawImage(imagen, sprite[0].x, sprite[0].y, ancho, alto, 0, 0, ancho * escala, alto * escala);
+                }
+                window.onclick = function () {
+                    var i = 0;
+                    var xs=0;
+                    var escala = 2;
+                    setInterval(function () {
+                        contexto.clearRect(0, 0, contexto.canvas.width, contexto.canvas.height);
+                        contexto.drawImage(imagen, sprite[0].x, sprite[0].y, ancho, alto, 0, 0, ancho * escala, alto * escala);
+                        i++;
+                        if(i=22) i=18;
+                        xs += 5;
+                    }, 10)
+                }
+
+            }
+
+
+        </script>
+
+    </body>
+</html>
