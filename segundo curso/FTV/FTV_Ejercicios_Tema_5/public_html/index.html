@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <style>
+            canvas{
+                margin: 0px;
+                padding: 0px;
+                border: 1px solid black;
+                background-color: cyan
+            }
+        </style>
+    </head>
+    <body>
+        <canvas  id="lienzo" width="800" height="600">Tu navegador no soporta canvas</canvas>
+        <p id="parrafo"></p>
+        
+        <script>
+            "use strict";
+
+            var contexto = document.getElementById("lienzo").getContext("2d");
+            var parrafo = document.getElementById("parrafo");
+            
+            var segundos = 0;
+            parrafo.innerHTML=segundos;
+            contador();
+             
+             function contador(){
+                 segundos++;
+                 parrafo.innerHTML=segundos;
+                 setTimeout(contador,1000);
+             }
+             
+             /*
+             function function1 (){
+                 parrafo.innerHTML = "Ejecutada función 1"; 
+             }
+             
+             function function2 (){
+                 parrafo.innerHTML = "Ejecutada función 2"; 
+             }
+             
+             function function3 (){
+                 parrafo.innerHTML = "Ejecutada función 3"; 
+             }*/
+        </script>
+    </body>
+</html>
