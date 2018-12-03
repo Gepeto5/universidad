@@ -193,6 +193,7 @@
                 }
 
                 function thanosButton() {
+                    snap.play();
                     for (var i = 0; i < width; i++) {
                         for (var j = 0; j < height; j++) {
                             if (cellpos[i][j].alive) {
@@ -201,7 +202,6 @@
                         }
                     }
                     printCellsThanos();
-                    snap.play();
                 }
 
                 random.addEventListener("click", randomize, false);
