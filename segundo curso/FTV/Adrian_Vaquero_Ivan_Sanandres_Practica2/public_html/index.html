@@ -41,6 +41,12 @@
             <audio id="snap">
                 <source src="snap.mp3">
             </audio>
+            <audio id="macintosh">
+                <source src="normal.mp3">
+            </audio>
+            <audio id="macintosh8">
+                <source src="8bit.mp3">
+            </audio>
             <p id="simSteps"></p>
             <p id="cellSteps"></p>
             <p>Práctica 2 Fundamentos de Tecnología de Videojuegos<br />Adrián Vaquero Portillo, DNI: 53806658K<br />Iván Sanandrés Gutiérrez, DNI: 47587090K</p>
@@ -57,6 +63,11 @@
             var thanos = document.getElementById("thanos");
             var snap = document.getElementById("snap");
             var arcademode = document.getElementById("arcade");
+            var mac = document.getElementById("macintosh");
+            var mac8 = document.getElementById("macintosh8");
+            
+            var colorAlive = "darkblue";
+            var colorDead = "darkturquoise";
 
             function World() {
                 var dimCuadro;
@@ -116,38 +127,10 @@
                     for (var x = 0; x < width; x++) {
                         for (var y = 0; y < height; y++) {
                             if (cellpos[x][y].alive) {
-                                context.fillStyle = "darkblue";
+                                context.fillStyle = colorAlive;
                                 context.fillRect(x * cell, y * cell, cell, cell);
                             } else if (!cellpos[x][y].alive) {
-                                context.fillStyle = "darkturquoise";
-                                context.fillRect(x * cell, y * cell, cell, cell);
-                            }
-                        }
-                    }
-                }
-
-                function printCellsThanos() {
-                    for (var x = 0; x < width; x++) {
-                        for (var y = 0; y < height; y++) {
-                            if (cellpos[x][y].alive) {
-                                context.fillStyle = "black";
-                                context.fillRect(x * cell, y * cell, cell, cell);
-                            } else if (!cellpos[x][y].alive) {
-                                context.fillStyle = "purple";
-                                context.fillRect(x * cell, y * cell, cell, cell);
-                            }
-                        }
-                    }
-                }
-
-                function printCellsArcade() {
-                    for (var x = 0; x < width; x++) {
-                        for (var y = 0; y < height; y++) {
-                            if (cellpos[x][y].alive) {
-                                context.fillStyle = "darkolivegreen";
-                                context.fillRect(x * cell, y * cell, cell, cell);
-                            } else if (!cellpos[x][y].alive) {
-                                context.fillStyle = "darkseagreen";
+                                context.fillStyle = colorDead;
                                 context.fillRect(x * cell, y * cell, cell, cell);
                             }
                         }
@@ -183,7 +166,7 @@
                 }
 
                 printCells();
-                var print, sim, printArcade;
+                var print, sim;
                 var simNow = false;
                 var arcadeActivated = false;
 
@@ -193,7 +176,7 @@
                         sim = setInterval(life, 100);
                         simNow = true;
                     } else if (simNow === false && arcadeActivated === true) {
-                        printArcade = setInterval(printCellsArcade, 100);
+                        printArcade = setInterval(printCells, 100);
                         sim = setInterval(life, 100);
                         simNow = true;
                     }
@@ -213,11 +196,7 @@
                             cellpos[i][j].alive = false;
                         }
                     }
-                    if (arcadeActivated === false) {
-                        printCells();
-                    } else if (arcadeActivated === true) {
-                        printCellsArcade();
-                    }
+                    printCells();
                 }
 
                 function randomize() {
@@ -226,14 +205,12 @@
                             cellpos[i][j].alive = randBool();
                         }
                     }
-                    if (arcadeActivated === false) {
-                        printCells();
-                    } else if (arcadeActivated === true) {
-                        printCellsArcade();
-                    }
+                    printCells();
                 }
 
                 function thanosButton() {
+                    colorAlive = "darkturquoise";
+                    colorDead = "purple";
                     snap.play();
                     for (var i = 0; i < width; i++) {
                         for (var j = 0; j < height; j++) {
@@ -242,21 +219,26 @@
                             }
                         }
                     }
-                    printCellsThanos();
+                    printCells();
                 }
 
                 function arcadeM() {
                     if (arcadeActivated === false) {
-                        stopSimulation();
-                        printCellsArcade();
+                        colorAlive = "darkolivegreen";
+                        colorDead = "darkseagreen";
                         arcadeActivated = true;
-                        simulateLife();
+                        chiptune = true;
+                        mac.muted = true;
+                        mac8.muted = false;
                     } else if (arcadeActivated === true) {
-                        stopSimulation();
-                        printCells();
+                        colorAlive = "darkblue";
+                        colorDead = "darkturquoise";
                         arcadeActivated = false;
-                        simulateLife();
+                        chiptune = false;
+                        mac8.muted = true;
+                        mac.muted = false;
                     }
+                    printCells();
                 }
 
                 random.addEventListener("click", randomize, false);
@@ -269,6 +251,7 @@
                 canvas.addEventListener("click", clickCell, true);
                 canvas.addEventListener("click", statusCell, true);
                 canvas.addEventListener("mousemove", statusCell, false);
+                
                 function clickCell(e) {
                     var dimCuadro = this.getBoundingClientRect();
                     var posCuadroX = parseInt((e.pageX - dimCuadro.left) / cell);
@@ -310,7 +293,16 @@
 
             }
 
-            World(); //HOLD ON
+            var chiptune = false;
+
+            function music() {
+                mac.play();
+                mac8.play();
+                mac8.muted = true;
+            }
+
+            music();
+            World(); 
 
         </script>
     </body>
