@@ -6,33 +6,47 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
+            body{
+                background-size: cover;
+                background-image: url('fondo.jpg');
+            }
             canvas{
                 background-color: white;
                 border: 1px solid black;
                 margin: 10px;
                 padding: 0;
             }
+            button{
+                background-color: fuchsia;
+                border-radius: 3px;
+                border: 3px solid darkturquoise;
+                color: darkblue;
+                font-size: 20px;
+                font-family: courier;
+                font-weight: bold; 
+            }
         </style>
     </head>
     <body>
-        <div>
+        <div align="center" style="text-align: center">
             <canvas id="lienzo">Tu navegador no soporta canvas</canvas>
+        </div>
+        <div align="center" style="color: white; font-size: 25px; font-family: courier; font-weight: bold">
             <button id="simulate">Jugar</button>
             <button id="stop">Pausar</button>
             <button id="clear">Limpiar</button>
             <button id="random">Aleatorizar</button>
             <button id="thanos">Botón del Infinito</button>
+            <button id="arcade">Modo arcade</button>
             <audio id="snap">
                 <source src="snap.mp3">
             </audio>
             <p id="simSteps"></p>
             <p id="cellSteps"></p>
-        </div>
-        <div>
             <p>Práctica 2 Fundamentos de Tecnología de Videojuegos<br />Adrián Vaquero Portillo, DNI: 53806658K<br />Iván Sanandrés Gutiérrez, DNI: 47587090K</p>
         </div>
         <script>
-            var context;
+            var context; //darkolive green, darksea green, darkblue, darkturquoise, purple, black 
             var canvas = document.getElementById("lienzo");
             var simulate = document.getElementById("simulate");
             var stop = document.getElementById("stop");
@@ -42,14 +56,15 @@
             var clearCells = document.getElementById("clear");
             var thanos = document.getElementById("thanos");
             var snap = document.getElementById("snap");
+            var arcademode = document.getElementById("arcade");
 
             function World() {
                 var dimCuadro;
                 var posCuadroX;
                 var posCuadroY;
                 const cell = 10;    //tamaño célula
-                const width = 50;    //número células en el ancho
-                const height = 50;   //número células en el alto
+                this.width = 80;    //número células en el ancho
+                this.height = 80;   //número células en el alto
                 var checkN = [width];
                 var cellpos = [width];
                 for (var i = 0; i < width; i++) {
@@ -101,10 +116,10 @@
                     for (var x = 0; x < width; x++) {
                         for (var y = 0; y < height; y++) {
                             if (cellpos[x][y].alive) {
-                                context.fillStyle = "black";
+                                context.fillStyle = "darkblue";
                                 context.fillRect(x * cell, y * cell, cell, cell);
                             } else if (!cellpos[x][y].alive) {
-                                context.fillStyle = "red";
+                                context.fillStyle = "darkturquoise";
                                 context.fillRect(x * cell, y * cell, cell, cell);
                             }
                         }
@@ -119,6 +134,20 @@
                                 context.fillRect(x * cell, y * cell, cell, cell);
                             } else if (!cellpos[x][y].alive) {
                                 context.fillStyle = "purple";
+                                context.fillRect(x * cell, y * cell, cell, cell);
+                            }
+                        }
+                    }
+                }
+
+                function printCellsArcade() {
+                    for (var x = 0; x < width; x++) {
+                        for (var y = 0; y < height; y++) {
+                            if (cellpos[x][y].alive) {
+                                context.fillStyle = "darkolivegreen";
+                                context.fillRect(x * cell, y * cell, cell, cell);
+                            } else if (!cellpos[x][y].alive) {
+                                context.fillStyle = "darkseagreen";
                                 context.fillRect(x * cell, y * cell, cell, cell);
                             }
                         }
@@ -153,19 +182,23 @@
                     simSteps.innerHTML = "Pasos de la simulación " + counterSteps;
                 }
 
-
-
                 printCells();
-                var print, sim;
+                var print, sim, printArcade;
                 var simNow = false;
+                var arcadeActivated = false;
 
                 function simulateLife() {
-                    if (simNow === false) {
+                    if (simNow === false && arcadeActivated === false) {
                         print = setInterval(printCells, 100);
+                        sim = setInterval(life, 100);
+                        simNow = true;
+                    } else if (simNow === false && arcadeActivated === true) {
+                        printArcade = setInterval(printCellsArcade, 100);
                         sim = setInterval(life, 100);
                         simNow = true;
                     }
                 }
+
                 function stopSimulation() {
                     if (simNow === true) {
                         clearInterval(print);
@@ -180,7 +213,11 @@
                             cellpos[i][j].alive = false;
                         }
                     }
-                    printCells();
+                    if (arcadeActivated === false) {
+                        printCells();
+                    } else if (arcadeActivated === true) {
+                        printCellsArcade();
+                    }
                 }
 
                 function randomize() {
@@ -189,7 +226,11 @@
                             cellpos[i][j].alive = randBool();
                         }
                     }
-                    printCells();
+                    if (arcadeActivated === false) {
+                        printCells();
+                    } else if (arcadeActivated === true) {
+                        printCellsArcade();
+                    }
                 }
 
                 function thanosButton() {
@@ -204,10 +245,24 @@
                     printCellsThanos();
                 }
 
+                function arcadeM() {
+                    if (arcadeActivated === false) {
+                        stopSimulation();
+                        printCellsArcade();
+                        arcadeActivated = true;
+                        simulateLife();
+                    } else if (arcadeActivated === true) {
+                        stopSimulation();
+                        printCells();
+                        arcadeActivated = false;
+                        simulateLife();
+                    }
+                }
+
                 random.addEventListener("click", randomize, false);
                 clearCells.addEventListener("click", clear, false);
                 thanos.addEventListener("click", thanosButton, false);
-
+                arcademode.addEventListener("click", arcadeM, false);
                 simulate.addEventListener("click", simulateLife, false);
                 stop.addEventListener("click", stopSimulation, false);
 
@@ -215,9 +270,6 @@
                 canvas.addEventListener("click", statusCell, true);
                 canvas.addEventListener("mousemove", statusCell, false);
                 function clickCell(e) {
-                    /*  var posX = e.pageX;
-                     var posY = e.pageY;
-                     cellpos[parseInt((posX - 10) / cell)][parseInt((posY - 10) / cell)].alive = true;*/
                     var dimCuadro = this.getBoundingClientRect();
                     var posCuadroX = parseInt((e.pageX - dimCuadro.left) / cell);
                     var posCuadroY = parseInt((e.pageY - dimCuadro.top) / cell);
@@ -243,14 +295,10 @@
                 }
             }
 
-
-
             function Cell(alive) {
                 this.alive = alive;
                 this.time = 0;
             }
-
-
 
             function randBool() {
                 var num = Math.floor((Math.random() * 2) + 1);
