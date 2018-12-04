@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html>
     <head>
@@ -11,10 +11,9 @@
                 background-image: url('fondo.jpg');
             }
             canvas{
-                background-color: white;
-                border: 1px solid black;
                 margin: 10px;
                 padding: 0;
+                opacity: 0.8;
             }
             button{
                 background-color: fuchsia;
@@ -36,8 +35,9 @@
             <button id="stop">Pausar</button>
             <button id="clear">Limpiar</button>
             <button id="random">Aleatorizar</button>
+            <button id="res">Redimensionar canvas</button>
             <button id="thanos">Botón del Infinito</button>
-            <button id="arcade">Modo arcade</button>
+            <button id="arcade">Modo GameBoy</button>
             <audio id="snap">
                 <source src="snap.mp3">
             </audio>
@@ -49,6 +49,7 @@
             </audio>
             <p id="simSteps"></p>
             <p id="cellSteps"></p>
+            Introduce ancho: <input type="number" id="myText" value="">
             <p>Práctica 2 Fundamentos de Tecnología de Videojuegos<br />Adrián Vaquero Portillo, DNI: 53806658K<br />Iván Sanandrés Gutiérrez, DNI: 47587090K</p>
         </div>
         <script>
@@ -65,17 +66,21 @@
             var arcademode = document.getElementById("arcade");
             var mac = document.getElementById("macintosh");
             var mac8 = document.getElementById("macintosh8");
-            
+            var image = new Image();
+            image.src = "gameboy.png";
+
             var colorAlive = "darkblue";
             var colorDead = "darkturquoise";
 
             function World() {
                 var dimCuadro;
-                var posCuadroX;
-                var posCuadroY;
+                var posCuadroX = 0;
+                var posCuadroY = 0;
+                var offsetX = 0;
+                var offsetY = 0;
                 const cell = 10;    //tamaño célula
-                this.width = 80;    //número células en el ancho
-                this.height = 80;   //número células en el alto
+                var width = 80;    //número células en el ancho
+                var height = 80;   //número células en el alto
                 var checkN = [width];
                 var cellpos = [width];
                 for (var i = 0; i < width; i++) {
@@ -84,10 +89,9 @@
                     for (var j = 0; j < height; j++) {
                         cellpos[i][j] = new Cell();
                         cellpos[i][j].alive = false;
-                        //cellpos[i][j].alive = randBool();
                     }
                 }
-
+                
                 cellpos[1][0].alive = true;
                 cellpos[1][1].alive = true;
                 cellpos[1][2].alive = true;
@@ -105,12 +109,9 @@
                 canvas.height = height * cell;
 
                 context = canvas.getContext("2d");
-                context.strokeStyle = "lightgrey";
-                context.fillStyle = "black";
 
                 function checkNeighbours(x, y) {
                     var count = 0;
-
                     for (var i = -1; i < 2; i++) {
                         for (var j = -1; j < 2; j++) {
                             var aux1 = (x + i + width) % width;
@@ -128,10 +129,10 @@
                         for (var y = 0; y < height; y++) {
                             if (cellpos[x][y].alive) {
                                 context.fillStyle = colorAlive;
-                                context.fillRect(x * cell, y * cell, cell, cell);
+                                context.fillRect(x * cell + offsetX, y * cell + offsetY, cell, cell);
                             } else if (!cellpos[x][y].alive) {
                                 context.fillStyle = colorDead;
-                                context.fillRect(x * cell, y * cell, cell, cell);
+                                context.fillRect(x * cell + offsetX, y * cell + offsetY, cell, cell);
                             }
                         }
                     }
@@ -171,19 +172,15 @@
                 var arcadeActivated = false;
 
                 function simulateLife() {
-                    if (simNow === false && arcadeActivated === false) {
+                    if (!simNow) {
                         print = setInterval(printCells, 100);
-                        sim = setInterval(life, 100);
-                        simNow = true;
-                    } else if (simNow === false && arcadeActivated === true) {
-                        printArcade = setInterval(printCells, 100);
                         sim = setInterval(life, 100);
                         simNow = true;
                     }
                 }
 
                 function stopSimulation() {
-                    if (simNow === true) {
+                    if (simNow) {
                         clearInterval(print);
                         clearInterval(sim);
                         simNow = false;
@@ -209,34 +206,54 @@
                 }
 
                 function thanosButton() {
-                    colorAlive = "darkturquoise";
-                    colorDead = "purple";
-                    snap.play();
-                    for (var i = 0; i < width; i++) {
-                        for (var j = 0; j < height; j++) {
-                            if (cellpos[i][j].alive) {
-                                cellpos[i][j].alive = randBool();
+                    if (!arcadeActivated) {
+                        colorAlive = "darkturquoise";
+                        colorDead = "purple";
+                        snap.play();
+                        for (var i = 0; i < width; i++) {
+                            for (var j = 0; j < height; j++) {
+                                if (cellpos[i][j].alive) {
+                                    cellpos[i][j].alive = randBool();
+                                }
                             }
                         }
+                        printCells();
+                    } else {
+                        alert("Función no disponible en el Modo GameBoy");
                     }
-                    printCells();
                 }
 
                 function arcadeM() {
-                    if (arcadeActivated === false) {
+                    if (!arcadeActivated) {
                         colorAlive = "darkolivegreen";
                         colorDead = "darkseagreen";
                         arcadeActivated = true;
                         chiptune = true;
                         mac.muted = true;
                         mac8.muted = false;
-                    } else if (arcadeActivated === true) {
+
+                        canvas.width = 512;
+                        canvas.height = 680;
+                        context.drawImage(image, 0, 0, 512, 680);
+                        width = 22;
+                        height = 19;
+                        offsetX = 143;
+                        offsetY = 83;
+
+                    } else if (arcadeActivated) {
                         colorAlive = "darkblue";
                         colorDead = "darkturquoise";
                         arcadeActivated = false;
                         chiptune = false;
                         mac8.muted = true;
                         mac.muted = false;
+
+                        width = 80;
+                        height = 80;
+                        canvas.width = width * cell;
+                        canvas.height = height * cell;
+                        offsetX = 0;
+                        offsetY = 0;
                     }
                     printCells();
                 }
@@ -247,15 +264,16 @@
                 arcademode.addEventListener("click", arcadeM, false);
                 simulate.addEventListener("click", simulateLife, false);
                 stop.addEventListener("click", stopSimulation, false);
+                res.addEventListener("click", resizeCanvas, false);
 
                 canvas.addEventListener("click", clickCell, true);
                 canvas.addEventListener("click", statusCell, true);
                 canvas.addEventListener("mousemove", statusCell, false);
-                
+
                 function clickCell(e) {
-                    var dimCuadro = this.getBoundingClientRect();
-                    var posCuadroX = parseInt((e.pageX - dimCuadro.left) / cell);
-                    var posCuadroY = parseInt((e.pageY - dimCuadro.top) / cell);
+                    dimCuadro = this.getBoundingClientRect();
+                    posCuadroX = parseInt((e.clientX - dimCuadro.left - offsetX) / cell);
+                    posCuadroY = parseInt((e.clientY - dimCuadro.top - offsetY) / cell);
                     if (cellpos[posCuadroX][posCuadroY].alive === true && e.type === "click") {
                         cellpos[posCuadroX][posCuadroY].alive = false;
                         cellpos[posCuadroX][posCuadroY].time = 0;
@@ -268,12 +286,53 @@
 
                 function statusCell(e) {
                     dimCuadro = this.getBoundingClientRect();
-                    posCuadroX = parseInt((e.pageX - dimCuadro.left) / cell);
-                    posCuadroY = parseInt((e.pageY - dimCuadro.top) / cell);
+                    posCuadroX = parseInt((e.clientX - dimCuadro.left - offsetX) / cell);
+                    posCuadroY = parseInt((e.clientY - dimCuadro.top - offsetY) / cell);
                     if (cellpos[posCuadroX][posCuadroY].alive === true) {
                         cellSteps.innerHTML = "La célula (" + (posCuadroX + 1) + ", " + (posCuadroY + 1) + ") lleva viva " + cellpos[posCuadroX][posCuadroY].time + " pasos.";
                     } else if (cellpos[posCuadroX][posCuadroY].alive === false) {
                         cellSteps.innerHTML = "La célula (" + (posCuadroX + 1) + ", " + (posCuadroY + 1) + ") lleva muerta " + cellpos[posCuadroX][posCuadroY].time + " pasos.";
+                    }
+                }
+
+                function resizeCanvas() {
+                    if (!arcadeActivated) {
+                        var a = parseInt(document.getElementById("myText").value);
+                        var newarray = new Array(a);
+                        var newarrayn = new Array(a);
+
+                        var prevW = width;
+                        var prevH = height;
+
+                        if (a >= 20 && a <= 100) {
+                            width = a;
+                            height = a;
+                        } else {
+                            alert("Valor demasiado alto, por favor, introduce un valor entre 20 y 100");
+                        }
+
+                        canvas.width = width * cell;
+                        canvas.height = height * cell;
+
+                        for (var i = 0; i < a; i++) {
+                            newarray[i] = new Array(a);
+                            newarrayn[i] = new Array(a);
+                            for (var j = 0; j < a; j++) {
+                                if (i < prevW && j < prevH) {
+                                    newarray[i][j] = cellpos[i][j];
+                                    newarrayn[i][j] = checkN[i][j];
+                                } else {
+                                    newarray[i][j] = new Cell();
+                                    newarray[i][j].alive = false;
+                                }
+                            }
+                        }
+                        cellpos = newarray;
+                        checkN = newarrayn;
+
+                        printCells();
+                    } else {
+                        alert("Función no disponible en el Modo GameBoy");
                     }
                 }
             }
@@ -293,8 +352,6 @@
 
             }
 
-            var chiptune = false;
-
             function music() {
                 mac.play();
                 mac8.play();
@@ -302,8 +359,8 @@
             }
 
             music();
-            World(); 
-
+            World();
+            //resizeCanvas();
         </script>
     </body>
 </html>
