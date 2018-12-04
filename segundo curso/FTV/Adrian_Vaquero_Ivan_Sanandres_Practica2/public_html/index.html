@@ -24,6 +24,55 @@
                 font-family: courier;
                 font-weight: bold; 
             }
+            .overlay {
+                height: 100%;
+                width: 0;
+                position: fixed;
+                z-index: 1;
+                top: 0;
+                left: 0;
+                background-color: rgb(0,0,0);
+                background-color: rgba(0,0,0, 0.9);
+                overflow-x: hidden;
+                transition: 0.5s;
+            }
+
+            .overlay-content {
+                position: relative;
+                top: 25%;
+                width: 100%;
+                text-align: center;
+                margin-top: 30px;
+            }
+
+            .overlay a {
+                padding: 8px;
+                text-decoration: none;
+                font-size: 36px;
+                color: #818181;
+                display: block;
+                transition: 0.3s;
+            }
+
+            .overlay a:hover, .overlay a:focus {
+                color: #f1f1f1;
+            }
+
+            .overlay .closebtn {
+                position: absolute;
+                top: 20px;
+                right: 45px;
+                font-size: 60px;
+            }
+
+            @media screen and (max-height: 450px) {
+                .overlay a {font-size: 20px}
+                .overlay .closebtn {
+                    font-size: 40px;
+                    top: 15px;
+                    right: 35px;
+                }
+            }
         </style>
     </head>
     <body>
@@ -49,8 +98,21 @@
             </audio>
             <p id="simSteps"></p>
             <p id="cellSteps"></p>
-            Introduce ancho: <input type="number" id="myText" value="">
+            Introduce dimensión del canvas: <input type="number" id="res" value="">
+            Introduce coordenada en X: <input type="number" id="posX" value="">
+            Introduce coordenada en Y: <input type="number" id="posY" value="">
             <p>Práctica 2 Fundamentos de Tecnología de Videojuegos<br />Adrián Vaquero Portillo, DNI: 53806658K<br />Iván Sanandrés Gutiérrez, DNI: 47587090K</p>
+            <div id="myNav" class="overlay">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <div class="overlay-content">
+                    <a href="#">About</a>
+                    <a href="#">Services</a>
+                    <a href="#">Clients</a>
+                    <a href="#">Contact</a>
+                </div> 
+            </div>
+            <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
+
         </div>
         <script>
             var context; //darkolive green, darksea green, darkblue, darkturquoise, purple, black 
@@ -91,20 +153,6 @@
                         cellpos[i][j].alive = false;
                     }
                 }
-                
-                cellpos[1][0].alive = true;
-                cellpos[1][1].alive = true;
-                cellpos[1][2].alive = true;
-                cellpos[5][0].alive = true;
-                cellpos[5][1].alive = true;
-                cellpos[6][0].alive = true;
-                cellpos[6][2].alive = true;
-                cellpos[7][1].alive = true;
-                cellpos[25][25].alive = true;
-                cellpos[25][26].alive = true;
-                cellpos[26][25].alive = true;
-                cellpos[26][27].alive = true;
-                cellpos[27][25].alive = true;
                 canvas.width = width * cell;
                 canvas.height = height * cell;
 
@@ -166,7 +214,7 @@
                     simSteps.innerHTML = "Pasos de la simulación " + counterSteps;
                 }
 
-                printCells();
+
                 var print, sim;
                 var simNow = false;
                 var arcadeActivated = false;
@@ -297,7 +345,7 @@
 
                 function resizeCanvas() {
                     if (!arcadeActivated) {
-                        var a = parseInt(document.getElementById("myText").value);
+                        var a = parseInt(document.getElementById("res").value);
                         var newarray = new Array(a);
                         var newarrayn = new Array(a);
 
@@ -335,6 +383,161 @@
                         alert("Función no disponible en el Modo GameBoy");
                     }
                 }
+
+                function blinker(coordX, coordY) {
+                    cellpos[(coordX + width) % width][(coordY + width) % width].alive = true;
+                    cellpos[(coordX + 1 + width) % width][(coordY + width) % width].alive = true;
+                    cellpos[(coordX + 2 + width) % width][(coordY + width) % width].alive = true;
+                }
+
+                function glider(coordX, coordY) {
+                    cellpos[(coordX + width) % width][(coordY + width) % width].alive = true;
+                    cellpos[(coordX + 1 + width) % width][(coordY + width) % width].alive = true;
+                    cellpos[(coordX + 2 + width) % width][(coordY + width) % width].alive = true;
+                    cellpos[(coordX + width) % width][(coordY + 1 + width) % width].alive = true;
+                    cellpos[(coordX + 1 + width) % width][(coordY + 2 + width) % width].alive = true;
+                }
+
+                function boat(coordX, coordY) {
+                    cellpos[(coordX + width) % width][(coordY + width) % width].alive = true;
+                    cellpos[(coordX + 1 + width) % width][(coordY + width) % width].alive = true;
+                    cellpos[(coordX + width) % width][(coordY + 1 + width) % width].alive = true;
+                    cellpos[(coordX + 2 + width) % width][(coordY + 1 + width) % width].alive = true;
+                    cellpos[(coordX + 1 + width) % width][(coordY + 2 + width) % width].alive = true;
+                }
+
+                function pulsar(coordX, coordY) {
+                    cellpos[(coordX + 2 + width) % width][(coordY + width) % width].alive = true;
+                    cellpos[(coordX + 3 + width) % width][(coordY + width) % width].alive = true;
+                    cellpos[(coordX + 4 + width) % width][(coordY + width) % width].alive = true;
+                    cellpos[(coordX + 8 + width) % width][(coordY + width) % width].alive = true;
+                    cellpos[(coordX + 9 + width) % width][(coordY + width) % width].alive = true;
+                    cellpos[(coordX + 10 + width) % width][(coordY + width) % width].alive = true;
+
+                    cellpos[(coordX + width) % width][(coordY + 2 + width) % width].alive = true;
+                    cellpos[(coordX + width) % width][(coordY + 3 + width) % width].alive = true;
+                    cellpos[(coordX + width) % width][(coordY + 4 + width) % width].alive = true;
+                    cellpos[(coordX + width) % width][(coordY + 8 + width) % width].alive = true;
+                    cellpos[(coordX + width) % width][(coordY + 9 + width) % width].alive = true;
+                    cellpos[(coordX + width) % width][(coordY + 10 + width) % width].alive = true;
+
+                    cellpos[(coordX + 5 + width) % width][(coordY + 2 + width) % width].alive = true;
+                    cellpos[(coordX + 5 + width) % width][(coordY + 3 + width) % width].alive = true;
+                    cellpos[(coordX + 5 + width) % width][(coordY + 4 + width) % width].alive = true;
+                    cellpos[(coordX + 5 + width) % width][(coordY + 8 + width) % width].alive = true;
+                    cellpos[(coordX + 5 + width) % width][(coordY + 9 + width) % width].alive = true;
+                    cellpos[(coordX + 5 + width) % width][(coordY + 10 + width) % width].alive = true;
+
+                    cellpos[(coordX + 7 + width) % width][(coordY + 2 + width) % width].alive = true;
+                    cellpos[(coordX + 7 + width) % width][(coordY + 3 + width) % width].alive = true;
+                    cellpos[(coordX + 7 + width) % width][(coordY + 4 + width) % width].alive = true;
+                    cellpos[(coordX + 7 + width) % width][(coordY + 8 + width) % width].alive = true;
+                    cellpos[(coordX + 7 + width) % width][(coordY + 9 + width) % width].alive = true;
+                    cellpos[(coordX + 7 + width) % width][(coordY + 10 + width) % width].alive = true;
+
+                    cellpos[(coordX + 12 + width) % width][(coordY + 2 + width) % width].alive = true;
+                    cellpos[(coordX + 12 + width) % width][(coordY + 3 + width) % width].alive = true;
+                    cellpos[(coordX + 12 + width) % width][(coordY + 4 + width) % width].alive = true;
+                    cellpos[(coordX + 12 + width) % width][(coordY + 8 + width) % width].alive = true;
+                    cellpos[(coordX + 12 + width) % width][(coordY + 9 + width) % width].alive = true;
+                    cellpos[(coordX + 12 + width) % width][(coordY + 10 + width) % width].alive = true;
+
+                    cellpos[(coordX + 2 + width) % width][(coordY + 5 + width) % width].alive = true;
+                    cellpos[(coordX + 3 + width) % width][(coordY + 5 + width) % width].alive = true;
+                    cellpos[(coordX + 4 + width) % width][(coordY + 5 + width) % width].alive = true;
+                    cellpos[(coordX + 8 + width) % width][(coordY + 5 + width) % width].alive = true;
+                    cellpos[(coordX + 9 + width) % width][(coordY + 5 + width) % width].alive = true;
+                    cellpos[(coordX + 10 + width) % width][(coordY + 5 + width) % width].alive = true;
+
+                    cellpos[(coordX + 2 + width) % width][(coordY + 7 + width) % width].alive = true;
+                    cellpos[(coordX + 3 + width) % width][(coordY + 7 + width) % width].alive = true;
+                    cellpos[(coordX + 4 + width) % width][(coordY + 7 + width) % width].alive = true;
+                    cellpos[(coordX + 8 + width) % width][(coordY + 7 + width) % width].alive = true;
+                    cellpos[(coordX + 9 + width) % width][(coordY + 7 + width) % width].alive = true;
+                    cellpos[(coordX + 10 + width) % width][(coordY + 7 + width) % width].alive = true;
+
+                    cellpos[(coordX + 2 + width) % width][(coordY + 12 + width) % width].alive = true;
+                    cellpos[(coordX + 3 + width) % width][(coordY + 12 + width) % width].alive = true;
+                    cellpos[(coordX + 4 + width) % width][(coordY + 12 + width) % width].alive = true;
+                    cellpos[(coordX + 8 + width) % width][(coordY + 12 + width) % width].alive = true;
+                    cellpos[(coordX + 9 + width) % width][(coordY + 12 + width) % width].alive = true;
+                    cellpos[(coordX + 10 + width) % width][(coordY + 12 + width) % width].alive = true;
+                }
+
+
+                function gliderGun(coordX, coordY) {
+                    cellpos[(coordX + width) % width][(coordY + 4 + width) % width].alive = true;
+                    cellpos[(coordX + 1 + width) % width][(coordY + 4 + width) % width].alive = true;
+                    cellpos[(coordX + width) % width][(coordY + 5 + width) % width].alive = true;
+                    cellpos[(coordX + 1 + width) % width][(coordY + 5 + width) % width].alive = true;
+
+                    cellpos[(coordX + 10 + width) % width][(coordY + 4 + width) % width].alive = true;
+                    cellpos[(coordX + 10 + width) % width][(coordY + 5 + width) % width].alive = true;
+                    cellpos[(coordX + 10 + width) % width][(coordY + 6 + width) % width].alive = true;
+
+                    cellpos[(coordX + 11 + width) % width][(coordY + 3 + width) % width].alive = true;
+                    cellpos[(coordX + 11 + width) % width][(coordY + 7 + width) % width].alive = true;
+
+                    cellpos[(coordX + 12 + width) % width][(coordY + 2 + width) % width].alive = true;
+                    cellpos[(coordX + 12 + width) % width][(coordY + 8 + width) % width].alive = true;
+                    cellpos[(coordX + 13 + width) % width][(coordY + 2 + width) % width].alive = true;
+                    cellpos[(coordX + 13 + width) % width][(coordY + 8 + width) % width].alive = true;
+
+                    cellpos[(coordX + 14 + width) % width][(coordY + 5 + width) % width].alive = true;
+
+                    cellpos[(coordX + 15 + width) % width][(coordY + 3 + width) % width].alive = true;
+                    cellpos[(coordX + 15 + width) % width][(coordY + 7 + width) % width].alive = true;
+
+                    cellpos[(coordX + 16 + width) % width][(coordY + 4 + width) % width].alive = true;
+                    cellpos[(coordX + 16 + width) % width][(coordY + 5 + width) % width].alive = true;
+                    cellpos[(coordX + 16 + width) % width][(coordY + 6 + width) % width].alive = true;
+
+                    cellpos[(coordX + 17 + width) % width][(coordY + 5 + width) % width].alive = true;
+
+                    cellpos[(coordX + 20 + width) % width][(coordY + 2 + width) % width].alive = true;
+                    cellpos[(coordX + 20 + width) % width][(coordY + 3 + width) % width].alive = true;
+                    cellpos[(coordX + 20 + width) % width][(coordY + 4 + width) % width].alive = true;
+
+                    cellpos[(coordX + 21 + width) % width][(coordY + 2 + width) % width].alive = true;
+                    cellpos[(coordX + 21 + width) % width][(coordY + 3 + width) % width].alive = true;
+                    cellpos[(coordX + 21 + width) % width][(coordY + 4 + width) % width].alive = true;
+
+                    cellpos[(coordX + 22 + width) % width][(coordY + 1 + width) % width].alive = true;
+                    cellpos[(coordX + 22 + width) % width][(coordY + 5 + width) % width].alive = true;
+
+                    cellpos[(coordX + 24 + width) % width][(coordY + width) % width].alive = true;
+                    cellpos[(coordX + 24 + width) % width][(coordY + 1 + width) % width].alive = true;
+                    cellpos[(coordX + 24 + width) % width][(coordY + 5 + width) % width].alive = true;
+                    cellpos[(coordX + 24 + width) % width][(coordY + 6 + width) % width].alive = true;
+
+                    cellpos[(coordX + 34 + width) % width][(coordY + 2 + width) % width].alive = true;
+                    cellpos[(coordX + 35 + width) % width][(coordY + 2 + width) % width].alive = true;
+
+                    cellpos[(coordX + 34 + width) % width][(coordY + 3 + width) % width].alive = true;
+                    cellpos[(coordX + 35 + width) % width][(coordY + 3 + width) % width].alive = true;
+                }
+
+                function bird(coordX, coordY) {
+                    cellpos[(coordX + width) % width][(coordY + width) % width].alive = true;
+                    cellpos[(coordX + 3 + width) % width][(coordY + width) % width].alive = true;
+                    cellpos[(coordX + width) % width][(coordY + 2 + width) % width].alive = true;
+
+                    cellpos[(coordX + 1 + width) % width][(coordY + 3 + width) % width].alive = true;
+                    cellpos[(coordX + 2 + width) % width][(coordY + 3 + width) % width].alive = true;
+                    cellpos[(coordX + 3 + width) % width][(coordY + 3 + width) % width].alive = true;
+                    cellpos[(coordX + 4 + width) % width][(coordY + 3 + width) % width].alive = true;
+
+                    cellpos[(coordX + 4 + width) % width][(coordY + 1 + width) % width].alive = true;
+                    cellpos[(coordX + 4 + width) % width][(coordY + 2 + width) % width].alive = true;
+                }
+
+                function figures() {
+                    var px = parseInt(document.getElementById("posX").value);
+                    var py = parseInt(document.getElementById("posY").value);
+                }
+
+                printCells();
+
             }
 
             function Cell(alive) {
@@ -358,9 +561,16 @@
                 mac8.muted = true;
             }
 
+            function openNav() {
+                document.getElementById("myNav").style.width = "100%";
+            }
+
+            function closeNav() {
+                document.getElementById("myNav").style.width = "0%";
+            }
+
             music();
             World();
-            //resizeCanvas();
         </script>
     </body>
 </html>
