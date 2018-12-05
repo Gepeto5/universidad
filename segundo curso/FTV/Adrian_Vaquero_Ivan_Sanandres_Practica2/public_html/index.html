@@ -9,6 +9,12 @@
             body{
                 background-size: cover;
                 background-image: url('fondo.jpg');
+                background-image: url("fondo.jpg");
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-attachment: fixed; 
+                background-size: cover;
+                position: relative;
             }
             canvas{
                 margin: 10px;
@@ -98,25 +104,32 @@
             </audio>
             <p id="simSteps"></p>
             <p id="cellSteps"></p>
-            Introduce dimensión del canvas: <input type="number" id="res" value="">
-            Introduce coordenada en X: <input type="number" id="posX" value="">
-            Introduce coordenada en Y: <input type="number" id="posY" value="">
+            Introduce dimensión del canvas: <input type="number" id="resi" value="80">
+            <p>
+                Introduce coordenada en X: <input type="number" id="posX" value="">
+                Introduce coordenada en Y: <input type="number" id="posY" value="">
+            </p>
+            <p>
+                <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Introducir figuras</span>
+            </p>
             <p>Práctica 2 Fundamentos de Tecnología de Videojuegos<br />Adrián Vaquero Portillo, DNI: 53806658K<br />Iván Sanandrés Gutiérrez, DNI: 47587090K</p>
             <div id="myNav" class="overlay">
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                 <div class="overlay-content">
-                    <a href="#">About</a>
-                    <a href="#">Services</a>
-                    <a href="#">Clients</a>
-                    <a href="#">Contact</a>
+                    <a href="#" id="blink">Parpadeador</a>
+                    <a href="#" id="ship">Barco</a>
+                    <a href="#" id="glid">Planeador</a>
+                    <a href="#" id="glidGun">Pistola de planeadores</a>
+                    <a href="#" id="puls">Pulsar</a>
+                    <a href="#" id="bir">Pájaro</a>
                 </div> 
             </div>
-            <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
 
         </div>
         <script>
-            var context; //darkolive green, darksea green, darkblue, darkturquoise, purple, black 
+            var context; 
             var canvas = document.getElementById("lienzo");
+            var canvas2 = document.getElementById("lienzoGameBoy");
             var simulate = document.getElementById("simulate");
             var stop = document.getElementById("stop");
             var simSteps = document.getElementById("simSteps");
@@ -128,6 +141,12 @@
             var arcademode = document.getElementById("arcade");
             var mac = document.getElementById("macintosh");
             var mac8 = document.getElementById("macintosh8");
+            var blink = document.getElementById("blink");
+            var ship = document.getElementById("ship");
+            var glid = document.getElementById("glid");
+            var glidGun = document.getElementById("glidGun");
+            var puls = document.getElementById("puls");
+            var bir = document.getElementById("bir");
             var image = new Image();
             image.src = "gameboy.png";
 
@@ -205,9 +224,9 @@
                             }
                         }
                     }
-                    if (cellpos[posCuadroX][posCuadroY].alive === true) {
+                    if (cellpos[posCuadroX][posCuadroY].alive === true && ((posCuadroY < height) && (posCuadroX < width))) {
                         cellSteps.innerHTML = "La célula (" + (posCuadroX + 1) + ", " + (posCuadroY + 1) + ") lleva viva " + cellpos[posCuadroX][posCuadroY].time + " pasos.";
-                    } else if (cellpos[posCuadroX][posCuadroY].alive === false) {
+                    } else if (cellpos[posCuadroX][posCuadroY].alive === false && ((posCuadroY < height) && (posCuadroX < width))) {
                         cellSteps.innerHTML = "La célula (" + (posCuadroX + 1) + ", " + (posCuadroY + 1) + ") lleva muerta " + cellpos[posCuadroX][posCuadroY].time + " pasos.";
                     }
                     counterSteps++;
@@ -272,6 +291,7 @@
                 }
 
                 function arcadeM() {
+                    var a = parseInt(document.getElementById("resi").value);
                     if (!arcadeActivated) {
                         colorAlive = "darkolivegreen";
                         colorDead = "darkseagreen";
@@ -279,7 +299,7 @@
                         chiptune = true;
                         mac.muted = true;
                         mac8.muted = false;
-
+                        
                         canvas.width = 512;
                         canvas.height = 680;
                         context.drawImage(image, 0, 0, 512, 680);
@@ -288,35 +308,27 @@
                         offsetX = 143;
                         offsetY = 83;
 
-                    } else if (arcadeActivated) {
+                    } else if (arcadeActivated && a >= 30 && a <= 100) {
                         colorAlive = "darkblue";
                         colorDead = "darkturquoise";
                         arcadeActivated = false;
                         chiptune = false;
                         mac8.muted = true;
                         mac.muted = false;
-
+                        /*
                         width = 80;
                         height = 80;
                         canvas.width = width * cell;
-                        canvas.height = height * cell;
+                        canvas.height = height * cell; */
                         offsetX = 0;
                         offsetY = 0;
+                        resizeCanvas();
                     }
+                    else {
+                            alert("Valor no válido, introduce un valor entre 30 y 100");
+                        }
                     printCells();
                 }
-
-                random.addEventListener("click", randomize, false);
-                clearCells.addEventListener("click", clear, false);
-                thanos.addEventListener("click", thanosButton, false);
-                arcademode.addEventListener("click", arcadeM, false);
-                simulate.addEventListener("click", simulateLife, false);
-                stop.addEventListener("click", stopSimulation, false);
-                res.addEventListener("click", resizeCanvas, false);
-
-                canvas.addEventListener("click", clickCell, true);
-                canvas.addEventListener("click", statusCell, true);
-                canvas.addEventListener("mousemove", statusCell, false);
 
                 function clickCell(e) {
                     dimCuadro = this.getBoundingClientRect();
@@ -336,28 +348,32 @@
                     dimCuadro = this.getBoundingClientRect();
                     posCuadroX = parseInt((e.clientX - dimCuadro.left - offsetX) / cell);
                     posCuadroY = parseInt((e.clientY - dimCuadro.top - offsetY) / cell);
-                    if (cellpos[posCuadroX][posCuadroY].alive === true) {
+                    if(posCuadroX > width){
+                        posCuadroX = width;
+                    }
+                    if(posCuadroY > height){
+                        posCuadroY = height;
+                    }
+                    if (cellpos[posCuadroX][posCuadroY].alive === true && ((posCuadroY < height) && (posCuadroX < width))) {
                         cellSteps.innerHTML = "La célula (" + (posCuadroX + 1) + ", " + (posCuadroY + 1) + ") lleva viva " + cellpos[posCuadroX][posCuadroY].time + " pasos.";
-                    } else if (cellpos[posCuadroX][posCuadroY].alive === false) {
+                    } else if (cellpos[posCuadroX][posCuadroY].alive === false && ((posCuadroY < height) && (posCuadroX < width))) {
                         cellSteps.innerHTML = "La célula (" + (posCuadroX + 1) + ", " + (posCuadroY + 1) + ") lleva muerta " + cellpos[posCuadroX][posCuadroY].time + " pasos.";
                     }
                 }
 
                 function resizeCanvas() {
                     if (!arcadeActivated) {
-                        var a = parseInt(document.getElementById("res").value);
+                        var a = parseInt(document.getElementById("resi").value);
                         var newarray = new Array(a);
                         var newarrayn = new Array(a);
 
                         var prevW = width;
                         var prevH = height;
 
-                        if (a >= 20 && a <= 100) {
+                        if (a >= 30 && a <= 100) {
                             width = a;
                             height = a;
-                        } else {
-                            alert("Valor demasiado alto, por favor, introduce un valor entre 20 y 100");
-                        }
+                        
 
                         canvas.width = width * cell;
                         canvas.height = height * cell;
@@ -367,6 +383,7 @@
                             newarrayn[i] = new Array(a);
                             for (var j = 0; j < a; j++) {
                                 if (i < prevW && j < prevH) {
+                                    console.log(i);
                                     newarray[i][j] = cellpos[i][j];
                                     newarrayn[i][j] = checkN[i][j];
                                 } else {
@@ -377,36 +394,62 @@
                         }
                         cellpos = newarray;
                         checkN = newarrayn;
-
+                        } else {
+                            alert("Valor no válido, introduce un valor entre 30 y 100");
+                        }
                         printCells();
                     } else {
                         alert("Función no disponible en el Modo GameBoy");
                     }
                 }
 
-                function blinker(coordX, coordY) {
+                function blinker() {
+                    var coordX = parseInt(document.getElementById("posX").value);
+                    var coordY = parseInt(document.getElementById("posY").value);
+
                     cellpos[(coordX + width) % width][(coordY + width) % width].alive = true;
                     cellpos[(coordX + 1 + width) % width][(coordY + width) % width].alive = true;
                     cellpos[(coordX + 2 + width) % width][(coordY + width) % width].alive = true;
+                    if (!simNow) {
+                        printCells();
+                    }
+                    closeNav();
                 }
 
-                function glider(coordX, coordY) {
+                function glider() {
+                    var coordX = parseInt(document.getElementById("posX").value);
+                    var coordY = parseInt(document.getElementById("posY").value);
+
                     cellpos[(coordX + width) % width][(coordY + width) % width].alive = true;
                     cellpos[(coordX + 1 + width) % width][(coordY + width) % width].alive = true;
                     cellpos[(coordX + 2 + width) % width][(coordY + width) % width].alive = true;
                     cellpos[(coordX + width) % width][(coordY + 1 + width) % width].alive = true;
                     cellpos[(coordX + 1 + width) % width][(coordY + 2 + width) % width].alive = true;
+                    if (!simNow) {
+                        printCells();
+                    }
+                    closeNav();
                 }
 
-                function boat(coordX, coordY) {
+                function boat() {
+                    var coordX = parseInt(document.getElementById("posX").value);
+                    var coordY = parseInt(document.getElementById("posY").value);
+
                     cellpos[(coordX + width) % width][(coordY + width) % width].alive = true;
                     cellpos[(coordX + 1 + width) % width][(coordY + width) % width].alive = true;
                     cellpos[(coordX + width) % width][(coordY + 1 + width) % width].alive = true;
                     cellpos[(coordX + 2 + width) % width][(coordY + 1 + width) % width].alive = true;
                     cellpos[(coordX + 1 + width) % width][(coordY + 2 + width) % width].alive = true;
+                    if (!simNow) {
+                        printCells();
+                    }
+                    closeNav();
                 }
 
-                function pulsar(coordX, coordY) {
+                function pulsar() {
+                    var coordX = parseInt(document.getElementById("posX").value);
+                    var coordY = parseInt(document.getElementById("posY").value);
+
                     cellpos[(coordX + 2 + width) % width][(coordY + width) % width].alive = true;
                     cellpos[(coordX + 3 + width) % width][(coordY + width) % width].alive = true;
                     cellpos[(coordX + 4 + width) % width][(coordY + width) % width].alive = true;
@@ -462,10 +505,17 @@
                     cellpos[(coordX + 8 + width) % width][(coordY + 12 + width) % width].alive = true;
                     cellpos[(coordX + 9 + width) % width][(coordY + 12 + width) % width].alive = true;
                     cellpos[(coordX + 10 + width) % width][(coordY + 12 + width) % width].alive = true;
+                    if (!simNow) {
+                        printCells();
+                    }
+                    closeNav();
                 }
 
 
-                function gliderGun(coordX, coordY) {
+                function gliderGun() {
+                    var coordX = parseInt(document.getElementById("posX").value);
+                    var coordY = parseInt(document.getElementById("posY").value);
+
                     cellpos[(coordX + width) % width][(coordY + 4 + width) % width].alive = true;
                     cellpos[(coordX + 1 + width) % width][(coordY + 4 + width) % width].alive = true;
                     cellpos[(coordX + width) % width][(coordY + 5 + width) % width].alive = true;
@@ -515,9 +565,17 @@
 
                     cellpos[(coordX + 34 + width) % width][(coordY + 3 + width) % width].alive = true;
                     cellpos[(coordX + 35 + width) % width][(coordY + 3 + width) % width].alive = true;
+
+                    if (!simNow) {
+                        printCells();
+                    }
+                    closeNav();
                 }
 
-                function bird(coordX, coordY) {
+                function bird() {
+                    var coordX = parseInt(document.getElementById("posX").value);
+                    var coordY = parseInt(document.getElementById("posY").value);
+
                     cellpos[(coordX + width) % width][(coordY + width) % width].alive = true;
                     cellpos[(coordX + 3 + width) % width][(coordY + width) % width].alive = true;
                     cellpos[(coordX + width) % width][(coordY + 2 + width) % width].alive = true;
@@ -529,12 +587,34 @@
 
                     cellpos[(coordX + 4 + width) % width][(coordY + 1 + width) % width].alive = true;
                     cellpos[(coordX + 4 + width) % width][(coordY + 2 + width) % width].alive = true;
+
+                    if (!simNow) {
+                        printCells();
+                    }
+                    closeNav();
                 }
 
-                function figures() {
-                    var px = parseInt(document.getElementById("posX").value);
-                    var py = parseInt(document.getElementById("posY").value);
-                }
+
+
+
+                blink.addEventListener("click", blinker, false);
+                glid.addEventListener("click", glider, false);
+                ship.addEventListener("click", boat, false);
+                bir.addEventListener("click", bird, false);
+                glidGun.addEventListener("click", gliderGun, false);
+                puls.addEventListener("click", pulsar, false);
+
+                random.addEventListener("click", randomize, false);
+                clearCells.addEventListener("click", clear, false);
+                thanos.addEventListener("click", thanosButton, false);
+                arcademode.addEventListener("click", arcadeM, false);
+                simulate.addEventListener("click", simulateLife, false);
+                stop.addEventListener("click", stopSimulation, false);
+                res.addEventListener("click", resizeCanvas, false);
+
+                canvas.addEventListener("click", clickCell, true);
+                canvas.addEventListener("click", statusCell, true);
+                canvas.addEventListener("mousemove", statusCell, false);
 
                 printCells();
 
