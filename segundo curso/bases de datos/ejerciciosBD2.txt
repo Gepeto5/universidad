@@ -1,0 +1,129 @@
+commit;
+
+create table PERSONAJE_GENERICO (
+  Codigo_PG   number(3, 0),
+  Nombre      varchar2(10) not null,
+  Apodo       varchar2(10) not null,
+  Descripcion varchar2(255),
+  primary key (Codigo_PG)
+);
+
+  create table HABILIDAD(
+  Codigo_H number(3,0),
+  Nombre varchar2(20) not null,
+  Categoria varchar2 (10) not null,
+  Descripcion varchar2(50),
+  Coste number(6) not null,
+  primary key(Codigo_H),
+  check (descripcion = 'Fuerza' or descripcion='Velocidad' or descripcion = 'Punteria' or descripcion = 'Otras')
+);
+
+ create table HAB_NECESARIA(
+  Habilidad number(3,0),
+  H_Necesaria number(3,0) not null,
+  Puntos_Necesarios number(6, 0) not null,
+  primary key(Habilidad, H_necesaria),
+  foreign key(H_necesaria) references HABILIDAD on delete cascade,
+  foreign key(Habilidad) references HABILIDAD on delete cascade
+);
+
+ create table PG_TIENE_H(
+  Codigo_PG number(6,0),
+  Codigo_H number(5,0),
+  Puntos number(3,0) not null,
+  primary key(Codigo_PG,Codigo_H),
+  foreign key(Codigo_H) references habilidad on delete set null,
+  foreign key(Codigo_PG) references personaje_generico on delete set null
+);
+
+  create table ESCENARIO(
+  Codigo_E number(6,0),
+  Descripcion varchar2(50),
+  URL_Mapa varchar2(255) not null,
+  primary key(Codigo_E)
+);
+
+create table PERSONAJE_JUGADOR(
+  Codigo_PG number(3,0),
+  Codigo_PJ number(12,0),
+  Nombre varchar2 (20) not null,
+  Id_U number(10,0) not null,
+  primary key(Codigo_PG,Codigo_PJ),
+  foreign key (Codigo_PG) references PERSONAJE_GENERICO on delete cascade
+);
+
+ create table PJ_TIENE_H(
+  Codigo_PG number(3,0),
+  Codigo_H number(3,0),
+  Codigo_PJ number(12, 0),
+  Puntos number(3,0) not null,
+  primary key(Codigo_PG,Codigo_H, Codigo_PJ),
+  foreign key(Codigo_H) references habilidad on delete set null,
+  foreign key(Codigo_PG, Codigo_PJ) references personaje_jugador on delete set null
+);
+
+create table USUARIO(
+  ID_U number(10,0),
+  Nombre varchar2(50) not null,
+  Apodo varchar2 (20) not null,
+  Pais varchar2(15) not null,
+  IBAN varchar2(24) not null,
+  Oro number(10, 0) not null,
+  Contraseña number(8, 0) not null,
+  Codigo_PG_Capitan number(3, 0),
+  Codigo_PJ_Capitan number(12, 0),
+  primary key(ID_U),
+  foreign key (Codigo_PG_Capitan, Codigo_PJ_Capitan) references PERSONAJE_JUGADOR on delete cascade
+);
+
+alter table PERSONAJE_JUGADOR add(foreign key(ID_U) references USUARIO on delete cascade);
+
+create table EQUIPO(
+  Codigo_EQ number(10,0),
+  Nombre varchar2(50) not null,
+  Fecha_Creacion date not null,
+  Pais varchar2(15) not null,
+  Id_U1 number(10,0) not null,
+  Id_U2 number(10,0) not null,
+  Id_U3 number(10,0) not null,
+  Id_U4 number(10,0) not null,
+  Id_U5 number(10,0) not null,
+  primary key(Codigo_EQ),
+  foreign key (Id_U1) references USUARIO on delete cascade,
+  foreign key (Id_U2) references USUARIO on delete cascade,
+  foreign key (Id_U3) references USUARIO on delete cascade,
+  foreign key (Id_U4) references USUARIO on delete cascade,
+  foreign key (Id_U5) references USUARIO on delete cascade
+);
+
+rollback;
+
+commit; --ejercicio 1 hasta aqui
+
+insert into PERSONAJE_GENERICO(Codigo_PG,Nombre,Apodo,Descripcion) values(1,'Gepeto','Gepe','Es un tio bastante guay');
+insert into PERSONAJE_GENERICO(Codigo_PG,Nombre,Apodo,Descripcion) values(2,'Ece','Flexece','Cuenta la leyenda que alcanzo la maxima capa de ironia');
+insert into PERSONAJE_GENERICO(Codigo_PG,Nombre,Apodo,Descripcion) values(3,'Adri','Dabdrian','Aun sigue atrapado en un bucle infinito de dabs');
+insert into PERSONAJE_GENERICO(Codigo_PG,Nombre,Apodo,Descripcion) values(4,'Pedro','Thepyter','Acho pijo');
+insert into PERSONAJE_GENERICO(Codigo_PG,Nombre,Apodo) values(5,'Martin','Daodab');
+insert into PERSONAJE_GENERICO(Codigo_PG,Nombre,Apodo,Descripcion) values(6,'Eric','Sweiko','El rey eterno de los cowboys');
+
+insert into HABILIDAD(Codigo_H,Nombre,Categoria,Descripcion,Coste) values(3,'Dab infinito','Burla','Otras', 100);
+insert into HABILIDAD(Codigo_H,Nombre,Categoria,Descripcion,Coste) values(2,'Hablar en murciano','Dialecto','Fuerza', 200);
+insert into HABILIDAD(Codigo_H,Nombre,Categoria,Coste) values(7,'Fabricar memes','Velocidad', 100);
+insert into HABILIDAD(Codigo_H,Nombre,Categoria,Descripcion,Coste) values(4,'Programar','Hackeo','Punteria', 500);
+
+insert into HAB_NECESARIA(Habilidad,H_Necesaria,Puntos_Necesarios) values(3,2,7);
+insert into HAB_NECESARIA(Habilidad,H_Necesaria,Puntos_Necesarios) values(2,7,2);
+insert into HAB_NECESARIA(Habilidad,H_Necesaria,Puntos_Necesarios) values(7,3,88);
+insert into HAB_NECESARIA(Habilidad,H_Necesaria,Puntos_Necesarios) values(4,2,9);
+
+insert into PG_TIENE_H(Codigo_PG,Codigo_H,Puntos) values(1,7,10);
+insert into PG_TIENE_H(Codigo_PG,Codigo_H,Puntos) values(2,7,20);
+insert into PG_TIENE_H(Codigo_PG,Codigo_H,Puntos) values(3,3,15);
+insert into PG_TIENE_H(Codigo_PG,Codigo_H,Puntos) values(4,2,17);
+insert into PG_TIENE_H(Codigo_PG,Codigo_H,Puntos) values(5,4,22);
+insert into PG_TIENE_H(Codigo_PG,Codigo_H,Puntos) values(6,3,14);
+
+insert into ESCENARIO(Codigo_E,Descripcion,URL_Mapa) values(1,'Campus URJC','urjc.es');
+
+select * from PG_TIENE_H;

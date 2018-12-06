@@ -1,0 +1,105 @@
+commit;
+
+create table PERSONAJE_GENERICO (
+  Codigo_PG   number(3, 0),
+  Nombre      varchar2(10) not null,
+  Apodo       varchar2(10) not null,
+  Descripcion varchar2(255),
+  primary key (Codigo_PG)
+);
+
+  create table HABILIDAD(
+  Codigo_H number(3,0),
+  Nombre varchar2(20) not null,
+  Categoria varchar2 (10) not null,
+  Descripcion varchar2(50),
+  Coste number(6) not null,
+  primary key(Codigo_H),
+  check (descripcion = 'Fuerza' or descripcion='Velocidad' or descripcion = 'Punteria' or descripcion = 'Otras')
+);
+
+ create table HAB_NECESARIA(
+  Habilidad number(3,0),
+  H_Necesaria number(3,0) not null,
+  Puntos_Necesarios number(6, 0) not null,
+  primary key(Habilidad, H_necesaria),
+  foreign key(H_necesaria) references HABILIDAD on delete cascade,
+  foreign key(Habilidad) references HABILIDAD on delete cascade
+);
+
+ create table PG_TIENE_H(
+  Codigo_PG number(6,0),
+  Codigo_H number(5,0),
+  Puntos number(3,0) not null,
+  primary key(Codigo_PG,Codigo_H),
+  foreign key(Codigo_H) references habilidad on delete set null,
+  foreign key(Codigo_PG) references personaje_generico on delete set null
+);
+
+  create table ESCENARIO(
+  Codigo_E number(6,0),
+  Descripcion varchar2(50),
+  URL_Mapa varchar2(255) not null,
+  primary key(Codigo_E)
+);
+
+create table PERSONAJE_JUGADOR(
+  Codigo_PG number(3,0),
+  Codigo_PJ number(12,0),
+  Nombre varchar2 (20) not null,
+  Id_U number(10,0) not null,
+  primary key(Codigo_PG,Codigo_PJ),
+  foreign key (Codigo_PG) references PERSONAJE_GENERICO on delete cascade
+);
+
+ create table PJ_TIENE_H(
+  Codigo_PG number(3,0),
+  Codigo_H number(3,0),
+  Codigo_PJ number(12, 0),
+  Puntos number(3,0) not null,
+  primary key(Codigo_PG,Codigo_H, Codigo_PJ),
+  foreign key(Codigo_H) references habilidad on delete set null,
+  foreign key(Codigo_PG, Codigo_PJ) references personaje_jugador on delete set null
+);
+
+create table USUARIO(
+  ID_U number(10,0),
+  Nombre varchar2(50) not null,
+  Apodo varchar2 (20) not null,
+  Pais varchar2(15) not null,
+  IBAN varchar2(24) not null,
+  Oro number(10, 0) not null,
+  Contraseña number(8, 0) not null,
+  Codigo_PG_Capitan number(3, 0),
+  Codigo_PJ_Capitan number(12, 0),
+  primary key(ID_U),
+  foreign key (Codigo_PG_Capitan, Codigo_PJ_Capitan) references PERSONAJE_JUGADOR on delete cascade
+);
+
+alter table PERSONAJE_JUGADOR add(foreign key(ID_U) references USUARIO on delete cascade);
+
+create table EQUIPO(
+  Codigo_EQ number(10,0),
+  Nombre varchar2(50) not null,
+  Fecha_Creacion date not null,
+  Pais varchar2(15) not null,
+  Id_U1 number(10,0) not null,
+  Id_U2 number(10,0) not null,
+  Id_U3 number(10,0) not null,
+  Id_U4 number(10,0) not null,
+  Id_U5 number(10,0) not null,
+  primary key(Codigo_EQ),
+  foreign key (Id_U1) references USUARIO on delete cascade,
+  foreign key (Id_U2) references USUARIO on delete cascade,
+  foreign key (Id_U3) references USUARIO on delete cascade,
+  foreign key (Id_U4) references USUARIO on delete cascade,
+  foreign key (Id_U5) references USUARIO on delete cascade
+);
+
+rollback;
+
+commit; --ejercicio 1 hasta aqui
+
+insert into personaje_generico (Codigo_PG, nombre, apodo, descripcion) values (1, 'Gepeto', 'El Gepe', 'Es un tio bastante majo, y tiene un nombre muy guay');
+
+select * from personaje_generico;
