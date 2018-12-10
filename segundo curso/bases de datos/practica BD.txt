@@ -99,3 +99,39 @@ create table EQUIPO(
 rollback;
 
 commit; --ejercicio 1 hasta aqui
+
+insert into PERSONAJE_GENERICO(Codigo_PG,Nombre,Apodo,Descripcion) values(1,'Gepeto','Gepe','Es un tio bastante guay');
+insert into PERSONAJE_GENERICO(Codigo_PG,Nombre,Apodo,Descripcion) values(2,'Ece','Flexece','Cuenta la leyenda que alcanzo la maxima capa de ironia');
+insert into PERSONAJE_GENERICO(Codigo_PG,Nombre,Apodo,Descripcion) values(3,'Adri','Dabdrian','Aun sigue atrapado en un bucle infinito de dabs');
+insert into PERSONAJE_GENERICO(Codigo_PG,Nombre,Apodo,Descripcion) values(4,'Pedro','Thepyter','Acho pijo');
+insert into PERSONAJE_GENERICO(Codigo_PG,Nombre,Apodo) values(5,'Martin','Daodab');
+insert into PERSONAJE_GENERICO(Codigo_PG,Nombre,Apodo,Descripcion) values(6,'Eric','Sweiko','El rey eterno de los cowboys');
+
+insert into HABILIDAD(Codigo_H,Nombre,Categoria,Descripcion,Coste) values(3,'Dab infinito','Burla','Otras', 100);
+insert into HABILIDAD(Codigo_H,Nombre,Categoria,Descripcion,Coste) values(2,'Hablar en murciano','Dialecto','Fuerza', 200);
+insert into HABILIDAD(Codigo_H,Nombre,Categoria,Coste) values(7,'Fabricar memes','Velocidad', 100);
+insert into HABILIDAD(Codigo_H,Nombre,Categoria,Descripcion,Coste) values(4,'Programar','Hackeo','Punteria', 500);
+
+insert into HAB_NECESARIA(Habilidad,H_Necesaria,Puntos_Necesarios) values(3,2,7);
+insert into HAB_NECESARIA(Habilidad,H_Necesaria,Puntos_Necesarios) values(2,7,2);
+insert into HAB_NECESARIA(Habilidad,H_Necesaria,Puntos_Necesarios) values(7,3,88);
+insert into HAB_NECESARIA(Habilidad,H_Necesaria,Puntos_Necesarios) values(4,2,9);
+
+insert into PG_TIENE_H(Codigo_PG,Codigo_H,Puntos) values(1,7,10);
+insert into PG_TIENE_H(Codigo_PG,Codigo_H,Puntos) values(2,7,20);
+insert into PG_TIENE_H(Codigo_PG,Codigo_H,Puntos) values(3,3,15);
+insert into PG_TIENE_H(Codigo_PG,Codigo_H,Puntos) values(4,2,17);
+insert into PG_TIENE_H(Codigo_PG,Codigo_H,Puntos) values(5,4,22);
+insert into PG_TIENE_H(Codigo_PG,Codigo_H,Puntos) values(6,3,14);
+insert into ESCENARIO(Codigo_E,Descripcion,URL_Mapa) values(1,'Campus URJC','urjc.es');
+
+insert into PERSONAJE_JUGADOR(Codigo_PG, Codigo_PJ,Nombre, Id_U) values(1,1 ,'Tunnel Snake',9);
+insert into PERSONAJE_JUGADOR(Codigo_PG, Codigo_PJ,Nombre, Id_U) values(2,3 ,'Grusck',9);
+insert into PERSONAJE_JUGADOR(Codigo_PG, Codigo_PJ,Nombre, Id_U) values(3,7 ,'Mono Verde',26);
+insert into PERSONAJE_JUGADOR(Codigo_PG, Codigo_PJ,Nombre, Id_U) values(5,2 ,'Joker',30);
+insert into PERSONAJE_JUGADOR(Codigo_PG, Codigo_PJ,Nombre, Id_U) values(6,9 ,'DIO',30);
+
+insert into USUARIO(Id_U, Nombre, Apodo, Pais, IBAN, Oro, Contraseña) values(9,'Ivan' ,'Gepeto','España', 123456789, 50, 12345);
+
+
+select * from USUARIO;
