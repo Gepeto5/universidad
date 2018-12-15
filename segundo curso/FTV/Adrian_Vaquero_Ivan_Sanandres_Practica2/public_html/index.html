@@ -8,8 +8,7 @@
         <style>
             body{
                 background-size: cover;
-                background-image: url('fondo.jpg');
-                background-image: url("fondo.jpg");
+                background-image: url('https://i.redd.it/8ncj88qz0evy.jpg');
                 background-position: center center;
                 background-repeat: no-repeat;
                 background-attachment: fixed; 
@@ -42,7 +41,6 @@
                 overflow-x: hidden;
                 transition: 0.5s;
             }
-
             .overlay-content {
                 position: relative;
                 top: 25%;
@@ -50,7 +48,6 @@
                 text-align: center;
                 margin-top: 30px;
             }
-
             .overlay a {
                 padding: 8px;
                 text-decoration: none;
@@ -59,18 +56,15 @@
                 display: block;
                 transition: 0.3s;
             }
-
             .overlay a:hover, .overlay a:focus {
                 color: #f1f1f1;
             }
-
             .overlay .closebtn {
                 position: absolute;
                 top: 20px;
                 right: 45px;
                 font-size: 60px;
             }
-
             @media screen and (max-height: 450px) {
                 .overlay a {font-size: 20px}
                 .overlay .closebtn {
@@ -106,8 +100,8 @@
             <p id="cellSteps"></p>
             Introduce dimensión del canvas: <input type="number" id="resi" value="80">
             <p>
-                Introduce coordenada en X: <input type="number" id="posX" value="">
-                Introduce coordenada en Y: <input type="number" id="posY" value="">
+                Introduce coordenada en X: <input type="number" id="posX" value="0">
+                Introduce coordenada en Y: <input type="number" id="posY" value="0">
             </p>
             <p>
                 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Introducir figuras</span>
@@ -127,9 +121,8 @@
 
         </div>
         <script>
-            var context; 
+            var context; //Inicialización de variables que contienen los identificadores de los elementos HTML
             var canvas = document.getElementById("lienzo");
-            var canvas2 = document.getElementById("lienzoGameBoy");
             var simulate = document.getElementById("simulate");
             var stop = document.getElementById("stop");
             var simSteps = document.getElementById("simSteps");
@@ -148,23 +141,23 @@
             var puls = document.getElementById("puls");
             var bir = document.getElementById("bir");
             var image = new Image();
-            image.src = "gameboy.png";
+            image.src = "https://png2.kisspng.com/20180714/hui/kisspng-game-boy-color-pokmon-gold-and-silver-game-boy-a-sonja-day-5b4ab34f9429d3.5161927415316222236069.png";
 
-            var colorAlive = "darkblue";
+            var colorAlive = "darkblue"; //Colores que tendrán las células
             var colorDead = "darkturquoise";
 
-            function World() {
-                var dimCuadro;
-                var posCuadroX = 0;
-                var posCuadroY = 0;
-                var offsetX = 0;
+            function World() { //Función mundo
+                var dimCuadro; //Variable que determina el tamaño de un elemento y su posición relativa respecto a la ventana de visualización
+                var posCuadroX = 0; //Posición en la que estará el ratón en coordenadas de la célula en X
+                var posCuadroY = 0; //Posición en la que estará el ratón en coordenadas de la célula en Y
+                var offsetX = 0; //Offset utilizado para omitir el espacio que está fuera del mundo y dentro del canvas
                 var offsetY = 0;
-                const cell = 10;    //tamaño célula
-                var width = 80;    //número células en el ancho
-                var height = 80;   //número células en el alto
-                var checkN = [width];
-                var cellpos = [width];
-                for (var i = 0; i < width; i++) {
+                const cell = 10; //tamaño célula
+                var width = 80; //número células en el ancho
+                var height = 80; //número células en el alto
+                var checkN = [width]; //Array auxiliar que se usará para comprobar las células vecinas
+                var cellpos = [width]; //Array que determinará el número de células
+                for (var i = 0; i < width; i++) { //En este for se rellenan los arrays y se crean las células, que comenzarán con el estado de muertas
                     cellpos[i] = [height];
                     checkN[i] = [height];
                     for (var j = 0; j < height; j++) {
@@ -172,12 +165,12 @@
                         cellpos[i][j].alive = false;
                     }
                 }
-                canvas.width = width * cell;
+                canvas.width = width * cell; //Se determina el tamaño del lienzo
                 canvas.height = height * cell;
 
                 context = canvas.getContext("2d");
 
-                function checkNeighbours(x, y) {
+                function checkNeighbours(x, y) { //Función que comprueba los vecinos de una célula
                     var count = 0;
                     for (var i = -1; i < 2; i++) {
                         for (var j = -1; j < 2; j++) {
@@ -191,7 +184,7 @@
                     return count;
                 }
 
-                function printCells() {
+                function printCells() { //Función que pinta las células de un color u otro según estén vivas o muertas
                     for (var x = 0; x < width; x++) {
                         for (var y = 0; y < height; y++) {
                             if (cellpos[x][y].alive) {
@@ -205,8 +198,8 @@
                     }
                 }
 
-                var counterSteps = 0;
-                function life() {
+                var counterSteps = 0; //Contador de pasos de la simulación
+                function life() { //Función que simula la vida en el mundo, calculando las restricciones en función a los vecinos de cada célula
                     for (var x = 0; x < width; x++) {
                         for (var y = 0; y < height; y++) {
                             checkN[x][y] = checkNeighbours(x, y);
@@ -224,21 +217,21 @@
                             }
                         }
                     }
-                    if (cellpos[posCuadroX][posCuadroY].alive === true && ((posCuadroY < height) && (posCuadroX < width))) {
+                    if (cellpos[posCuadroX][posCuadroY].alive === true && ((posCuadroY < height) && (posCuadroX < width))) { //Se imprime por pantalla el tiempo que cada célula lleva viva o muerta, teniendo como referencia sus coordenadas
                         cellSteps.innerHTML = "La célula (" + (posCuadroX + 1) + ", " + (posCuadroY + 1) + ") lleva viva " + cellpos[posCuadroX][posCuadroY].time + " pasos.";
                     } else if (cellpos[posCuadroX][posCuadroY].alive === false && ((posCuadroY < height) && (posCuadroX < width))) {
                         cellSteps.innerHTML = "La célula (" + (posCuadroX + 1) + ", " + (posCuadroY + 1) + ") lleva muerta " + cellpos[posCuadroX][posCuadroY].time + " pasos.";
                     }
-                    counterSteps++;
-                    simSteps.innerHTML = "Pasos de la simulación " + counterSteps;
+                    counterSteps++; 
+                    simSteps.innerHTML = "Pasos de la simulación " + counterSteps; //Se imprimen por pantalla los pasos que lleva la simulación activa
                 }
 
 
-                var print, sim;
-                var simNow = false;
-                var arcadeActivated = false;
+                var print, sim; //Variables que se utilizarán para facilitar el uso de funciones que activan y desactivan intervalos
+                var simNow = false; //Variable que determina si la simulación está activa o no
+                var arcadeActivated = false; //Variable que determina si el modo GameBoy está activo o no
 
-                function simulateLife() {
+                function simulateLife() { //Función que utiliza intervalos para que se llame a las funciones life y printCells cada 100 milisegundos
                     if (!simNow) {
                         print = setInterval(printCells, 100);
                         sim = setInterval(life, 100);
@@ -246,7 +239,7 @@
                     }
                 }
 
-                function stopSimulation() {
+                function stopSimulation() { //Función que detiene los intervalos
                     if (simNow) {
                         clearInterval(print);
                         clearInterval(sim);
@@ -254,7 +247,7 @@
                     }
                 }
 
-                function clear() {
+                function clear() { //Función que deja a todas las células en estado muerto
                     for (var i = 0; i < width; i++) {
                         for (var j = 0; j < height; j++) {
                             cellpos[i][j].alive = false;
@@ -263,7 +256,7 @@
                     printCells();
                 }
 
-                function randomize() {
+                function randomize() { //Función que aleatoriza el estado de las células
                     for (var i = 0; i < width; i++) {
                         for (var j = 0; j < height; j++) {
                             cellpos[i][j].alive = randBool();
@@ -272,7 +265,7 @@
                     printCells();
                 }
 
-                function thanosButton() {
+                function thanosButton() { //Función que deja al 50% de las células vivas, escogidas de manera aleatoria, en estado muerto
                     if (!arcadeActivated) {
                         colorAlive = "darkturquoise";
                         colorDead = "purple";
@@ -290,7 +283,7 @@
                     }
                 }
 
-                function arcadeM() {
+                function arcadeM() { //Función que activa o desactiva el modo GameBoy
                     var a = parseInt(document.getElementById("resi").value);
                     if (!arcadeActivated) {
                         colorAlive = "darkolivegreen";
@@ -330,7 +323,7 @@
                     printCells();
                 }
 
-                function clickCell(e) {
+                function clickCell(e) { //Función que se activa cuando se ejecuta un evento de click de ratón sobre el canvas, y que sirve para cambiar el estado de la célula que se clica
                     dimCuadro = this.getBoundingClientRect();
                     posCuadroX = parseInt((e.clientX - dimCuadro.left - offsetX) / cell);
                     posCuadroY = parseInt((e.clientY - dimCuadro.top - offsetY) / cell);
@@ -344,7 +337,7 @@
                     printCells();
                 }
 
-                function statusCell(e) {
+                function statusCell(e) { //Función que muestra por pantalla los pasos que una célula lleva viva o muerta cuando el ratón pasa por encima, y teniendo en cuenta sus coordenadas en el mundo
                     dimCuadro = this.getBoundingClientRect();
                     posCuadroX = parseInt((e.clientX - dimCuadro.left - offsetX) / cell);
                     posCuadroY = parseInt((e.clientY - dimCuadro.top - offsetY) / cell);
@@ -361,7 +354,7 @@
                     }
                 }
 
-                function resizeCanvas() {
+                function resizeCanvas() { //Función que redimensiona el lienzo a la dimensión puesta por el usuario en el cuadro de texto correspondiente
                     if (!arcadeActivated) {
                         var a = parseInt(document.getElementById("resi").value);
                         var newarray = new Array(a);
@@ -374,7 +367,6 @@
                             width = a;
                             height = a;
                         
-
                         canvas.width = width * cell;
                         canvas.height = height * cell;
 
@@ -403,7 +395,7 @@
                     }
                 }
 
-                function blinker() {
+                function blinker() { //Función que dibuja un parpadeador en las coordenadas introducidas por el usuario
                     var coordX = parseInt(document.getElementById("posX").value);
                     var coordY = parseInt(document.getElementById("posY").value);
 
@@ -416,7 +408,7 @@
                     closeNav();
                 }
 
-                function glider() {
+                function glider() { //Función que dibuja un planeador en las coordenadas introducidas por el usuario
                     var coordX = parseInt(document.getElementById("posX").value);
                     var coordY = parseInt(document.getElementById("posY").value);
 
@@ -431,7 +423,7 @@
                     closeNav();
                 }
 
-                function boat() {
+                function boat() { //Función que dibuja un barco en las coordenadas introducidas por el usuario
                     var coordX = parseInt(document.getElementById("posX").value);
                     var coordY = parseInt(document.getElementById("posY").value);
 
@@ -446,7 +438,7 @@
                     closeNav();
                 }
 
-                function pulsar() {
+                function pulsar() { //Función que dibuja un pulsar en las coordenadas introducidas por el usuario
                     var coordX = parseInt(document.getElementById("posX").value);
                     var coordY = parseInt(document.getElementById("posY").value);
 
@@ -512,7 +504,7 @@
                 }
 
 
-                function gliderGun() {
+                function gliderGun() { //Función que dibuja una pistola de planeadores en las coordenadas introducidas por el usuario
                     var coordX = parseInt(document.getElementById("posX").value);
                     var coordY = parseInt(document.getElementById("posY").value);
 
@@ -572,7 +564,7 @@
                     closeNav();
                 }
 
-                function bird() {
+                function bird() { //Función que dibuja un pájaro en las coordenadas introducidas por el usuario
                     var coordX = parseInt(document.getElementById("posX").value);
                     var coordY = parseInt(document.getElementById("posY").value);
 
@@ -593,11 +585,10 @@
                     }
                     closeNav();
                 }
-
-
-
-
-                blink.addEventListener("click", blinker, false);
+                
+                //Añadimos event listeners para las funciones que los requieren
+                
+                blink.addEventListener("click", blinker, false); 
                 glid.addEventListener("click", glider, false);
                 ship.addEventListener("click", boat, false);
                 bir.addEventListener("click", bird, false);
@@ -617,15 +608,14 @@
                 canvas.addEventListener("mousemove", statusCell, false);
 
                 printCells();
-
             }
 
-            function Cell(alive) {
-                this.alive = alive;
+            function Cell(alive) { //Constructor de objeto célula
+                this.alive = alive; //Alive es un booleano. Si es false, la célula estará muerta, y si es true, la célula estará viva
                 this.time = 0;
             }
 
-            function randBool() {
+            function randBool() { //Función auxiliar que calcula un booleano aleatorio. Esta función se utilizará para aleatorizar el estado de las células.
                 var num = Math.floor((Math.random() * 2) + 1);
                 if (num === 1) {
                     return true;
@@ -635,22 +625,22 @@
 
             }
 
-            function music() {
+            function music() { //Función que se utiliza para activar la música de fondo. 
                 mac.play();
                 mac8.play();
-                mac8.muted = true;
+                mac8.muted = true; //Se desactiva el volumen de este sonido para poder alternar entre la versión normal y 8 bit de la canción al mismo tiempo que se alterna entre el modo normal y el modo GameBoy
             }
 
-            function openNav() {
+            function openNav() { //Función utilizada para abrir la ventana de selección de figuras
                 document.getElementById("myNav").style.width = "100%";
             }
 
-            function closeNav() {
+            function closeNav() { //Función utilizada para cerrar la ventana de selección de figuras
                 document.getElementById("myNav").style.width = "0%";
             }
 
-            music();
-            World();
+            music(); //Se ejecuta la música
+            World(); //Se crea el mundo cuando se carga la página web
         </script>
     </body>
 </html>
