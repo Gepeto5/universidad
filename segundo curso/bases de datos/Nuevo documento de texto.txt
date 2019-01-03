@@ -1,0 +1,5 @@
+cardinalidad maxima de una relacion esta al otro lado (un libro va a tener una editorial como maximo).
+
+La implementacion optima sera tratando de usar el minimo de tablas posible
+
+examen: preguntas sobre las practicas 1 y 2. escribir en sql, interpretar en sql... operaciones siempre parecidas a las utilizadas en practicas
