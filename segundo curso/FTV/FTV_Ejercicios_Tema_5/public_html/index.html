@@ -14,29 +14,89 @@ and open the template in the editor.
                 margin: 0px;
                 padding: 0px;
                 border: 1px solid black;
-                background-color: cyan
+                background-color: lightgrey
             }
         </style>
     </head>
     <body>
         <canvas  id="lienzo" width="800" height="600">Tu navegador no soporta canvas</canvas>
         <p id="parrafo"></p>
-        
+        <p id="parrafo2"></p>
         <script>
             "use strict";
 
             var contexto = document.getElementById("lienzo").getContext("2d");
+            var lienzo = document.getElementById("lienzo");
             var parrafo = document.getElementById("parrafo");
             
             var segundos = 0;
+            
+            var maxX = lienzo.width;
+            var maxY = lienzo.height;
+            var anchoCuadro = 50;
+            
+            var x = maxX / 2;
+            var y = maxY / 2;
+            
+            var orientacion = false;
+            
+            function direccion(){
+                if(maxX === x + 50){
+                    orientacion = true;
+                }
+                else if(x === 0){
+                    orientacion = false;
+                }
+            }
+            
+            function dibujaCuadro(){
+                direccion();
+                if(maxX != x + 50 && orientacion === false){
+                contexto.clearRect(0,0,maxX,maxY);
+                segundos++;
+                contexto.strokeRect(x,y,anchoCuadro,anchoCuadro);
+                x++;
+                parrafo.innerHTML = "x = " + x + " y = " + y;
+                }
+                else if(x != 0 && orientacion === true){
+                contexto.clearRect(0,0,maxX,maxY);
+                segundos++;
+                contexto.strokeRect(x,y,anchoCuadro,anchoCuadro);
+                x--;
+                parrafo.innerHTML = "x = " + x + " y = " + y;
+                }
+            }
+            
+            
+            setInterval(dibujaCuadro, 1);
+            
+            /*
+            var parrafo = document.getElementById("parrafo");
+            var parrafo2 = document.getElementById("parrafo2");
+            
+            var segundos = 0;
+            var segundos2 = 20;
             parrafo.innerHTML=segundos;
+            parrafo2.innerHTML=segundos2;
             contador();
              
              function contador(){
+                 if(segundos < segundos2){
                  segundos++;
+                 segundos2 -= 2;
                  parrafo.innerHTML=segundos;
-                 setTimeout(contador,1000);
+                 parrafo2.innerHTML=segundos2;
+                 //setTimeout(contador,1000);
              }
+             }
+             
+             function detener(){
+                 clearTimeout(temp);
+             }
+             
+             var temp = setInterval(contador, 1000);
+             /*
+             //setTimeout(detener,10000);
              
              /*
              function function1 (){

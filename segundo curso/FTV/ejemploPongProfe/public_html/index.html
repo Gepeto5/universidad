@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<html>
+    
+    <head>
+        <title>Ejercicio 25</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <style>
+            canvas {
+                margin:           0px;
+                padding:          0px;
+                border:           1px solid black;
+                background-color: lightgray;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <div><canvas id="lienzo" width="800" height="600">Tu navegador no soporta el elemento canvas.</canvas></div>
+        <div><p id="parrafo">Esperando a que pase algo...</p></div>
+
+        <script>
+            "use strict";
+
+            var contextoGrafico = document.getElementById('lienzo').getContext('2d');
+            var lienzo          = document.getElementById('lienzo');
+            var parrafo         = document.getElementById('parrafo');
+
+            var maxX = lienzo.width;
+            var maxY = lienzo.height;
+                          
+            var paloVerde = { color: "green", x: 1      , y: maxY/2-50, ancho: 25, alto: 150 };
+            var paloRojo  = { color: "red"  , x: maxX-25, y: maxY/2-50, ancho: 25, alto: 150 };
+            var pelota    = { x : maxX/2, y: maxY/2, velocidadX: 3, velocidadY: 0, ancho: 50, alto: 50 };		
+
+            requestAnimationFrame(actualizaDibujo);
+
+            var ritmo = 30;
+            var temporizador = setInterval(actualizaEstado,1000/ritmo);	
+
+            function actualizaEstado() {
+                // primero calculamos la velocidad de X
+                pelota.x += pelota.velocidadX;			
+                // si (x,y) es la esquina del cuadrado, x + 50 es la x del lado derecho ya que el ancho total son 50
+                // comprobamos si choca con el cuadro verde o rojo. Para ello alguno de los puntos del cuadrado tiene que coincidir con alguno de los puntos del palo		
+                if(seSolapan(pelota,paloRojo)>=0)       pelota.velocidadX = -pelota.velocidadX*1.50;
+                else if((pelota.x+pelota.ancho)>=maxX)  pelota.velocidadX = -pelota.velocidadX;
+                else if(seSolapan(pelota,paloVerde)>=0) pelota.velocidadX = -pelota.velocidadX*1.50;
+                else if(pelota.x<=0)                    pelota.velocidadX = -pelota.velocidadX;					
+                // limitamos la velocidad en X
+                if(pelota.velocidadX*30> 500) pelota.velocidadX =  500/30;
+                if(pelota.velocidadX*30<-500) pelota.velocidadX = -500/30;					
+                // segundo calculamos la velocidad en Y
+                // comprobamos si ahora por qué lado del palo rebotarebota con los bordes superior o inferior del lienzo
+                if(seSolapan(pelota,paloRojo)===0 || seSolapan(pelota,paloVerde)===0) //toca por arriba
+                    //velocidad de Y negativa
+                    pelota.velocidadY = -Math.abs(pelota.velocidadX);
+                else if(seSolapan(pelota,paloRojo)===1 || seSolapan(pelota,paloVerde)===1) //toca por en medio
+                    pelota.velocidadY = 0;
+                else if(seSolapan(pelota,paloRojo)===2 || seSolapan(pelota,paloVerde)===2) //toca por abajo			
+                    //velocidad de Y positiva
+                    pelota.velocidadY = Math.abs(pelota.velocidadX);
+                else if((pelota.y+pelota.alto)>=maxY || (pelota.y<0)) //comprobamos si toca por arriba o por abajo del lienzo para invertir la velocidad en el eje Y
+                    pelota.velocidadY = -pelota.velocidadY;
+                pelota.y += pelota.velocidadY; 
+                //actualizamos la posición del palo verde comparandolo con el centro de la pelota
+                if(paloVerde.y < pelota.y + pelota.alto/2)                      paloVerde.y++;
+                else if (paloVerde.y + pelota.alto > pelota.y + pelota.alto/2)  paloVerde.y--;                        
+            }
+
+            // esta funcion comprueba si dos objetos se solapan a partir de sus coordenadas
+            // divide el tamaño de B en tres segmentos e indica en qué tercio toca A con B
+            // devuelve -1 si no hay solape, 0 si solapa arriba, 1 si solapa en medio y 2 si solapa abajo
+            function seSolapan(A, B) {
+                //segmento superior de B			
+                var rectanguloSuperior = { x: B.x, y: B.y             , ancho: B.ancho, alto: B.alto/3 };
+                var rectanguloCentral  = { x: B.x, y: B.y+B.alto/3    , ancho: B.ancho, alto: B.alto/3 };
+                var rectanguloInferior = { x: B.x, y: B.y+(B.alto/3)*2, ancho: B.ancho, alto: B.alto/3 };
+                if((A.x+A.ancho<rectanguloSuperior.x || rectanguloSuperior.x+rectanguloSuperior.ancho< A.x || A.y+A.alto<rectanguloSuperior.y || rectanguloSuperior.y+rectanguloSuperior.alto<A.y)===false)			
+                    return 0;
+                else if((A.x+A.ancho<rectanguloCentral.x || rectanguloCentral.x+rectanguloCentral.ancho<A.x || A.y+A.alto<rectanguloCentral.y || rectanguloCentral.y+rectanguloCentral.alto<A.y)===false)
+                    return 1;
+                else if ((A.x+A.ancho<rectanguloInferior.x || rectanguloInferior.x+rectanguloInferior.ancho<A.x || A.y+A.alto<rectanguloInferior.y || rectanguloInferior.y+rectanguloInferior.alto<A.y)===false)
+                    return 2;
+                else
+                    return -1;
+            }
+
+            function actualizaDibujo() {
+                dibujaCuadro(contextoGrafico);
+                requestAnimationFrame(actualizaDibujo);
+            }
+
+            function dibujaCuadro(contexto) {
+                contexto.clearRect(0, 0, maxX, maxY);
+                contexto.strokeRect(pelota.x, pelota.y, pelota.ancho, pelota.alto);
+                pintaPalo(contexto,paloVerde);
+                pintaPalo(contexto,paloRojo);
+                parrafo.innerHTML = pelota.velocidad*30;
+            }
+
+            function pintaPalo(contexto, palo) {			
+                var color = contexto.fillStyle;
+                contexto.fillStyle = palo.color;
+                contexto.fillRect(palo.x,palo.y, palo.ancho, palo.alto);
+                contexto.fillStyle = color;
+            }
+
+            // Nueva propiedad del palo rojo para indicar si se está moviendo o no cogido por el ratón
+            paloRojo.conRaton = false;
+            
+            lienzo.addEventListener("mousedown",manejaraton,false);
+            lienzo.addEventListener("mouseup"  ,manejaraton,false);
+            lienzo.addEventListener("mousemove",manejaraton,true );		
+
+            function manejaraton(e) {		
+                var dimensionesinternas = this.getBoundingClientRect();			
+                var posCuadroX = e.pageX - dimensionesinternas.left;	
+                var posCuadroY = e.pageY - dimensionesinternas.top;						
+                switch(e.type) {		
+                    case "mousedown":
+                        //Comprobamos si se ha pinchado sobre el palo rojo
+                        if(posCuadroX>=paloRojo.x && posCuadroX<=paloRojo.x+paloRojo.ancho && posCuadroY>=paloRojo.y && posCuadroY<=paloRojo.y+paloRojo.alto) paloRojo.conRaton = true;
+                        break;				
+                    case "mouseup":
+                        //Al soltar el botón dejamos de mover el palo
+                        paloRojo.conRaton = false;
+                        break;
+                    case "mousemove":
+                        //Si el ratón se mueve y el palo está pinchado y no nos salimos del lienzo, actualizamos las coordenadas X del palo con las del ratón
+                        //como alineamos el palo por arriba, por simplificar asumimos que por arriba no nos podemos salir
+                        if(paloRojo.conRaton===true && posCuadroY+paloRojo.alto<=dimensionesinternas.bottom) paloRojo.y = posCuadroY;
+                        break;
+                }
+            }
+
+        </script>
+
+    </body>
+  
+</html>

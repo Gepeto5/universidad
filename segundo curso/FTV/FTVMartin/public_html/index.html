@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+
+<html>
+    
+    <head>
+        
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <style>
+            
+            canvas
+            {
+                margin: 0px;
+                padding: 0px;
+                border: 1px solid black;
+                background-color: lightgray;
+            }
+            
+            p
+            {
+                font-size: 20pt;
+            }
+            
+        </style>
+        
+    </head>
+    
+    <body>
+        
+        <div>
+            <canvas id = "canvas" width = 500 height = 500>TU NAVEGADOR NO SOPORTA CANVAS</canvas>
+        </div>
+        
+        <div>
+            <p id = "p1">ESPERANDO A QUE OCURRA ALGO...</p>
+        </div>
+        
+        <script>
+                "use strict"; //si no declaramos una variable dice cosas
+                
+                var context = document.getElementById("canvas").getContext("2d");
+                var p = document.getElementById("p1");
+                
+            // ESPERA ACTIVA
+                //Esta forma deja ocupada a la thread de la cpu en tonterias para esperar a que se actualice la pantalla, como hemos congelado la thread principal no se va a ver como se actualiza
+                /*var contador = 0;
+                while(contados < 5)
+                {
+                    p.innerHTML = contador;
+                    contador++;
+                    sleep(1000);
+                }
+                
+                function sleep(miliseconds)
+                {
+                    var start = new Date().getTime(); //numereo de milisegundos desde una fecha en concreto
+                    while(true)
+                    {
+                        if( (new Date().getTime() - start) > miliseconds){ break; }
+                    }
+                }*/
+    
+            // TEMPORIZADORES (en que momento queremos que se ejecute una función)
+                /*alert("PULSE ENTER PARA EMPEZAR");
+                var aux = 0;
+                var timer = window.setTimeout(function1, 3000); //ejecuta function 1 cuando pasen 30000 milisegundos desde que se ejecuta esta linea se va a ejecutar function1
+                window.clearTimeout(timer); //borramos el temporizador del setTimeOut
+                function function1()
+                {
+                    alert("HAN PASADO 3 SEGUNDOS");
+                }*/
+                
+            //Espera activa guay con timers
+                /*var contador = 0;
+
+                setTimeout(function2, 1000); //como pertenece al objeto window no hace falta poner window.
+                function function2 ()
+                { 
+                    contador++; 
+                    p.innerHTML = contador;
+                    window.setTimeout(function2, 1000);
+                }*/
+    
+    
+    
+    
+            //Animaciones
+                /*var x = 0;
+                var ritmo = 60;
+                //De esta forma actualizamos nuestro sistema a un ritmo y mostramos a otro
+                var timer = setInterval( function()
+                        { 
+                            x++;
+                            if(x > 400) { clearInterval(timer); }
+                        }
+                , 1000/ritmo);
+                
+                //De esta forma desacoplamos el update de nuestro sistema con el dibujado por pantalla
+                requestAnimationFrame(dibujarCuadro); //Esta funcion se ejecuta según los HZs del monitor, es como un setTimeout que mete en los milisegundos los hercios, además no renderiza el objeto si no estamos en la ventana
+                function dibujarCuadro()
+                {
+                    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+                    context.strokeRect(x, 100, 100, 100);
+                    requestAnimationFrame(dibujarCuadro);
+                }*/
+    
+    
+    
+            //SPRITES
+            
+                var width = 28; //tamaño de cada sprite
+                var height = 67;
+                
+                var spriteSheet = new Array(32);
+                
+                var sprite = new Image();
+                sprite.src = "sprite.png";
+                
+                sprite.onload = function () 
+                {
+                    var i = 0;
+                    for(var ySprite = 0; ySprite < 4; ySprite++)
+                    {
+                        for(var xSprite = 0; xSprite < 8; xSprite++)
+                        {
+                            spriteSheet[i] = {x: xSprite * width, y: ySprite * height};
+                            i++;
+                        }
+                    }
+                };
+                
+                window.onkeypress = function(e)
+                {
+                    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+                    var i = parseInt(e.key) + 17;
+                    
+                    var scale = 4;
+                    context.drawImage(sprite, spriteSheet[i].x, spriteSheet[i].y, width, height, 0, 0, width * scale, height * scale);
+                };
+                
+                window.onclick = function(e)
+                {
+                    var i = 0;
+                    var scale = 2;
+                    var xs = 100;
+                    setInterval(function () 
+                    {
+                        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+                        
+                        context.drawImage(sprite, spriteSheet[i].x, spriteSheet[i].y, width, height, xs, 100, width * scale, height * scale);
+                        i++;
+                        if (i < 19 || i > 22){ i = 19;}
+                        xs += 5;
+                    }, 100);
+                };
+                
+                
+                
+        </script>
+        
+    </body>
+    
+</html>
