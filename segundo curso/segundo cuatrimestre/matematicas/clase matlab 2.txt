@@ -1,0 +1,48 @@
+%%Calculo de lunutes
+syms x
+f=x^2+x^·/3+1 %funcion simbolica
+x_0=2
+L=limit(f,x,x_0)
+figure
+ezplot(f,[1,3,-1,1])
+hold on
+
+
+%%Fijado x_0 y dado epsilon existe delta
+epsilon=4*1.e-3 %fijado epsilon
+delta=1.e-1 %existe delta: no lo conozco por lo que fijo un entorno
+
+g=abs(g-L)
+cota=0.*x+epsilon
+eje_x=0.*x
+entorno=[x_0-delta,x_0
+figure
+ezplot(g,entorno)
+xlabel('entorno')
+title('demostracion existencial del limite')
+hold on
+
+%%ejemplo:calculo delta. necesito resolver ecuaciones no lineales
+h=g-epsilon
+solve(h) %no encuentra solucion analitica
+h_n=matlabFunction(h)
+semilla=0.4 %dando una semilla random no ssuele converger
+sol=fzero(g_n,semilla) %fsolve para sistemas
+delta=abs(sol-x_0)
+
+%%limites en el infinito
+L1=limit(f,-inf)
+L2=limit(f,inf)
+
+%%limites laterales
+LL=limit(f_1,x,x_0,'left')
+
+%%Aproximacion de funciones: Desarrollo de Taylor
+P1=taylor(f,x,'ExpansionPoint',x_0,'Order',2)
+P2=taylor(f,x,'ExpansionPoint',x_0,'Order',3)
+
+%%Taylor simbolico 1D
+x_0=0
+syms x
+f=x*sinh(x+1)
+y1=eval(taylor
