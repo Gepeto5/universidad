@@ -1,0 +1,185 @@
+clear all %elimina todas las variables de la memoria
+close all %elimina todas las figuras
+clc %limpia la ventana de comandos
+clr %ejecuta los 3 comandos anteriores
+
+%ctrl + enter ejecuta todos los comandos
+
+%%CALCULO SIMBOLICO
+syms x %variable simbolica
+syms x real %indica que la variable es real
+f=x^3*sin(x) %funcion simbolica
+
+%%REPRESENTACION DEL COMANTO EZPLOT
+a=-4; b=6; %extremos del intervalo
+figure
+ezplot(f,[a,b])
+title('Grafica de una funcion simbolica')
+legend('Funcion f')
+
+%%CALCULO NUMERICO
+h=0.01 %discretizacion del mallado
+I=[a:h:b];
+f_n=@(x) x.^3.*sin(x) &funcion numerica (el punto simboliza vectorizacion)
+
+%%REPRESENTAR COMANDO PLOT
+figure
+plot(I,f_n(I)) %Lo valores que toma f en el intervalo I
+title('Grafica de funcion numerica')
+legend('Funcion f')
+
+%%EVALUACION DE FUNCIONES
+v_s=subs(f,2) %simbolica
+v_n=F_n(2) %numerica
+
+%%EJERCICIO: IDENTIFICAR EL NODO CORRESPONDIENTE AL PUNTO
+%evaluar la funcion numerica en ese nodo
+%punto=a+(nodo-1)+h; nodo=(punto-a)/h+1
+punto=2
+nodo=(punto-a)/h+1
+v_nn=f_n(I(nodo))
+
+%%COMANDO SUBPLOT
+figure
+subplot(1,2,1)
+ezplot(f,[-4,6])
+title('Grafica de una funcion simbolica')
+legend('Funcion f') %Poner leyenda para cada grafica
+subplot(1,2,2)
+plot(I,f_n(I))
+title('Grafica de una funcion numerica')
+legend('funcion f','Location' 'south') %mover la leyenda
+
+%%FUNCIONES ELEMENTALES
+%polinomicas
+syms x %variable simbolica
+f=x^6-2*x^4-x^3+x+1 %funcion simbolica
+
+%%REPRESENTACION DE COMANDO EZPLOT (FPLOT)
+I=[-2,2] %region 1D
+J=[-2,2,-1,5]; %ventana 2D
+figureezplot(f,I) %cambiar I por J para  centrar la ventana
+title('Grafica de una funcion simbolica')
+
+%%CALCULO NUMERICO
+h=0.1 %discretizacion del mallado
+I=[-2:h:2]; %mallado numerico: son vectores de nodos
+ext_izq=I(1) %extraer primera componente
+ext_der=I(end) %extraer la ultima componente
+
+%%VECTORIZACION PARA GRAFICAS
+f_n=@(x) x^6-2*x^4-x^3+x+1 %funcion numerica NO vectorizada
+f_n=matlabFunction(f) %funcion numerica vectorizada
+
+%%VALORES NODALES
+vn=f_n(I);
+
+%%REPRESENTACION NUMERICA Y VALORES NODALES
+figure
+plot(I, f_n(I), 'b.-')
+title('Grafica de una funcion numerica y valores nodales')
+legend('Funcion f')
+
+%%COMPORTAMIENTO POLINOMICAS
+f1=x; %definicion simbolica
+f2=x^2; g2=sqrt(x);
+f3=x^3; g3=x^(1/3);
+f4=x^4; g4=x^(1/4);
+
+%el punto y coma sirve para que no te muestre el resultado del comando
+
+%%COMPORTAMIENTO LOGARITMICAS
+close all
+ln=log(x); %definicion simbolica
+l2=log2(x);
+l10(log10(x);
+
+%%REPRESENTACION LOGARITMICAS
+I=[0,1.5,-5,3]
+figure
+ezplot(ln,I)
+hold on
+ezplot(l2,I)
+hold on
+ezplot(l10,I)
+hold off
+
+%%COMPORAMIENTO EXPONENCIALES
+en=exp(x);
+e2=2^x;
+e10=10^x;
+
+%%REPRESENTACION EXPONENCIALES
+I=[-1.5,1.5,0,3]; %se enmarca la ventana
+figure
+ezplot(en,I)
+hold on
+
+%%COMANDO LINSPACE PARA MALLADOS
+close all
+np=20
+I=linspace(0,1,np) %genera un mallado en el intervalo especificado
+
+%%DEFINICION DE FUNCIONES DISCONTINUAS EN x0
+x0=2 %punto de discontinuidad
+I_1=linspace(1,x0);
+f_1=@(x) -x.^2+17;
+p_1=f_1(x0) %evaluacion
+
+I_2=linspace(x0,3);
+f_2=@(x) x.^3-5;
+p_2=F_2(x0); %evaluacion
+
+%%REPRESENTACION FUNCIONES DISCONTINUAS EN x0
+figure
+`plot(I_1,f_!(I_1),'b',I_2,f_2(I_2),'b',...
+[x0,x0], [p_2,p_1],'k-,'x0,p_!,'k*',x0,p_2,'k*')
+xlabel('x')
+ylabel('funcion discontinua')
+title('Funcion discontinua en x0')
+
+%%DEFINICIONES MEDIANTE COMANDO REWRITE
+rewrite(csc(x),'sin')
+rewrite(coth(x),'exp')
+
+%%FUNCIONES TRIGONOMETRICAS: REPRESENTACION NUMERICA
+close all
+I=2*pi:0.01
+
+%%REPRESENTACION SIMBOLICA 
+%con fplot aparecen las asintotas
+syms x
+fplot(tan(x))
+title('Grafica de la funcion tangente')
+
+%%EZPLOT PARA FUNCIONES CURVAS
+close all
+figure
+C=ezplot('x^2-y^4')
+set(C,'lineWidth',2)
+set(C,'Color','r')
+
+%%EZPLOT PARA CURVAS PARAMETRIZADAS
+syms t
+x=t*sin(5*t);
+y=t*cos(5*t);
+figure
+ezplot(x,y)
+
+%%EJEMPLO DESIGUALDADES
+close all
+f_0=0*x; f_1=sin(x); f_2=tan(x)
+I=[0,pi/2]figure
+F0=ezplot(f_0,I)
+set(F0,'Color','k')
+hold on
+F1=ezplot(f_0,I)
+set(F1,'LineWidth',2)
+hold on
+ezplot(f_2,I)
+hold on
+ezplot(f_3,I)
+legend('0','sin(x)','x','tan(x)')
+hold off
+
+
