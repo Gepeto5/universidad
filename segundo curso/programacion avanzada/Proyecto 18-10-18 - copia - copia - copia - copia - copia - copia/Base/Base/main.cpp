@@ -29,7 +29,7 @@ v.getX() = 4;
 #include "toro.h"
 #include "compuesto.h" 
 #include "triangulo.h"
-#include "plano.h"
+//#include "plano.h"
 #include <iostream>
 #include <sstream>
 #include <fstream>

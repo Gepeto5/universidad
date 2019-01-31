@@ -110,6 +110,8 @@ create table EQUIPO(
   foreign key (Codigo_ES) references ESCENARIO on delete cascade
 );
 
+alter table PARTIDA add foreign key (Codigo_EQ_Ganador) references EQUIPO on delete cascade;
+
 rollback;
 
 commit; --ejercicio 1 hasta aqui
@@ -171,8 +173,11 @@ insert into PJ_TIENE_H(Codigo_PG,Codigo_H, Codigo_PJ,Puntos) values(1,7 ,1 ,22);
 insert into PJ_TIENE_H(Codigo_PG,Codigo_H, Codigo_PJ,Puntos) values(5,7 ,2 ,10);
 insert into PJ_TIENE_H(Codigo_PG,Codigo_H, Codigo_PJ,Puntos) values(2,3 ,3 ,30);
 
-insert into EQUIPO(Codigo_EQ,Nombre, Fecha_Creacion,Pais,Id_U1,Id_U2,Id_U3,Id_U4,Id_U5) values(1,'JoJo Explosive Team' ,to_date('22/02/2018', 'dd/mm/yyyy') ,'Nigeria',9,26,11,2,1);
-insert into EQUIPO(Codigo_EQ,Nombre, Fecha_Creacion,Pais,Id_U1,Id_U2,Id_U3,Id_U4,Id_U5) values(2,'JoJo Not So Explosive Team' ,to_date('23/02/2018', 'dd/mm/yyyy') ,'Nigeria',1,2,3,4,5);
+insert into EQUIPO(Codigo_EQ,Nombre,Fecha_Creacion,Pais,Id_U1,Id_U2,Id_U3,Id_U4,Id_U5) values(1,'JoJo Explosive Team' ,to_date('22/02/2018', 'dd/mm/yyyy') ,'Nigeria',9,26,11,2,1);
+insert into EQUIPO(Codigo_EQ,Nombre,Fecha_Creacion,Pais,Id_U1,Id_U2,Id_U3,Id_U4,Id_U5) values(2,'JoJo Not So Explosive Team' ,to_date('23/02/2018', 'dd/mm/yyyy') ,'Nigeria',6,7,3,4,5);
+
+insert into PARTIDA(Codigo_P,Codigo_EQ1,Codigo_EQ2,Codigo_EQ_Ganador,Codigo_ES,FechaIni,FechaFin) values(1, 1, 2, 1, 1, to_date('22/02/2018', 'dd/mm/yyyy'),to_date('23/02/2018', 'dd/mm/yyyy'));
+insert into PARTIDA(Codigo_P,Codigo_EQ1,Codigo_EQ2,Codigo_EQ_Ganador,Codigo_ES,FechaIni,FechaFin) values(2, 2, 1, 1, 1, to_date('22/03/2018', 'dd/mm/yyyy'),to_date('23/07/2018', 'dd/mm/yyyy'));
 
 commit;
 
@@ -183,3 +188,62 @@ alter table PARTIDA add check(FechaIni < FechaFin); --3.1
 alter table USUARIO add unique(Apodo); --3.2
 
 alter table USUARIO add EMAIL VARCHAR2(100)  default 'example@urjc.es' not null ;
+select * from USUARIO; --3.4
+
+alter table PARTIDA modify check(Codigo_EQ_Ganador = Codigo_EQ1 OR Codigo_EQ_Ganador = Codigo_EQ2 OR Codigo_EQ_Ganador = NULL); --3.5
+
+commit; -- hasta aqui ejercicio 3
+
+update PJ_TIENE_H set Puntos = 23 where Codigo_PJ = 1; --4.1
+
+update HABILIDAD set Coste = 500 where Categoria = 'Velocidad'; --4.2
+
+update USUARIO set Oro = (Oro + 100) where Pais = 'España'; --4.3
+
+update PJ_TIENE_H set Puntos = (Puntos + 1) where Puntos < (select avg(Puntos) from PJ_TIENE_H); --4.4
+
+--delete from USUARIO where ID_U != (select ); --4.5
+
+commit; -- hasta aqui ejercicio 4
+
+create view HABILIDAD_NECESARIA_PARA_OTRA as (select HAB_NECESARIA.Habilidad, HAB_NECESARIA.H_Necesaria, HAB_NECESARIA.Puntos_Necesarios, HABILIDAD.Categoria, HABILIDAD.Coste, HABILIDAD.Descripcion, HABILIDAD.Nombre from HAB_NECESARIA join HABILIDAD on HAB_NECESARIA.Habilidad=HABILIDAD.Codigo_H OR HAB_NECESARIA.H_Necesaria=HABILIDAD.Codigo_H);
+select * from HABILIDAD_NECESARIA_PARA_OTRA; --5.1
+
+--create view EJERCICIO5_2 as (select USUARIO.Nombre, count(PARTIDA.Codigo_EQ1 OR PARTIDA.Codigo_EQ2));
+
+commit; --hasta aqui ejercicio 5
+
+select Nombre from USUARIO where Pais = 'España'; --6.1
+
+select Codigo_H from PJ_TIENE_H join PERSONAJE_JUGADOR PJ on PJ_TIENE_H.Codigo_PG != PJ.Codigo_PG and PJ_TIENE_H.Codigo_PJ != PJ.Codigo_PJ; --6.2
+
+select * from USUARIO join EQUIPO on (USUARIO.ID_U != EQUIPO.Id_U1 AND USUARIO.ID_U != EQUIPO.Id_U2 AND USUARIO.ID_U != EQUIPO.Id_U3 AND USUARIO.ID_U != EQUIPO.Id_U4 AND USUARIO.ID_U != EQUIPO.Id_U5 AND EQUIPO.Pais = 'Nigeria'); --6.3
+
+select  USUARIO.Apodo, count(USUARIO.ID_U) from USUARIO
+join EQUIPO on USUARIO.ID_U = EQUIPO.Id_U1 OR USUARIO.ID_U = EQUIPO.Id_U2 OR USUARIO.ID_U = EQUIPO.Id_U3 OR USUARIO.ID_U = EQUIPO.Id_U4 OR USUARIO.ID_U = EQUIPO.Id_U5
+join PARTIDA on (EQUIPO.Codigo_EQ = PARTIDA.Codigo_EQ1 OR EQUIPO.Codigo_EQ = PARTIDA.Codigo_EQ2) group by USUARIO.Apodo; --6.4
+
+select Pais from USUARIO where Oro = (select max(Oro) from USUARIO); --6.6
+
+commit; --hasta aqui ejercicio 6
+
+create table PARTIDA_FINALIZADA(
+  ID_U number(10,0),
+  Codigo_P number(10,0),
+  Puntos_Ganados number(3,0),
+  Oro_Ganado number(10,0),
+  Vida_Restante_PJ number(3,0),
+  primary key(ID_U, Codigo_P),
+  foreign key (ID_U) references USUARIO on delete cascade,
+  foreign key (Codigo_P) references PARTIDA on delete cascade
+);
+
+create table VIDA_FINAL_PJ(
+  Codigo_PG number(3,0),
+  Codigo_PJ number(12,0),
+  Codigo_P number(10,0),
+  Vida_Final number(3,0),
+  primary key (Codigo_PJ,Codigo_P),
+  foreign key (Codigo_PG,Codigo_PJ) references PERSONAJE_JUGADOR on delete cascade,
+  foreign key (Codigo_P) references PARTIDA on delete cascade
+);

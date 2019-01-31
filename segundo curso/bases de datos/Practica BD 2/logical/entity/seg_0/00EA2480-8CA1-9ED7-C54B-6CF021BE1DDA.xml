@@ -1,0 +1,88 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="00EA2480-8CA1-9ED7-C54B-6CF021BE1DDA" name="Personaje jugador tiene habilidad">
+<createdBy>i.sanandres.2017</createdBy>
+<createdTime>2019-01-04 12:32:33 UTC</createdTime>
+<ownerDesignName>Practica BD 2</ownerDesignName>
+<engineerTo>
+<item key="5F1DCB05-2C6F-8C0E-A4C7-A3259C1F0173" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<shortName>PJ_Tiene_H</shortName>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="Codigo_PG" id="840044D6-D048-FB3A-D6F4-D5493FE9ABD9">
+<createdBy>i.sanandres.2017</createdBy>
+<createdTime>2019-01-04 12:32:56 UTC</createdTime>
+<ownerDesignName>Practica BD 2</ownerDesignName>
+<engineerTo>
+<item key="5F1DCB05-2C6F-8C0E-A4C7-A3259C1F0173" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypeScale>3</dataTypeScale>
+<ownDataTypeParameters>,,3</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Codigo_H" id="CDD464BB-441F-2EC4-3134-0CB64A7D9542">
+<createdBy>i.sanandres.2017</createdBy>
+<createdTime>2019-01-04 12:33:15 UTC</createdTime>
+<ownerDesignName>Practica BD 2</ownerDesignName>
+<engineerTo>
+<item key="5F1DCB05-2C6F-8C0E-A4C7-A3259C1F0173" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypeScale>3</dataTypeScale>
+<ownDataTypeParameters>,,3</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Codigo_PJ" id="BF0230C6-66A8-027F-22B2-372B3E5EF20A">
+<createdBy>i.sanandres.2017</createdBy>
+<createdTime>2019-01-04 12:33:48 UTC</createdTime>
+<ownerDesignName>Practica BD 2</ownerDesignName>
+<engineerTo>
+<item key="5F1DCB05-2C6F-8C0E-A4C7-A3259C1F0173" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypeScale>12</dataTypeScale>
+<ownDataTypeParameters>,,12</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Puntos" id="29DBA50E-F211-E93D-B3F2-9CDE280290F5">
+<createdBy>i.sanandres.2017</createdBy>
+<createdTime>2019-01-04 12:34:17 UTC</createdTime>
+<ownerDesignName>Practica BD 2</ownerDesignName>
+<engineerTo>
+<item key="5F1DCB05-2C6F-8C0E-A4C7-A3259C1F0173" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypeScale>3</dataTypeScale>
+<ownDataTypeParameters>,,3</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="5C099C2B-98BB-9011-C8C3-2B188C8DDC6C" name="Personaje jugador tiene habilidad PK">
+<createdBy>i.sanandres.2017</createdBy>
+<createdTime>2019-01-04 12:33:05 UTC</createdTime>
+<ownerDesignName>Practica BD 2</ownerDesignName>
+<engineerTo>
+<item key="5F1DCB05-2C6F-8C0E-A4C7-A3259C1F0173" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>840044D6-D048-FB3A-D6F4-D5493FE9ABD9</attributeRef>
+<attributeRef>CDD464BB-441F-2EC4-3134-0CB64A7D9542</attributeRef>
+<attributeRef>BF0230C6-66A8-027F-22B2-372B3E5EF20A</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

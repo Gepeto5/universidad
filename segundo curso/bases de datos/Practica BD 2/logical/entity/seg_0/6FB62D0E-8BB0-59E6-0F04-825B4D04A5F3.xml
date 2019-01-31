@@ -1,0 +1,124 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="6FB62D0E-8BB0-59E6-0F04-825B4D04A5F3" name="Partida">
+<createdBy>i.sanandres.2017</createdBy>
+<createdTime>2019-01-04 12:46:35 UTC</createdTime>
+<ownerDesignName>Practica BD 2</ownerDesignName>
+<engineerTo>
+<item key="5F1DCB05-2C6F-8C0E-A4C7-A3259C1F0173" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="Codigo_P" id="A25FCB4C-E4C6-94C6-28AC-98381BDCC51E">
+<createdBy>i.sanandres.2017</createdBy>
+<createdTime>2019-01-04 12:47:01 UTC</createdTime>
+<ownerDesignName>Practica BD 2</ownerDesignName>
+<engineerTo>
+<item key="5F1DCB05-2C6F-8C0E-A4C7-A3259C1F0173" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypeScale>10</dataTypeScale>
+<ownDataTypeParameters>,,10</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Codigo_EQ1" id="7C2E8B76-BA3C-104B-7493-3E9F53058BBF">
+<createdBy>i.sanandres.2017</createdBy>
+<createdTime>2019-01-04 12:47:18 UTC</createdTime>
+<ownerDesignName>Practica BD 2</ownerDesignName>
+<engineerTo>
+<item key="5F1DCB05-2C6F-8C0E-A4C7-A3259C1F0173" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypeScale>10</dataTypeScale>
+<ownDataTypeParameters>,,10</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Codigo_EQ2" id="1DECC863-1801-BE3C-2DAE-29362404CB1D">
+<createdBy>i.sanandres.2017</createdBy>
+<createdTime>2019-01-04 12:47:45 UTC</createdTime>
+<ownerDesignName>Practica BD 2</ownerDesignName>
+<engineerTo>
+<item key="5F1DCB05-2C6F-8C0E-A4C7-A3259C1F0173" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypeScale>10</dataTypeScale>
+<ownDataTypeParameters>,,10</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Codigo_EQ_Ganador" id="3CFD6C3E-E4D2-6AE9-20C8-09A21AB6AFAA">
+<createdBy>i.sanandres.2017</createdBy>
+<createdTime>2019-01-04 12:47:59 UTC</createdTime>
+<ownerDesignName>Practica BD 2</ownerDesignName>
+<engineerTo>
+<item key="5F1DCB05-2C6F-8C0E-A4C7-A3259C1F0173" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypeScale>10</dataTypeScale>
+<ownDataTypeParameters>,,10</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Codigo_ES" id="1F9157C0-34EB-B7B9-94F1-960C2CFE98F0">
+<createdBy>i.sanandres.2017</createdBy>
+<createdTime>2019-01-04 12:48:10 UTC</createdTime>
+<ownerDesignName>Practica BD 2</ownerDesignName>
+<engineerTo>
+<item key="5F1DCB05-2C6F-8C0E-A4C7-A3259C1F0173" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypeScale>6</dataTypeScale>
+<ownDataTypeParameters>,,6</ownDataTypeParameters>
+</Attribute>
+<Attribute name="FechaIni" id="8FCE9351-F660-BFC6-24FB-ED5B9FE4918E">
+<createdBy>i.sanandres.2017</createdBy>
+<createdTime>2019-01-04 12:48:39 UTC</createdTime>
+<ownerDesignName>Practica BD 2</ownerDesignName>
+<engineerTo>
+<item key="5F1DCB05-2C6F-8C0E-A4C7-A3259C1F0173" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="FechaFin" id="C277F52F-6674-0EB6-8D96-276117EAC8A3">
+<createdBy>i.sanandres.2017</createdBy>
+<createdTime>2019-01-04 12:48:54 UTC</createdTime>
+<ownerDesignName>Practica BD 2</ownerDesignName>
+<engineerTo>
+<item key="5F1DCB05-2C6F-8C0E-A4C7-A3259C1F0173" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="87933AB3-84D7-7794-A1B6-58E8FDA05CBE" name="Partida PK">
+<createdBy>i.sanandres.2017</createdBy>
+<createdTime>2019-01-04 12:47:17 UTC</createdTime>
+<ownerDesignName>Practica BD 2</ownerDesignName>
+<engineerTo>
+<item key="5F1DCB05-2C6F-8C0E-A4C7-A3259C1F0173" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>A25FCB4C-E4C6-94C6-28AC-98381BDCC51E</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

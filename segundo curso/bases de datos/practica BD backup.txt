@@ -1,0 +1,217 @@
+commit;
+
+create table PERSONAJE_GENERICO (
+  Codigo_PG   number(3, 0),
+  Nombre      varchar2(10) not null,
+  Apodo       varchar2(10) not null,
+  Descripcion varchar2(255),
+  primary key (Codigo_PG)
+);
+
+  create table HABILIDAD(
+  Codigo_H number(3,0),
+  Nombre varchar2(20) not null,
+  Categoria varchar2 (10) not null,
+  Descripcion varchar2(50),
+  Coste number(6) not null,
+  primary key(Codigo_H),
+  check (descripcion = 'Fuerza' or descripcion='Velocidad' or descripcion = 'Punteria' or descripcion = 'Otras')
+);
+
+ create table HAB_NECESARIA(
+  Habilidad number(3,0),
+  H_Necesaria number(3,0) not null,
+  Puntos_Necesarios number(6, 0) not null,
+  primary key(Habilidad, H_necesaria),
+  foreign key(H_necesaria) references HABILIDAD on delete cascade,
+  foreign key(Habilidad) references HABILIDAD on delete cascade
+);
+
+ create table PG_TIENE_H(
+  Codigo_PG number(6,0),
+  Codigo_H number(5,0),
+  Puntos number(3,0) not null,
+  primary key(Codigo_PG,Codigo_H),
+  foreign key(Codigo_H) references habilidad on delete set null,
+  foreign key(Codigo_PG) references personaje_generico on delete set null
+);
+
+  create table ESCENARIO(
+  Codigo_E number(6,0),
+  Descripcion varchar2(50),
+  URL_Mapa varchar2(255) not null,
+  primary key(Codigo_E)
+);
+
+create table PERSONAJE_JUGADOR(
+  Codigo_PG number(3,0),
+  Codigo_PJ number(12,0),
+  Nombre varchar2 (20) not null,
+  Id_U number(10,0) not null,
+  primary key(Codigo_PG,Codigo_PJ),
+  foreign key (Codigo_PG) references PERSONAJE_GENERICO on delete cascade
+);
+
+ create table PJ_TIENE_H(
+  Codigo_PG number(3,0),
+  Codigo_H number(3,0),
+  Codigo_PJ number(12, 0),
+  Puntos number(3,0) not null,
+  primary key(Codigo_PG,Codigo_H, Codigo_PJ),
+  foreign key(Codigo_H) references habilidad on delete set null,
+  foreign key(Codigo_PG, Codigo_PJ) references personaje_jugador on delete set null
+);
+
+create table USUARIO(
+  ID_U number(10,0),
+  Nombre varchar2(50) not null,
+  Apodo varchar2 (20) not null,
+  Pais varchar2(15) not null,
+  IBAN varchar2(24) not null,
+  Oro number(10, 0) not null,
+  Contraseña number(8, 0) not null,
+  Codigo_PG_Capitan number(3, 0),
+  Codigo_PJ_Capitan number(12, 0),
+  primary key(ID_U),
+  foreign key (Codigo_PG_Capitan, Codigo_PJ_Capitan) references PERSONAJE_JUGADOR on delete cascade
+);
+
+alter table PERSONAJE_JUGADOR add(foreign key(ID_U) references USUARIO on delete cascade);
+
+create table EQUIPO(
+  Codigo_EQ number(10,0),
+  Nombre varchar2(50) not null,
+  Fecha_Creacion date not null,
+  Pais varchar2(15) not null,
+  Id_U1 number(10,0) not null,
+  Id_U2 number(10,0) not null,
+  Id_U3 number(10,0) not null,
+  Id_U4 number(10,0) not null,
+  Id_U5 number(10,0) not null,
+  primary key(Codigo_EQ),
+  foreign key (Id_U1) references USUARIO on delete cascade,
+  foreign key (Id_U2) references USUARIO on delete cascade,
+  foreign key (Id_U3) references USUARIO on delete cascade,
+  foreign key (Id_U4) references USUARIO on delete cascade,
+  foreign key (Id_U5) references USUARIO on delete cascade
+);
+
+  create table PARTIDA(
+  Codigo_P number(10,0),
+  Codigo_EQ1 number(10,0) not null,
+  Codigo_EQ2 number(10,0) not null,
+  Codigo_EQ_Ganador number(10,0),
+  Codigo_ES number(6,0) not null,
+  FechaIni date not null,
+  FechaFin date,
+  primary key (Codigo_P),
+  foreign key (Codigo_EQ1) references EQUIPO on delete cascade,
+  foreign key (Codigo_EQ2) references EQUIPO on delete cascade,
+  foreign key (Codigo_ES) references ESCENARIO on delete cascade
+);
+
+alter table PARTIDA add foreign key (Codigo_EQ_Ganador) references EQUIPO on delete cascade;
+
+rollback;
+
+commit; --ejercicio 1 hasta aqui
+
+insert into PERSONAJE_GENERICO(Codigo_PG,Nombre,Apodo,Descripcion) values(1,'Gepeto','Gepe','Es un tio bastante guay');
+insert into PERSONAJE_GENERICO(Codigo_PG,Nombre,Apodo,Descripcion) values(2,'Ece','Flexece','Cuenta la leyenda que alcanzo la maxima capa de ironia');
+insert into PERSONAJE_GENERICO(Codigo_PG,Nombre,Apodo,Descripcion) values(3,'Adri','Dabdrian','Aun sigue atrapado en un bucle infinito de dabs');
+insert into PERSONAJE_GENERICO(Codigo_PG,Nombre,Apodo,Descripcion) values(4,'Pedro','Thepyter','Acho pijo');
+insert into PERSONAJE_GENERICO(Codigo_PG,Nombre,Apodo) values(5,'Martin','Daodab');
+insert into PERSONAJE_GENERICO(Codigo_PG,Nombre,Apodo,Descripcion) values(6,'Eric','Sweiko','El rey eterno de los cowboys');
+insert into PERSONAJE_GENERICO(Codigo_PG,Nombre,Apodo,Descripcion) values(7,'Albondiga','Meatball','Delicioso');
+insert into PERSONAJE_GENERICO(Codigo_PG,Nombre,Apodo,Descripcion) values(8,'Doom Guy','Slayer','Pussy Slayer');
+insert into PERSONAJE_GENERICO(Codigo_PG,Nombre,Apodo,Descripcion) values(9,'Alfredo','Mercurio','Nadie puede pararle');
+insert into PERSONAJE_GENERICO(Codigo_PG,Nombre,Apodo,Descripcion) values(10,'LiberPrime','Francis','Mision: Erradicar la amenaza comunista');
+insert into PERSONAJE_GENERICO(Codigo_PG,Nombre,Apodo,Descripcion) values(11,'LGTBOT','LGTBOT','LGTBOT');
+
+insert into HABILIDAD(Codigo_H,Nombre,Categoria,Descripcion,Coste) values(3,'Dab infinito','Burla','Otras', 100);
+insert into HABILIDAD(Codigo_H,Nombre,Categoria,Descripcion,Coste) values(2,'Hablar en murciano','Dialecto','Fuerza', 200);
+insert into HABILIDAD(Codigo_H,Nombre,Categoria,Coste) values(7,'Fabricar memes','Velocidad', 100);
+insert into HABILIDAD(Codigo_H,Nombre,Categoria,Descripcion,Coste) values(4,'Programar','Hackeo','Punteria', 500);
+
+insert into HAB_NECESARIA(Habilidad,H_Necesaria,Puntos_Necesarios) values(3,2,7);
+insert into HAB_NECESARIA(Habilidad,H_Necesaria,Puntos_Necesarios) values(2,7,2);
+insert into HAB_NECESARIA(Habilidad,H_Necesaria,Puntos_Necesarios) values(7,3,88);
+insert into HAB_NECESARIA(Habilidad,H_Necesaria,Puntos_Necesarios) values(4,2,9);
+
+insert into PG_TIENE_H(Codigo_PG,Codigo_H,Puntos) values(1,7,10);
+insert into PG_TIENE_H(Codigo_PG,Codigo_H,Puntos) values(2,7,20);
+insert into PG_TIENE_H(Codigo_PG,Codigo_H,Puntos) values(3,3,15);
+insert into PG_TIENE_H(Codigo_PG,Codigo_H,Puntos) values(4,2,17);
+insert into PG_TIENE_H(Codigo_PG,Codigo_H,Puntos) values(5,4,22);
+insert into PG_TIENE_H(Codigo_PG,Codigo_H,Puntos) values(6,3,14);
+insert into ESCENARIO(Codigo_E,Descripcion,URL_Mapa) values(1,'Campus URJC','urjc.es');
+
+insert into PERSONAJE_JUGADOR(Codigo_PG, Codigo_PJ,Nombre, Id_U) values(1,1 ,'Tunnel Snake',9);
+insert into PERSONAJE_JUGADOR(Codigo_PG, Codigo_PJ,Nombre, Id_U) values(5,2 ,'Tree Monkey',26);
+insert into PERSONAJE_JUGADOR(Codigo_PG, Codigo_PJ,Nombre, Id_U) values(2,3 ,'Awesome Guy',11);
+insert into PERSONAJE_JUGADOR(Codigo_PG, Codigo_PJ,Nombre, Id_U) values(3,4 ,'Bastard Bunny',1);
+insert into PERSONAJE_JUGADOR(Codigo_PG, Codigo_PJ,Nombre, Id_U) values(4,5 ,'Cunning Bird',2);
+insert into PERSONAJE_JUGADOR(Codigo_PG, Codigo_PJ,Nombre, Id_U) values(6,3 ,'Smart Turtle',3);
+insert into PERSONAJE_JUGADOR(Codigo_PG, Codigo_PJ,Nombre, Id_U) values(7,1 ,'Stupid Fox',4);
+insert into PERSONAJE_JUGADOR(Codigo_PG, Codigo_PJ,Nombre, Id_U) values(8,2 ,'Incredible Frog',5);
+insert into PERSONAJE_JUGADOR(Codigo_PG, Codigo_PJ,Nombre, Id_U) values(11,7 ,'Amazing Penguin',6);
+insert into PERSONAJE_JUGADOR(Codigo_PG, Codigo_PJ,Nombre, Id_U) values(10,3 ,'Hard Kangaroo',7);
+
+insert into USUARIO(Id_U, Nombre, Apodo, Pais, IBAN, Oro, Contraseña) values(9,'Ivan' ,'Gepeto','España', 123456789, 50, 12345);
+insert into USUARIO(Id_U, Nombre, Apodo, Pais, IBAN, Oro, Contraseña, CODIGO_PG_CAPITAN, CODIGO_PJ_CAPITAN) values(26,'Andrea' ,'Mono Verde','España', 1234567888, 100, 123451, 1, 1);
+insert into USUARIO(Id_U, Nombre, Apodo, Pais, IBAN, Oro, Contraseña, CODIGO_PG_CAPITAN, CODIGO_PJ_CAPITAN) values(11,'Eze' ,'Amigo Cubano','Cuba', 34567888, 10, 1234851, 5, 2);
+insert into USUARIO(Id_U, Nombre, Apodo, Pais, IBAN, Oro, Contraseña, CODIGO_PG_CAPITAN, CODIGO_PJ_CAPITAN) values(1,'Ruperta' ,'Ruper','Afganistan', 12334567888, 700, 1234051, 1, 1);
+insert into USUARIO(Id_U, Nombre, Apodo, Pais, IBAN, Oro, Contraseña, CODIGO_PG_CAPITAN, CODIGO_PJ_CAPITAN) values(2,'Nemesio' ,'STARS','Uganda', 34567888, 10, 23451, 1, 1);
+
+insert into USUARIO(Id_U, Nombre, Apodo, Pais, IBAN, Oro, Contraseña) values(3,'Ambrosio' ,'Ermenejildo','Uganda', 34567888, 10, 23451);
+insert into USUARIO(Id_U, Nombre, Apodo, Pais, IBAN, Oro, Contraseña, CODIGO_PG_CAPITAN, CODIGO_PJ_CAPITAN) values(4,'Tomas' ,'Turbao','Uganda', 34567888, 10, 23451, 6, 3);
+insert into USUARIO(Id_U, Nombre, Apodo, Pais, IBAN, Oro, Contraseña, CODIGO_PG_CAPITAN, CODIGO_PJ_CAPITAN) values(5,'Paco' ,'Jonarse','Uganda', 34567888, 10, 23451, 6, 3);
+insert into USUARIO(Id_U, Nombre, Apodo, Pais, IBAN, Oro, Contraseña, CODIGO_PG_CAPITAN, CODIGO_PJ_CAPITAN) values(6,'Ana' ,'Conda','Uganda', 34567888, 10, 23451, 6, 3);
+insert into USUARIO(Id_U, Nombre, Apodo, Pais, IBAN, Oro, Contraseña, CODIGO_PG_CAPITAN, CODIGO_PJ_CAPITAN) values(7,'Ivan' ,'Yvienen','Uganda', 34567888, 10, 23451, 6, 3);
+
+insert into PJ_TIENE_H(Codigo_PG,Codigo_H, Codigo_PJ,Puntos) values(1,7 ,1 ,22);
+insert into PJ_TIENE_H(Codigo_PG,Codigo_H, Codigo_PJ,Puntos) values(5,7 ,2 ,10);
+insert into PJ_TIENE_H(Codigo_PG,Codigo_H, Codigo_PJ,Puntos) values(2,3 ,3 ,30);
+
+insert into EQUIPO(Codigo_EQ,Nombre, Fecha_Creacion,Pais,Id_U1,Id_U2,Id_U3,Id_U4,Id_U5) values(1,'JoJo Explosive Team' ,to_date('22/02/2018', 'dd/mm/yyyy') ,'Nigeria',9,26,11,2,1);
+insert into EQUIPO(Codigo_EQ,Nombre, Fecha_Creacion,Pais,Id_U1,Id_U2,Id_U3,Id_U4,Id_U5) values(2,'JoJo Not So Explosive Team' ,to_date('23/02/2018', 'dd/mm/yyyy') ,'Nigeria',1,2,3,4,5);
+
+commit;
+
+select * from USUARIO; --Hasta aqui ejercicio 2
+
+alter table PARTIDA add check(FechaIni < FechaFin); --3.1
+
+alter table USUARIO add unique(Apodo); --3.2
+
+alter table USUARIO add EMAIL VARCHAR2(100)  default 'example@urjc.es' not null ;
+select * from USUARIO; --3.4
+
+alter table PARTIDA modify check(Codigo_EQ_Ganador = Codigo_EQ1 OR Codigo_EQ_Ganador = Codigo_EQ2 OR Codigo_EQ_Ganador = NULL); --3.5
+
+commit; -- hasta aqui ejercicio 3
+
+update PJ_TIENE_H set Puntos = 23 where Codigo_PJ = 1; --4.1
+
+update HABILIDAD set Coste = 500 where Categoria = 'Velocidad'; --4.2
+
+update USUARIO set Oro = (Oro + 100) where Pais = 'España'; --4.3
+
+update PJ_TIENE_H set Puntos = (Puntos + 1) where Puntos < (select avg(Puntos) from PJ_TIENE_H); --4.4
+
+--delete from USUARIO where ID_U != (select ); --4.5
+
+commit; -- hasta aqui ejercicio 4
+
+create view HABILIDAD_NECESARIA_PARA_OTRA as (select HAB_NECESARIA.Habilidad, HAB_NECESARIA.H_Necesaria, HAB_NECESARIA.Puntos_Necesarios, HABILIDAD.Categoria, HABILIDAD.Coste, HABILIDAD.Descripcion, HABILIDAD.Nombre from HAB_NECESARIA join HABILIDAD on HAB_NECESARIA.Habilidad=HABILIDAD.Codigo_H OR HAB_NECESARIA.H_Necesaria=HABILIDAD.Codigo_H);
+select * from HABILIDAD_NECESARIA_PARA_OTRA; --5.1
+
+--create view EJERCICIO5_2 as (select USUARIO.Nombre, count(PARTIDA.Codigo_EQ1 OR PARTIDA.Codigo_EQ2));
+
+commit; --hasta aqui ejercicio 5
+
+select Nombre from USUARIO where Pais = 'España'; --5.1
+
+select Codigo_H from PJ_TIENE_H join PERSONAJE_JUGADOR PJ on PJ_TIENE_H.Codigo_PG != PJ.Codigo_PG and PJ_TIENE_H.Codigo_PJ != PJ.Codigo_PJ; --5.2
+
+select Nombre from USUARIO join EQUIPO on USUARIO.ID_U = Id_U1; --OR USUARIO.ID_U != E.Id_U2 or USUARIO.ID_U != E.Id_U3 or USUARIO.ID_U != E.Id_U4 or USUARIO.ID_U != E.Id_U5;

@@ -1,0 +1,75 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="29DE2867-6FA5-8897-14DA-4C9219F94792" name="Personaje generico tiene habilidad">
+<createdBy>i.sanandres.2017</createdBy>
+<createdTime>2019-01-04 12:26:09 UTC</createdTime>
+<ownerDesignName>Practica BD 2</ownerDesignName>
+<engineerTo>
+<item key="5F1DCB05-2C6F-8C0E-A4C7-A3259C1F0173" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<shortName>PG_Tiene_H</shortName>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="Codigo_PG" id="17C56AED-D570-5EB8-5513-262F1935FF6A">
+<createdBy>i.sanandres.2017</createdBy>
+<createdTime>2019-01-04 12:26:47 UTC</createdTime>
+<ownerDesignName>Practica BD 2</ownerDesignName>
+<engineerTo>
+<item key="5F1DCB05-2C6F-8C0E-A4C7-A3259C1F0173" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypeScale>6</dataTypeScale>
+<ownDataTypeParameters>,,6</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Codigo_H" id="83EC88C2-23C2-6875-93B7-54D24D1EA9D8">
+<createdBy>i.sanandres.2017</createdBy>
+<createdTime>2019-01-04 12:27:18 UTC</createdTime>
+<ownerDesignName>Practica BD 2</ownerDesignName>
+<engineerTo>
+<item key="5F1DCB05-2C6F-8C0E-A4C7-A3259C1F0173" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypeScale>5</dataTypeScale>
+<ownDataTypeParameters>,,5</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Puntos" id="78D112F2-AB63-7A62-B24B-BDA7D4DD5101">
+<createdBy>i.sanandres.2017</createdBy>
+<createdTime>2019-01-04 12:27:34 UTC</createdTime>
+<ownerDesignName>Practica BD 2</ownerDesignName>
+<engineerTo>
+<item key="5F1DCB05-2C6F-8C0E-A4C7-A3259C1F0173" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>0</dataTypePrecision>
+<dataTypeScale>3</dataTypeScale>
+<ownDataTypeParameters>,0,3</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="44D5E6EA-91BB-C951-2051-CF7D23734D10" name="Personaje generico tiene habilidad PK">
+<createdBy>i.sanandres.2017</createdBy>
+<createdTime>2019-01-04 12:26:58 UTC</createdTime>
+<ownerDesignName>Practica BD 2</ownerDesignName>
+<engineerTo>
+<item key="5F1DCB05-2C6F-8C0E-A4C7-A3259C1F0173" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>17C56AED-D570-5EB8-5513-262F1935FF6A</attributeRef>
+<attributeRef>83EC88C2-23C2-6875-93B7-54D24D1EA9D8</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

@@ -1,0 +1,42 @@
+﻿  Source.cpp
+c:\users\pedro\desktop\universidad\curso 2\primer cuatrimestre\programación avanzada\examen junio 2017\junio 2017\junio 2017\neurona.h(30): warning C4018: '<': signed/unsigned mismatch
+c:\users\pedro\desktop\universidad\curso 2\primer cuatrimestre\programación avanzada\examen junio 2017\junio 2017\junio 2017\neurona.h(37): warning C4018: '<': signed/unsigned mismatch
+c:\users\pedro\desktop\universidad\curso 2\primer cuatrimestre\programación avanzada\examen junio 2017\junio 2017\junio 2017\neurona.h(39): warning C4018: '<': signed/unsigned mismatch
+c:\users\pedro\desktop\universidad\curso 2\primer cuatrimestre\programación avanzada\examen junio 2017\junio 2017\junio 2017\neurona.h(58): warning C4244: 'argument': conversion from 'double' to 'const _Ty', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+c:\users\pedro\desktop\universidad\curso 2\primer cuatrimestre\programación avanzada\examen junio 2017\junio 2017\junio 2017\neurona.h(64): warning C4244: 'argument': conversion from 'double' to 'const _Ty', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+c:\users\pedro\desktop\universidad\curso 2\primer cuatrimestre\programación avanzada\examen junio 2017\junio 2017\junio 2017\neurona.h(78): warning C4018: '<': signed/unsigned mismatch
+c:\users\pedro\desktop\universidad\curso 2\primer cuatrimestre\programación avanzada\examen junio 2017\junio 2017\junio 2017\neurona.h(81): warning C4018: '<': signed/unsigned mismatch
+c:\users\pedro\desktop\universidad\curso 2\primer cuatrimestre\programación avanzada\examen junio 2017\junio 2017\junio 2017\capa.h(19): warning C4244: 'argument': conversion from 'double' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+c:\users\pedro\desktop\universidad\curso 2\primer cuatrimestre\programación avanzada\examen junio 2017\junio 2017\junio 2017\redneuronal.h(13): warning C4018: '<': signed/unsigned mismatch
+c:\users\pedro\desktop\universidad\curso 2\primer cuatrimestre\programación avanzada\examen junio 2017\junio 2017\junio 2017\neuronarelu.h(11): warning C4018: '<': signed/unsigned mismatch
+  neuronaRELU.cpp
+c:\users\pedro\desktop\universidad\curso 2\primer cuatrimestre\programación avanzada\examen junio 2017\junio 2017\junio 2017\neurona.h(30): warning C4018: '<': signed/unsigned mismatch
+c:\users\pedro\desktop\universidad\curso 2\primer cuatrimestre\programación avanzada\examen junio 2017\junio 2017\junio 2017\neurona.h(37): warning C4018: '<': signed/unsigned mismatch
+c:\users\pedro\desktop\universidad\curso 2\primer cuatrimestre\programación avanzada\examen junio 2017\junio 2017\junio 2017\neurona.h(39): warning C4018: '<': signed/unsigned mismatch
+c:\users\pedro\desktop\universidad\curso 2\primer cuatrimestre\programación avanzada\examen junio 2017\junio 2017\junio 2017\neurona.h(58): warning C4244: 'argument': conversion from 'double' to 'const _Ty', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+c:\users\pedro\desktop\universidad\curso 2\primer cuatrimestre\programación avanzada\examen junio 2017\junio 2017\junio 2017\neurona.h(64): warning C4244: 'argument': conversion from 'double' to 'const _Ty', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+c:\users\pedro\desktop\universidad\curso 2\primer cuatrimestre\programación avanzada\examen junio 2017\junio 2017\junio 2017\neurona.h(78): warning C4018: '<': signed/unsigned mismatch
+c:\users\pedro\desktop\universidad\curso 2\primer cuatrimestre\programación avanzada\examen junio 2017\junio 2017\junio 2017\neurona.h(81): warning C4018: '<': signed/unsigned mismatch
+c:\users\pedro\desktop\universidad\curso 2\primer cuatrimestre\programación avanzada\examen junio 2017\junio 2017\junio 2017\neuronarelu.h(11): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  junio 2017.vcxproj -> C:\Users\PEDRO\Desktop\Universidad\Curso 2\Primer Cuatrimestre\Programación avanzada\Examen junio 2017\junio 2017\Debug\junio 2017.exe

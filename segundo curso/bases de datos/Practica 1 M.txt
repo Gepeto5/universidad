@@ -1,0 +1,343 @@
+create table Personaje_Generico
+(
+  CodPG Number(3,0) primary key,
+  Nombre varchar2(10) not null,
+  Apodo varchar2(10) not null,
+  Descripcion varchar2(255)
+);
+
+insert into PERSONAJE_GENERICO values (001, 'Antón', 'El Matón', 'Descripción Antón');
+insert into PERSONAJE_GENERICO values (002, 'Tim', 'El Mago', 'Descripción Tim');
+insert into PERSONAJE_GENERICO values (003, 'María', 'La maja', 'Descripción María');
+insert into PERSONAJE_GENERICO values (004, 'Calimero', 'El Asesino', 'Descripción Calimero');
+insert into PERSONAJE_GENERICO values (005, 'Bob', 'La Esponja', 'Descripción Bob');
+insert into PERSONAJE_GENERICO values (006, 'Jake', 'El Perro', 'Descripción Jake');
+insert into PERSONAJE_GENERICO values (007, 'Bojack', 'El Caballo', 'Descripción Bojack');
+insert into PERSONAJE_GENERICO values (008, 'Benny', 'El Pirata', 'Descripción Benny');
+insert into PERSONAJE_GENERICO values (009, 'Parcelsus', 'La Física', 'Descripción Parcelsus');
+insert into PERSONAJE_GENERICO values (010, 'Ciri', 'La Elfa', 'Descripción Ciri');
+select *  from PERSONAJE_GENERICO;
+
+create table Habilidad
+(
+  CodH Number(3, 0) primary key,
+  Nombre varchar2(20) not null,
+  Categoria varchar2(9) not null,
+  Descripcion varchar2(255),
+  Coste Number(6, 0) not null,
+  CONSTRAINT valoresCategoria check ( Categoria in ('Fuerza', 'Velocidad', 'Punteria', 'Otras') )
+);
+
+insert into HABILIDAD values (001, 'Volar', 'Velocidad', 'Descripción volar', 100);
+insert into HABILIDAD values (002, 'Nadar', 'Velocidad', 'Descripción nadar', 100);
+insert into HABILIDAD values (003, 'Apuntar', 'Punteria', 'Descripción apuntar', 100);
+insert into HABILIDAD values (004, 'Programar', 'Otras', 'Descripción programar', 100);
+insert into HABILIDAD values (005, 'Construir', 'Fuerza', 'Descripción contruir', 100);
+select * from HABILIDAD;
+
+create table Hab_Necesaria
+(
+  Habilidad number(3, 0) references Habilidad on delete cascade,
+  H_Necesaria number(3, 0) references Habilidad on delete cascade,
+  Puntos_Necesarios number(3, 0) not null,
+  primary key(Habilidad, H_Necesaria)
+);
+
+insert into HAB_NECESARIA values (001, 004, 100);
+insert into HAB_NECESARIA values (002, 001, 100);
+select * from HAB_NECESARIA;
+
+create table PG_Tiene_H
+(
+  CodPG Number(3, 0) references Personaje_Generico on delete cascade,
+  CodH Number(3, 0) references Habilidad on delete cascade,
+  Puntos number(3, 0) not null,
+  PRIMARY KEY (CodPG, CodH)
+);
+
+insert into PG_TIENE_H values (001, 001, 100);
+insert into PG_TIENE_H values (002, 002, 100);
+insert into PG_TIENE_H values (003, 003, 10);
+insert into PG_TIENE_H values (004, 004, 1);
+insert into PG_TIENE_H values (005, 001, 100);
+insert into PG_TIENE_H values (006, 002, 100);
+insert into PG_TIENE_H values (007, 003, 10);
+insert into PG_TIENE_H values (008, 004, 1);
+insert into PG_TIENE_H values (009, 001, 100);
+insert into PG_TIENE_H values (010, 002, 100);
+select * from PG_TIENE_H;
+
+create table Personaje_Jugador
+(
+  CodPG Number(3, 0) references Personaje_Generico on delete cascade,
+  CodPJ Number(12, 0),
+  userId Number(10, 0) not null,
+  Nombre varchar2(30) not null,
+  PRIMARY KEY (CodPG, CodPJ)
+);
+
+insert into PERSONAJE_JUGADOR values (001, 001, 2, 'Mantón');
+insert into PERSONAJE_JUGADOR values (001, 002, 2, 'XxMatónxX');
+insert into PERSONAJE_JUGADOR values (002, 003, 3, 'Timothy');
+insert into PERSONAJE_JUGADOR values (003, 004, 4, 'Mariana');
+insert into PERSONAJE_JUGADOR values (004, 005, 5, 'Calamar');
+insert into PERSONAJE_JUGADOR values (005, 006, 6, 'Patricio');
+insert into PERSONAJE_JUGADOR values (006, 007, 7, 'Fin');
+insert into PERSONAJE_JUGADOR values (007, 008, 8, 'Manteca');
+insert into PERSONAJE_JUGADOR values (008, 009, 9, 'Sherlock');
+insert into PERSONAJE_JUGADOR values (009, 010, 10, 'Parcela');
+insert into PERSONAJE_JUGADOR values (010, 011, 11, 'Cirilla');
+select * from PERSONAJE_JUGADOR;
+
+create table PJ_Tiene_H
+(
+  CodPG Number(3, 0),
+  CodPJ Number(12, 0),
+  CodH number(3, 0),
+  Puntos Number(3, 0) not null,
+  primary key (CodPG, CodPJ, CodH),
+  FOREIGN KEY (CodPG, CodPJ) references Personaje_Jugador on delete cascade
+);
+
+insert into PJ_TIENE_H values (001, 001, 001, 100);
+insert into PJ_TIENE_H values (001, 002, 002, 200);
+insert into PJ_TIENE_H values (002, 003, 003, 300);
+insert into PJ_TIENE_H values (003, 004, 004, 400);
+insert into PJ_TIENE_H values (004, 005, 001, 100);
+insert into PJ_TIENE_H values (005, 006, 002, 200);
+insert into PJ_TIENE_H values (006, 007, 003, 300);
+insert into PJ_TIENE_H values (007, 008, 004, 400);
+insert into PJ_TIENE_H values (008, 009, 001, 100);
+insert into PJ_TIENE_H values (009, 010, 002, 200);
+insert into PJ_TIENE_H values (010, 011, 002, 200);
+select * from PJ_TIENE_H;
+
+create table USUARIO
+(
+  userId number(10, 0) primary key,
+  Nombre varchar2(50) not null,
+  Apodo varchar2(20) not null,
+  Pais varchar2(20) not null,
+  IBAN varchar2(34) not null,
+  Oro Number(8, 2) not null,
+  Contrasena varchar2(32) not null,
+  CodPG_Capitan Number(3, 0),
+  CodPJ_Capitan Number(12, 0),
+  FOREIGN KEY (CodPG_Capitan, CodPJ_Capitan) references Personaje_Jugador on delete set null
+);
+
+insert into USUARIO values (1, 'Martín', 'Daoab', 'España', 'ABCDHIJK00000000000001', 999, 'PASSWORD', 001, 001);
+insert into USUARIO values (2, 'Antonio', 'Galathar', 'España', 'ABCDHIJK00000000000022', 9999, 'PASSWORD', 001, 002);
+insert into USUARIO values (3, 'Adrián', 'Swagdri', 'España', 'ABCDHIJK00000000000002', 98, 'PASSWORD', 002, 003);
+insert into USUARIO values (4, 'Pedro', 'Pyter', 'España', 'ABCDHIJK00000000000003', 100, 'PASSWORD', 003, 004);
+insert into USUARIO values (5, 'Iván', 'Gepeto', 'España', 'ABCDHIJK00000000000004', 569, 'PASSWORD', 004, 005);
+insert into USUARIO values (6, 'Ruso', 'MacRuso', 'USA', 'ABCDHIJK00000000000005', 420, 'PASSWORD', 005, 006);
+insert into USUARIO values (7, 'Celia', 'Biblio', 'Francia', 'ABCDHIJK00000000000006', 137, 'PASSWORD', 006, 007);
+insert into USUARIO values (8, 'Lucia', 'Lux', 'Alemania', 'ABCDHIJK00000000000007', 139, 'PASSWORD', 007, 008);
+insert into USUARIO values (9, 'Marta', 'Marto', 'Bulgaria', 'ABCDHIJK00000000000008', 200, 'PASSWORD', 008, 009);
+insert into USUARIO values (10, 'Pepe', 'Rodriguez', 'Mexico', 'ABCDHIJK00000000000009', 300, 'PASSWORD', 009, 010);
+insert into USUARIO values (11, 'Pringao', 'Sin Partida', 'NADA', 'ABCDHIJK00000000000011', 969, 'PASSWORD', 010, 011);
+select * from USUARIO;
+
+alter table Personaje_Jugador modify (userId references USUARIO on delete cascade);
+
+create table Equipo
+(
+  CodE number(10, 0) primary key,
+  Nombre varchar2(20) unique not null,
+  Fecha_Creacion DATE not null,
+  userId1 Number(10, 0) references USUARIO not null,
+  userId2 Number(10, 0) references USUARIO not null,
+  userId3 Number(10, 0) references USUARIO not null,
+  userId4 Number(10, 0) references USUARIO not null,
+  userId5 Number(10, 0) references USUARIO not null
+);
+
+insert into EQUIPO values (1, 'NushPegan', TO_DATE('22/11/2018', 'dd-mm-yyyy'), 1, 2, 3, 4, 5);
+insert into EQUIPO values (2, 'Dracónidos', TO_DATE('13/09/1999', 'dd-mm-yyyy'), 6, 7, 8, 9, 10);
+select * from EQUIPO;
+
+create table Escenario
+(
+  CodES Number(6, 0) primary key,
+  Descripcion varchar2(50),
+  URL varchar2(255) not null
+);
+
+insert into ESCENARIO values (1, 'Descripción E1', 'URL_MAPA1');
+insert into ESCENARIO values (2, 'Descripción E2', 'URL_MAPA2');
+insert into ESCENARIO values (3, 'Descripción E3', 'URL_MAPA3');
+select * from ESCENARIO;
+
+create table Partida
+(
+  CodP Number(20, 0) primary key,
+  CodEQ1 Number(10, 0) references Equipo not null,
+  CodEQ2 Number(10, 0) references Equipo not null,
+  CodEQGanador Number(10, 0) references Equipo,
+  CodES Number(6, 0) references Escenario not null,
+  FechaIni DATE not null,
+  FechaFin DATE
+);
+
+insert into PARTIDA values (1, 1, 2, 1, 1, TO_DATE('22/11/2018', 'dd/mm/yyyy'), TO_DATE('23/11/2018', 'dd-mm-yyyy'));
+insert into PARTIDA values (2, 1, 2, 1, 2, TO_DATE('23/11/2018', 'dd/mm/yyyy'), TO_DATE('24/11/2018', 'dd-mm-yyyy'));
+insert into PARTIDA values (3, 1, 2, 2, 1, TO_DATE('24/11/2018', 'dd/mm/yyyy'), TO_DATE('25/11/2018', 'dd-mm-yyyy'));
+insert into PARTIDA values (4, 1, 2, 2, 2, TO_DATE('26/11/2018', 'dd/mm/yyyy'), TO_DATE('30/11/2018', 'dd-mm-yyyy'));
+select * from PARTIDA;
+
+--3.1
+commit;
+--alter table Partida add check (FechaIni < FechaFin);
+--insert into PARTIDA values (1, 1, 2, 1, 1, TO_DATE('22/11/2018', 'dd/mm/yyyy'), TO_DATE('23/11/2016', 'dd-mm-yyyy'));
+--select * from user_constraints;
+--alter table Partida drop constraint SYS_C0039150;
+alter table Partida add CONSTRAINT fechaBien check (FechaIni < FechaFin); -- si le ponemos nombre aparece en la consola y es mas facil el debug
+rollback;
+
+--3.2
+commit;
+alter table USUARIO modify Apodo unique;
+rollback;
+
+--3.3
+commit;
+alter table USUARIO disable unique (Apodo);
+insert into USUARIO values (12, 'Pringao', 'Sin Partida', 'NADA', 'ABCDHIJK00000000000011', 969, 'PASSWORD', 010, 011);
+select * from USUARIO;
+rollback;
+
+--3.4
+commit;
+alter table USUARIO add (Email varchar2(255) default 'sin email' not null); --si no ponemos el default se pondria  a null y salta el error por la restriccion
+select * from USUARIO;
+rollback;
+
+--3.5
+commit;
+alter table Partida add CONSTRAINT equipoBien check (CodEQGanador in (CodEQ1, CodEQ2, null ));
+--insert into PARTIDA values (5, 1, 2, null, 3, TO_DATE('26/11/2018', 'dd/mm/yyyy'), TO_DATE('30/11/2018', 'dd-mm-yyyy'));
+select * from Partida;
+rollback;
+
+--4.1
+select *
+from Personaje_Jugador j, Habilidad h, PJ_Tiene_H ph
+where ph.CodH = h.CodH and ph.CodPG = j.CodPG and ph.CodPJ = j.CodPJ;
+
+update PJ_Tiene_H set Puntos = 150 where CodPG = 1 and CodPJ = 1;
+
+--4.2
+select * from Habilidad;
+update Habilidad set Coste = coste * 2 where Categoria like 'Velocidad';
+
+--4.3
+select * from USUARIO;
+update USUARIO set Oro = oro + 100 where Pais like 'España';
+
+--4.4
+select * from PJ_Tiene_H;
+update PJ_Tiene_H set Puntos = Puntos + 1 where Puntos < (select avg(Puntos) from PJ_Tiene_H); -- no podemos hacer el grupo en un update, hay que comparar con una subconsulta
+
+--4.5
+commit;
+delete from USUARIO
+where userId in(select userId from USUARIO
+
+                    minus
+
+                select u.userId
+                from USUARIO u, Equipo e, Partida p
+                where e.CodE in (p.CodEQ1, p.CodEQ2, p.CodEQGanador)
+                and u.userId in (e.userId1, e.userId2, e.userId3, e.userId4, e.userId5)
+                );
+select * from USUARIO;
+rollback;
+
+--5.1
+create or replace view DATOS_DE_HABILIDADES
+as (select h1.CodH, h1.Nombre, h1.Categoria, h1.Descripcion, h1.Coste,
+           h2.CodH as Codigo_HN, h2.Nombre as Nombre_HN, h2.Categoria as Categoria_HN,h2.Descripcion as Descripcion_HN, h2.Coste as Coste_HN,
+           hb.Habilidad, hb.H_Necesaria, hb.Puntos_Necesarios
+    from Habilidad h1, Habilidad h2, Hab_Necesaria hb
+    where h1.CodH = hb.Habilidad and h2.CodH = hb.H_Necesaria
+   );
+
+select * from DATOS_DE_HABILIDADES;
+--insert into DATOS_DE_HABILIDADES values(3, 'Apuntar', 'Punteria', 'Descripcion apuntar', 100, 4, 'Programar', 'Otras', 'Descripción programar', 100, 3, 4, 500); --al ser resultado de una expresion (join o los as) no se pueden insertar datos
+
+--5.2
+select Apodo, Num_EQUIPOS, NUM_PARTIDAS
+from
+    (select e.CodE, u.Apodo, count (u.Apodo) as Num_EQUIPOS
+     from USUARIO u, Equipo e
+     where u.userId in (e.userId1, e.userId2, e.userId3, e.userId4, e.userId5)
+     group by u.Apodo, e.CodE
+    ) t1
+    join
+    (
+     select e.CodE, count(e.CodE) as NUM_PARTIDAS
+     from Equipo e, Partida p
+     where e.CodE in (p.CodEQ1, p.CodEQ2, p.CodEQGanador)
+     group by e.CodE
+    ) t2
+    on t1.CodE = t2.CodE;
+
+--6.1
+select * from USUARIO where Pais like 'España';
+
+--6.2
+select * from Habilidad
+    minus
+select * from Habilidad
+where CodH in (select CodH from PJ_Tiene_H);
+
+--6.3
+select * from USUARIO
+    minus
+select u.userId, u.Nombre, u.Apodo, u.Pais, u.IBAN,
+       u.Oro, u.Contrasena, u.CodPG_Capitan, u.CodPJ_Capitan, u.Email
+from USUARIO u, Equipo e
+where u.userId in (e.userId1, e.userId2, e.userId3, e.userId4, e.userId5);
+
+
+--6.4
+select u.Nombre, count(u.Apodo) as NUMERO_PARTIDAS
+from USUARIO u, Equipo e, Partida p
+where e.CodE in  (p.CodEQ1, p.CodEQ2, p.CodEQGanador)
+and u.userId in (e.userId1, e.userId2, e.userId3, e.userId4, e.userId5)
+group by u.Nombre;
+
+--6.5
+select p.CodP, sysdate - p.FechaFin as DIAS_DESDE_FIN
+from Partida p;
+
+--6.6
+
+select u.Pais, sum(u.Oro) as TOTAL_ORO
+from USUARIO u
+group by u.Pais having sum(u.Oro) = (select max(sum(oro))
+                                     from USUARIO
+                                     group by Pais
+                                    );
+
+--7.1
+create table Puntuacion
+(
+  CodP number(20, 0) references Partida,
+  userId number(10, 0) references USUARIO,
+  puntosObtenidos number(3, 0) not null,
+  oroObtenido number(3, 0) not null,
+  primary key (CodP, userId)
+);
+
+insert into Puntuacion values (1, 1, 100, 50);
+select * from Puntuacion;
+
+--7.2
+create table Historico_Partidas_Terminadas
+  as (select * from Partida where FechaFin is not null);
+
+insert into PARTIDA values (5, 1, 2, 2, 2, TO_DATE('26/11/2018', 'dd/mm/yyyy'), null);
+select * from Partida;
+select * from Historico_Partidas_Terminadas;

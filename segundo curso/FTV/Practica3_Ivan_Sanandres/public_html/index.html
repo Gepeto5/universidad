@@ -42,23 +42,28 @@ and open the template in the editor.
                 -Cuando el jugador destruya todos los ladrillos, se activará un nivel de bonificación, donde en cada fila de ladrillos se necesita un toque más para destruir cada uno. <br/>
                 -En cada partida el jugador dispone de 3 vidas. <br/> -Las vidas están simbolizadas por los sprites de la raqueta situados en la esquina inferior izquierda del lienzo. <br/>
                 -Cuando el jugador falle 2 veces, únicamente tendrá un intento más.<br/> -Cuando el jugador se quede sin vidas, podrá hacer click en el botón de reintentar para jugar otra partida. <br/>
-                -Cada vez que se destruya un ladrillo se sumarán 100 puntos a la puntuación. </br> Cuando el jugador haya destruido la mitad de los ladrillos, se le recompensará volviendo a tener 2 vidas. </p>
+                -Cada vez que se destruya un ladrillo se sumarán 100 puntos a la puntuación. </br> -Cuando el jugador haya destruido la mitad de los ladrillos, se le recompensará volviendo a tener 2 vidas. </p>
             <canvas id="canvas" width="750" height="1050"></canvas>
             <p></p>
             <button id="retry">Reintentar</button>
             <p style="color: red; font-weight: bold">Práctica 3 de Fundamentos de Tecnología de Videojuegos.</p>
             <p style="color: red; font-weight: bold">Práctica realizada por el alumno Iván Sanandrés Gutiérrez, con DNI 47587090K.</p>
+            <p style="color: red; font-weight: bold">Práctica entregada el día 6 de enero de 2019.</p>
             <p style="color: red; font-weight: bold">Imagen de fondo extraída de: https://hdwallpaperim.com/wp-content/uploads/2017/08/104598-space-pixel_art-horizon-stars.jpg</p>
         </div>
         <script>
             "use strict";
-
+            
+            //Se toman el contexto, el canvas y el botón de reintentar
             var canvas = document.getElementById("canvas");
             var context = canvas.getContext("2d");
             var retry = document.getElementById("retry");
-
+            
+            //Se toman el ancho y alto del canvas
             var x = canvas.width;
             var y = canvas.height;
+            
+            //Declaración de las imágenes que se van a usar
             var backImage = new Image();
             backImage.src = "hexagon_pattern.png";
             var playerImage = new Image();
@@ -76,6 +81,7 @@ and open the template in the editor.
             var life2 = new Image();
             life2.src = "racket.png";
 
+            //Colores de los ladrillos dependiendo de su nivel
             var colorLevel1 = "lightgreen";
             var colorLevel2 = "fuchsia";
             var colorLevel3 = "cyan";
@@ -83,13 +89,15 @@ and open the template in the editor.
             var colorLevel5 = "red";
             var colorLevel6 = "grey";
 
+            //Variables del jugador (o raqueta)
             var playerWidth = 33;
             var playerHeight = 10;
             var playerScaleFactor = 2.5;
             var playerPosX = 342;
             var playerPosY = 900;
-            var playerHitBox = 27.5;
+            var playerHitBox = 27.5; //Esta variable es el valor del ancho de la raqueta dividido entre 3, para poder tomar 3 zonas iguales en las que la pelota pueda colisionar
 
+            //Variables de la pelota
             var ballWidth = 6;
             var ballHeight = 5;
             var ballScaleFactor = 3;
@@ -97,40 +105,66 @@ and open the template in the editor.
             var ballVelY = 0;
             var ballPosX = 383.25 + ballVelX;
             var ballPosY = 885 + ballVelY;
-            var ballThrowed = false;
-            var ballHitBoxX = ballPosX + ((ballWidth * ballScaleFactor) / 2);
-            var ballHitBoxY = (ballHeight * ballScaleFactor) + ballPosY;
-            var ballDirection = 1;
-            var ballCollided = false;
+            var ballThrowed = false; //Esta variable determina si la pelota está en movimiento o no
+            var ballHitBoxX = ballPosX + ((ballWidth * ballScaleFactor) / 2); //Esta variable almacena el punto medio en X de la pelota
+            var ballHitBoxY = (ballHeight * ballScaleFactor) + ballPosY; //Esta variable almacena la posición en Y de la parte más baja de la pelota
+            var ballDirection = 1; //Determina la dirección de la pelota. Si es 1, irá hacia arriba, si es -1, irá hacia abajo.
+            var ballCollided = false; //Variable que determina si, tras haber sido la bola lanzada por el jugador, ha colisionado aún con un ladrillo o no
 
+            //Variables de los ladrillos
             var bricks = [77];
             var brickWidth = 49.23;
             var brickHeight = 25.83;
             var brickHitBox = 16.41;
             var brickLevel1Y = 330;
-            var brickCheckCollision;
             var brickCollisionDown = false;
-
+            
+            //Objeto jugador, que tiene como atributos la puntuación y las vidas
             function player() {
                 this.score = 0;
                 this.lives = 2;
             }
-
+            
+            //Se crea el jugador
             var ply = new player();
 
+            //Objeto ladrillo
             function brick() {
-                var level;
-                var levelCheck;
-                var coordX;
-                var coordY;
-                var hits;
-                var hitBoxX1;
-                var hitBoxX2;
-                var hitBoxX3;
-                var hitBoxY;
-                this.broken = false;
+                var level; //Nivel del ladrillo
+                var levelCheck; //Variable auxiliar que se utiliza para comprobar en qué nivel está el ladrillo teniendo en cuenta su posición en Y
+                var coordX; //Coordenadas del ladrillo en X
+                var coordY; //Coordenadas del ladrillo en Y
+                var hits; //Golpes que soporta cada ladrillo antes de romperse
+                var hitBoxX1; //Posición en X tenida en cuenta para calcular si la bola colisiona con la parte izquierda o central del ladrillo
+                var hitBoxX2; //Posición en X tenida en cuenta para calcular si la bola colisiona con la parte central o derecha del ladrillo
+                var hitBoxX3; //Posición en X tenida en cuenta para calcular si la bola colisona con la parte derecha del ladrillo
+                var hitBoxY; //Posición en Y más baja del ladrillo, tenida en cuenta para calcular la colisión
+                this.broken = false; //Variable que determina si el ladrillo ha sido destruido o no
             }
-
+            
+            //Función que rellena el array de ladrillos
+            function generateBricks() {
+                var brickCount = 0;
+                var levelAux = 6;
+                for (var i = 150; i < 330; i += 30) { //y
+                    for (var j = 25; j <= 675.77; j += 54.23) { //x
+                        bricks[brickCount] = new brick();
+                        bricks[brickCount].coordX = j;
+                        bricks[brickCount].coordY = i;
+                        bricks[brickCount].hitBoxX1 = j + brickHitBox;
+                        bricks[brickCount].hitBoxX2 = j + (brickHitBox * 2);
+                        bricks[brickCount].hitBoxX3 = j + (brickHitBox * 3);
+                        bricks[brickCount].hitBoxY = i + brickHeight;
+                        bricks[brickCount].level = levelAux;
+                        bricks[brickCount].levelCheck = bricks[brickCount].coordY - bricks[brickCount].level;
+                        bricks[brickCount].hits = 1;
+                        brickCount++;
+                    }
+                    levelAux--;
+                }
+            }
+            
+            //Función que crea el array de ladrillos para el nivel bonus del juego, tras destruir todos los ladrillos del nivel principal
             function generateBricksBonus() {
                 var brickCount = 0;
                 var levelAux = 6;
@@ -163,28 +197,8 @@ and open the template in the editor.
                     levelAux--;
                 }
             }
-            
-            function generateBricks() {
-                var brickCount = 0;
-                var levelAux = 6;
-                for (var i = 150; i < 330; i += 30) { //y
-                    for (var j = 25; j <= 675.77; j += 54.23) { //x
-                        bricks[brickCount] = new brick();
-                        bricks[brickCount].coordX = j;
-                        bricks[brickCount].coordY = i;
-                        bricks[brickCount].hitBoxX1 = j + brickHitBox;
-                        bricks[brickCount].hitBoxX2 = j + (brickHitBox * 2);
-                        bricks[brickCount].hitBoxX3 = j + (brickHitBox * 3);
-                        bricks[brickCount].hitBoxY = i + brickHeight;
-                        bricks[brickCount].level = levelAux;
-                        bricks[brickCount].levelCheck = bricks[brickCount].coordY - bricks[brickCount].level;
-                        bricks[brickCount].hits = 1;
-                        brickCount++;
-                    }
-                    levelAux--;
-                }
-            }
-            
+             
+            //Función que tiene en cuenta el array de ladrillos para pintarlos en el canvas 
             function printBricks() {
                 var brickCount = 0;
                 var levelAux = 6;
@@ -211,9 +225,11 @@ and open the template in the editor.
                     levelAux--;
                 }
             }
-
+            
+            //Se generan los ladrillos una única vez
             generateBricks();
 
+            //Función que se ejecuta cada ciertos frames, y que pinta los elementos en el lienzo
             function generateElements() {
                 context.clearRect(0, 0, canvas.width, canvas.height);
                 context.drawImage(backImage, 0, 0, x, y);
@@ -221,25 +237,26 @@ and open the template in the editor.
                 context.drawImage(topImage, 0, 0, x, 20);
                 context.drawImage(leftImage, 0, 20, 20, y);
                 context.drawImage(rightImage, 730, 20, 20, y);
-                if (ply.lives === 2) {
+                if (ply.lives === 2) { //Dependiendo del número de vidas, se pintan o no los sprites que las simbolizan en la esquina inferior izquierda del canvas
                     context.drawImage(life1, 20, 967, playerWidth, playerHeight);
                     context.drawImage(life2, 65, 967, playerWidth, playerHeight);
                 } else if (ply.lives === 1) {
                     context.drawImage(life1, 20, 967, playerWidth, playerHeight);
                 }
 
-                if (playerPosX <= 20) {
+                if (playerPosX <= 20) { //Se comprueba si la raqueta colisiona con las paredes
                     playerPosX = playerPosX + 5;
                     if (ballThrowed === false && ballPosX - 41.25 <= 20) {
                         ballPosX = ballPosX + 5;
                     }
-                } else if (playerPosX + 83 >= 730) {
-                    playerPosX = playerPosX - 5;
+                } else if (playerPosX >= 647.5) {
+                    playerPosX = 647.5;
                     if (ballThrowed === false && ballPosX + 41.25 >= 730) {
-                        ballPosX = ballPosX - 5;
+                        ballPosX = playerPosX + 41.25;
                     }
                 }
-
+                
+                //Se ejecutan las funciones que calculan las colisones y setean la velocidad de la pelota dependiendo de estas
                 ballCollisions();
                 setBallVelocity();
 
@@ -247,6 +264,7 @@ and open the template in the editor.
                 context.drawImage(playerImage, playerPosX, playerPosY, playerWidth * playerScaleFactor, playerHeight * playerScaleFactor);
             }
             
+            //Función que determina cuándo se ejecuta la función de generar elementos
             var game = function () {
                 if (ply.lives >= 0) {
                     generateElements();
@@ -259,11 +277,12 @@ and open the template in the editor.
 
             requestAnimationFrame(game);
 
+            //Función que calcula las colisiones de la bola
             function ballCollisions() {
                 ballHitBoxX = ballPosX + 9;
                 ballHitBoxY = (ballHeight * ballScaleFactor) + ballPosY;
-                if (ballThrowed === true) {
-                    if (ballCollided === false) {
+                if (ballThrowed === true) { //Si la bola no ha sido lanzada no tendrá velocidad
+                    if (ballCollided === false) { //Hasta que colisione con un ladrillo, la bola irá hacia arriba en linea recta
                         ballVelY = -7.5;
                         if (ballPosY <= 20) {
                             ballVelY = 7.5;
@@ -271,8 +290,8 @@ and open the template in the editor.
                             ballCollided = true;
                         }
                     }
-                    if (ballPosY < playerPosY + playerHeight * playerScaleFactor && ballDirection === 1) {
-                        for (var i = 0; i < bricks.length; i++) {
+                    if (ballPosY < playerPosY + playerHeight * playerScaleFactor && ballDirection === 1) { //Si la bola va hacia arriba
+                        for (var i = 0; i < bricks.length; i++) { //Se comprueba con un for si la bola colisiona con alguno de los ladrillos
                             if (ballPosY <= bricks[i].hitBoxY && ballPosY >= bricks[i].coordY && (ballHitBoxX >= bricks[i].coordX && ballHitBoxX <= bricks[i].hitBoxX1) && bricks[i].broken === false) {
                                 ballVelY = 7.5;
                                 ballVelX = -7.5;
@@ -303,7 +322,7 @@ and open the template in the editor.
                                     bricks[i].broken = true;
                                     ply.score += 100;
                                 }
-                            } if(bricks[i] != bricks[0]){
+                            } if(bricks[i] != bricks[0]){ //Se comprueba si la bola colisiona con dos ladrillos a la vez, teniendo en cuenta el actual y el anterior. Es por esto que se descarta el primer ladrillo de todos, que lanzará una excepción al no tener ladrillo anterior
                             if (ballPosY <= bricks[i].hitBoxY && ballPosY >= bricks[i].coordY && (ballHitBoxX < bricks[i].coordX && ballHitBoxX > bricks[i - 1].hitBoxX3) && bricks[i].broken === false && bricks[i - 1].broken === false && bricks[i] !== bricks[0] && bricks[i-1] !== undefined) {
                                 ballVelY = 7.5;
                                 ballVelX = 0;
@@ -322,7 +341,7 @@ and open the template in the editor.
                             }
                             }
                         }
-                        if (ballPosX <= 20) {
+                        if (ballPosX <= 20) { //Se calcula si la bola colisiona con alguna de las paredes o el techo
                             ballVelX = 7.5;
                         } else if (ballPosX + 18 >= 730) {
                             ballVelX = -7.5;
@@ -330,7 +349,7 @@ and open the template in the editor.
                             ballVelY = 7.5;
                             ballDirection = -1;
                         }
-                    } else if (ballPosY < playerPosY + playerHeight * playerScaleFactor && ballDirection === -1) {
+                    } else if (ballPosY < playerPosY + playerHeight * playerScaleFactor && ballDirection === -1) { //Si la bola va hacia abajo
                         if (ballHitBoxY >= playerPosY && (ballHitBoxX > playerPosX && ballHitBoxX <= playerPosX + playerHitBox)) {
                             ballVelY = -7.5;
                             ballVelX = -7.5;
@@ -375,22 +394,7 @@ and open the template in the editor.
                                     bricks[i].broken = true;
                                     ply.score += 100;
                                 }
-                            }/* else if (ballPosY <= bricks[i].coordY && (ballHitBoxX < bricks[i].coordX && ballHitBoxX > bricks[i - 1].hitBoxX3) && bricks[i].broken === false && bricks[i - 1].broken === false && ballPosY >= bricks[i].levelCheck && ballPosY >= bricks[i - 1].levelCheck && bricks[i] !== bricks[0] && bricks[i-1] !== undefined) {
-                                ballVelY = -7.5;
-                                ballVelX = 0;
-                                ballCollided = true;
-                                ballDirection = 1;
-                                bricks[i].hits--;
-                                bricks[i - 1].hits--;
-                                if (bricks[i].hits === 0) {
-                                    bricks[i].broken = true;
-                                    ply.score += 100;
-                                }
-                                if (bricks[i - 1].hits === 0) {
-                                    bricks[i - 1].broken = true;
-                                    ply.score += 100;
-                                }
-                            }*/ // colisiones en los lados
+                            } // colisiones en los lados
                             else if (ballPosY >= bricks[i].coordY && ballPosY <= bricks[i].hitBoxY && (ballPosX + ballWidth >= bricks[i].coordX && ballPosX + ballWidth <= bricks[i].hitBoxX1) && ballVelX === 7.5 && bricks[i].broken === false) {
                                 ballVelY = 7.5;
                                 ballVelX = -7.5;
@@ -419,7 +423,7 @@ and open the template in the editor.
                             brickCollisionDown = false;
                         }
 
-                    } else if (ballPosY > playerPosY + playerHeight * playerScaleFactor) {
+                    } else if (ballPosY > playerPosY + playerHeight * playerScaleFactor) { //Si la bola no colisiona con la raqueta, el jugador pierde una vida y tiene que volver a lanzarla en el caso de que siga teniendo vidas
                         ply.lives--;
                         if (ply.lives === 1) {
                             life1.style.display = 'none';
@@ -437,9 +441,10 @@ and open the template in the editor.
                     ballVelX = 0;
                     ballVelY = 0;
                 }
-                scoreCounter();
+                scoreCounter(); //Después de comprobar las colisiones, se compreuba si se ha modificado la puntuación
             }
 
+            //Función que lleva la cuenta de la puntuación. Esta será mostrada en la parte inferior izquierda de la pantalla
             function scoreCounter() {
                 context.font = '20pt Calibri';
                 context.fillText("Puntuación: " + ply.score, 20, 1000);
@@ -449,6 +454,7 @@ and open the template in the editor.
                 bonusLevel();
             }
 
+            //Función que tiene en cuenta si el jugador se ha quedado sin vidas para poder usar el botón de reintentar
             function tryAgain() {
                 if (ply.lives < 0) {
                     ply.score = 0;
@@ -461,17 +467,19 @@ and open the template in the editor.
                 }
             }
             
+            //Función que tiene en cuenta si el jugador ha destruido todos los ladrillos, y entonces dar comienzo el nivel de bonificación, ganando además 1000 puntos extra
             function bonusLevel(){
                 if(ply.score === 7800){
+                    ply.score += 1000;
                     generateBricksBonus();
                     ply.lives = 2;
-                    ballThrowed = false;
                     ballPosX = playerPosX + 41.25;
                     ballPosY = 885;
-                    ply.score += 1000;
+                    ballThrowed = false;
                 }
             }
 
+            //Función que setea la velocidad de la bola tras calcular las colisiones
             function setBallVelocity() {
                 ballPosX = ballPosX + ballVelX;
                 ballPosY = ballPosY + ballVelY;
@@ -479,6 +487,7 @@ and open the template in the editor.
 
             playerImage.usingMouse = false;
 
+            //Función que maneja los eventos de ratón para controlar la raqueta
             function mouseHandlers(e) {
                 var dim = this.getBoundingClientRect();
                 var posX = e.clientX - dim.left;
@@ -504,12 +513,14 @@ and open the template in the editor.
                 }
             }
 
+            //Función que maneja el evento de teclado que lanza la bola
             function throwBall(e) {
                 if (e.charCode === 87 || e.charCode === 119) {
                     ballThrowed = true;
                 }
             }
 
+            //Event listeners asociados a las funciones de manejo de teclado y ratón
             canvas.addEventListener("mousedown", mouseHandlers, false);
             canvas.addEventListener("mouseup", mouseHandlers, false);
             canvas.addEventListener("mousemove", mouseHandlers, true);
